@@ -9,6 +9,7 @@ $page_name = '';
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="top-page.css">
     <title><?= page_title($page_name) ?></title>
   </head>
   <body>
