@@ -33,10 +33,10 @@ $page_name = '';
       </div>
       <div class="box-login-form-content">
         <form>
-          <input type="button">
-          または
-          <input type="button">
-        <form>
+          <input type="button" name="login" value="ログイン">
+          <p>または</p>
+          <input type="button" name="register" value="新規登録">
+        </form>
       </div>
     </div>
     <div class="box-login-form">
@@ -45,10 +45,10 @@ $page_name = '';
       </div>
       <div class="box-login-form-content">
         <form>
-          <input type="button">
-          または
-          <input type="button">
-        <form>
+          <input type="button" name="login" value="ログイン">
+          <p>または</p>
+          <input type="button" name="register" value="新規登録">
+        </form>
       </div>
     </div>
   </body>
