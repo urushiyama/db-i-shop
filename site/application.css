@@ -3,6 +3,13 @@ body {
   background-color: dimgray;
 }
 
+@media screen and (min-width: 1024px) {
+  body {
+    width: 1024px;
+    margin: 0 auto;
+  }
+}
+
 .system-logo {
   text-align: center;
   background-color: dimgray;
