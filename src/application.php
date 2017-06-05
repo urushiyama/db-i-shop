@@ -2,8 +2,8 @@
 require_once 'config.php';
 require_once 'view_config.php';
 
-$page_name = '';
-$page_file = '_login-page.php';
+if (!isset($page_name)) $page_name = '';
+if (!isset($page_file)) $page_file = '_login-page.php';
 ?>
 
 <!DOCTYPE html>
