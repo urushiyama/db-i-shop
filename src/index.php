@@ -13,5 +13,8 @@ if ($page != 'top') {
 }
 
 $page_file = "_${page}-page.php";
+if (!file_exists($page_file)) {
+  $page_file = "_not-found-page.php";
+}
 include 'application.php'
  ?>
