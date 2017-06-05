@@ -18,6 +18,11 @@ body {
   font-weight: bold;
 }
 
+a.system-logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .search-form {
   text-align: center;
   background-color: lightgray;

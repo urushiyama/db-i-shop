@@ -15,7 +15,7 @@ if (!isset($page_file)) $page_file = '_login-page.php';
   </head>
   <body>
     <div class="system-logo">
-      <?= $system_name ?>
+      <a href="#" class="system-logo-link"><?= $system_name ?></a>
     </div>
     <?
       include $page_file;
