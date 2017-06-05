@@ -103,3 +103,12 @@ div.box-login-form-content input[type="password"] {
 div.box-login-form-content p {
   flex: 1 1;
 }
+
+input:hover {
+  box-shadow: 0 0 4px 0 gold;
+}
+
+input:focus {
+  box-shadow: 0 0 4px 0 skyblue;
+  background-color: lightgray;
+}
