@@ -1,0 +1,26 @@
+{
+  "name": "db-i-shop",
+  "version": "1.0.0",
+  "description": "This is a repo for amazon-like EC site, and is an assignment of Database system I.",
+  "main": "site/index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urushiyama/db-i-shop.git"
+  },
+  "author": "urushiyama",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/urushiyama/db-i-shop/issues"
+  },
+  "homepage": "https://github.com/urushiyama/db-i-shop#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0"
+  }
+}
