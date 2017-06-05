@@ -42,6 +42,18 @@ div.search-form-content input[type="submit"] {
   flex: 1 1;
 }
 
+.box-content-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.box-content-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .box-login-form {
   text-align: center;
   background-color: lightgray;
@@ -67,6 +79,18 @@ div.box-login-form-content input {
 
 div.box-login-form-content input[type="button"] {
   flex: 2 1;
+}
+
+div.box-login-form-content input[type="submit"] {
+  flex: 2 1;
+}
+
+div.box-login-form-content input[type="text"] {
+  flex: 4 2;
+}
+
+div.box-login-form-content input[type="password"] {
+  flex: 4 2;
 }
 
 div.box-login-form-content p {
