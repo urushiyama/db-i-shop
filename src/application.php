@@ -1,9 +1,12 @@
 <?php
 require_once 'config.php';
 require_once 'view_config.php';
+require './_C_renderer.php';
 
-if (!isset($page_name)) $page_name = '';
-if (!isset($page_file)) $page_file = '_login-page.php';
+$page_name = ($page == 'top') ? '' : $page;
+$page_file = "_${page}-page.php";
+
+$renderer = new Renderer("_not-found-page.php");
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +23,7 @@ if (!isset($page_file)) $page_file = '_login-page.php';
       <a href="#" class="system-logo-link"><?= $system_name ?></a>
     </div>
     <?
-      include $page_file;
+      $renderer.render([template=>$page_file]);
     ?>
   </body>
 </html>
