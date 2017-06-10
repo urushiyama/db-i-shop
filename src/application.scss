@@ -1,4 +1,19 @@
-@import "sanitize";
+@import "_reset";
+
+
+$headers: h1, h2, h3, h4, h5, h6;
+
+#{$headers} {
+  font-family: $root-font-family;
+}
+
+p {
+  font-family: $root-font-family;
+}
+
+a {
+  font-family: $root-font-family;
+}
 
 body {
   margin: 0;
