@@ -656,5 +656,22 @@ input:focus {
           box-shadow: 0 0 4px 0 skyblue;
   background-color: lightgray; }
 
+.flash-container, .flash-container-info, .flash-container-warn, .flash-container-danger {
+  border-style: solid;
+  border-radius: 8px;
+  border-width: 2px; }
+
+.flash-container-info {
+  border-color: #14d5ff;
+  background-color: #78ffff; }
+
+.flash-container-warn {
+  border-color: #fcde24;
+  background-color: #ffffd8; }
+
+.flash-container-danger {
+  border-color: #ff2424;
+  background-color: #ffd8d8; }
+
 ul {
   text-align: left; }

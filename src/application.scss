@@ -1,5 +1,8 @@
-@import "_reset";
+@import "reset";
 
+$flash-info-color: rgb(20, 213, 255);
+$flash-warn-color: rgb(252, 222, 36);
+$flash-danger-color: rgb(255, 36, 36);
 
 $headers: h1, h2, h3, h4, h5, h6;
 
@@ -133,6 +136,30 @@ input:hover {
 input:focus {
   box-shadow: 0 0 4px 0 skyblue;
   background-color: lightgray;
+}
+
+.flash-container {
+  border-style: solid;
+  border-radius: 8px;
+  border-width: 2px;
+}
+
+.flash-container-info {
+  @extend .flash-container;
+  border-color: $flash-info-color;
+  background-color: $flash-info-color * 6;
+}
+
+.flash-container-warn {
+  @extend .flash-container;
+  border-color: $flash-warn-color;
+  background-color: $flash-warn-color * 6;
+}
+
+.flash-container-danger {
+  @extend .flash-container;
+  border-color: $flash-danger-color;
+  background-color: $flash-danger-color * 6;
 }
 
 ul {
