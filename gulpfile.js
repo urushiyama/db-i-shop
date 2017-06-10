@@ -29,7 +29,13 @@ gulp.task('js', function () {
   .pipe(gulp.dest('./site'))
 })
 
+gulp.task('php', function () {
+  gulp.src('src/**/*.php')
+  .pipe(gulp.dest('./site'))
+})
+
 gulp.task('default', function () {
   gulp.watch('src/**/*.scss', ['sass'])
   gulp.watch('src/**/*.js', ['js'])
+  gulp.watch('src/**/*.php', ['php'])
 })
