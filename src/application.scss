@@ -4,6 +4,16 @@ $flash-info-color: rgb(20, 213, 255);
 $flash-warn-color: rgb(252, 222, 36);
 $flash-danger-color: rgb(255, 36, 36);
 
+$app-selected-color: gold;
+$app-bg-color: dimgray;
+$app-text-color: white;
+
+$box-bg-color: lightgray;
+$box-header-bg-color: gray;
+
+$input-bg-color: white;
+$input-text-color: black;
+
 $headers: h1, h2, h3, h4, h5, h6;
 
 #{$headers} {
@@ -20,11 +30,9 @@ a {
 
 body {
   margin: 0;
-  background-color: dimgray;
-}
+  background-color: $app-bg-color;
 
-@media screen and (min-width: 1024px) {
-  body {
+  @media screen and (min-width: 1024px) {
     width: 1024px;
     margin: 0 auto;
   }
@@ -32,8 +40,8 @@ body {
 
 .system-logo {
   text-align: center;
-  background-color: dimgray;
-  color: white;
+  background-color: $app-bg-color;
+  color: $app-text-color;
   font-size: 2.0em;
   font-weight: bold;
 }
@@ -45,33 +53,34 @@ body {
 
 .search-form {
   text-align: center;
-  background-color: lightgray;
+  background-color: $box-bg-color;
 }
 
 .search-form-title {
-  background-color: gray;
-  color: white;
+  background-color: $box-header-bg-color;
+  color: $app-text-color;
 }
 
-div.search-form-content form {
-  display: flex;
-}
+div.search-form-content {
+  form {
+    display: flex;
+  }
 
-div.search-form-content input {
-  margin: 0.5em;
-  padding: 0.5em;
-  font-size: 1.0em;
-  border-style: none;
-  background-color: white;
-  color: black;
-}
+  input {
+    margin: 0.5em;
+    padding: 0.5em;
+    font-size: 1.0em;
+    border-style: none;
+    background-color: $input-bg-color;
+    color: $input-text-color;
 
-div.search-form-content input[type="text"] {
-  flex: 5 2;
-}
-
-div.search-form-content input[type="submit"] {
-  flex: 1 1;
+    &[type="text"] {
+      flex: 5 2;
+    }
+    &[type="submit"] {
+      flex: 1 1;
+    }
+  }
 }
 
 .box-content-column {
@@ -88,54 +97,44 @@ div.search-form-content input[type="submit"] {
 
 .box-login-form {
   text-align: center;
-  background-color: lightgray;
+  background-color: $box-bg-color;
 }
 
 .box-login-form-title {
-  background-color: gray;
-  color: white;
+  background-color: $box-header-bg-color;
+  color: $app-text-color;
 }
 
-div.box-login-form-content form {
-  display: flex;
-}
+.box-login-form-content {
+  form {
+    display: flex;
+  }
 
-div.box-login-form-content input {
-  border: none;
-  margin: 0.5em;
-  padding: 0.5em;
-  font-size: 1.0em;
-  color: black;
-  background-color: white;
-}
+  input {
+    border: none;
+    margin: 0.5em;
+    padding: 0.5em;
+    font-size: 1.0em;
+    color: $input-text-color;
+    background-color: $input-bg-color;
 
-div.box-login-form-content input[type="button"] {
-  flex: 2 1;
-}
+    &[type="button"] {
+      flex: 2 1;
+    }
+    &[type="submit"] {
+      flex: 2 1;
+    }
+    &[type="text"] {
+      flex: 4 2;
+    }
+    &[type="password"] {
+      flex: 4 2;
+    }
+  }
 
-div.box-login-form-content input[type="submit"] {
-  flex: 2 1;
-}
-
-div.box-login-form-content input[type="text"] {
-  flex: 4 2;
-}
-
-div.box-login-form-content input[type="password"] {
-  flex: 4 2;
-}
-
-div.box-login-form-content p {
-  flex: 1 1;
-}
-
-input:hover {
-  box-shadow: 0 0 4px 0 gold;
-}
-
-input:focus {
-  box-shadow: 0 0 4px 0 skyblue;
-  background-color: lightgray;
+  p {
+    flex: 1 1;
+  }
 }
 
 .flash-container {
@@ -160,6 +159,18 @@ input:focus {
   @extend .flash-container;
   border-color: $flash-danger-color;
   background-color: $flash-danger-color * 6;
+}
+
+
+input {
+  &:hover {
+    box-shadow: 0 0 4px 0 $app-selected-color;
+  }
+
+  &:focus {
+    box-shadow: 0 0 4px 0 skyblue;
+    background-color: lightgray;
+  }
 }
 
 ul {

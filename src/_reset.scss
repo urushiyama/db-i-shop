@@ -2,4 +2,4 @@ $root-box-sizing: border-box;
 $root-font-family: "Open Sans", sans-serif;
 $root-color: black;
 
-@import "_sanitize.scss";
+@import "sanitize";

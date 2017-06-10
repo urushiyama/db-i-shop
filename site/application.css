@@ -529,11 +529,10 @@ a {
 body {
   margin: 0;
   background-color: dimgray; }
-
-@media screen and (min-width: 1024px) {
-  body {
-    width: 1024px;
-    margin: 0 auto; } }
+  @media screen and (min-width: 1024px) {
+    body {
+      width: 1024px;
+      margin: 0 auto; } }
 
 .system-logo {
   text-align: center;
@@ -566,16 +565,14 @@ div.search-form-content input {
   border-style: none;
   background-color: white;
   color: black; }
-
-div.search-form-content input[type="text"] {
-  -webkit-box-flex: 5;
-      -ms-flex: 5 2;
-          flex: 5 2; }
-
-div.search-form-content input[type="submit"] {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1;
-          flex: 1 1; }
+  div.search-form-content input[type="text"] {
+    -webkit-box-flex: 5;
+        -ms-flex: 5 2;
+            flex: 5 2; }
+  div.search-form-content input[type="submit"] {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1;
+            flex: 1 1; }
 
 .box-content-column {
   display: -webkit-box;
@@ -609,52 +606,39 @@ div.search-form-content input[type="submit"] {
   background-color: gray;
   color: white; }
 
-div.box-login-form-content form {
+.box-login-form-content form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
 
-div.box-login-form-content input {
+.box-login-form-content input {
   border: none;
   margin: 0.5em;
   padding: 0.5em;
   font-size: 1.0em;
   color: black;
   background-color: white; }
+  .box-login-form-content input[type="button"] {
+    -webkit-box-flex: 2;
+        -ms-flex: 2 1;
+            flex: 2 1; }
+  .box-login-form-content input[type="submit"] {
+    -webkit-box-flex: 2;
+        -ms-flex: 2 1;
+            flex: 2 1; }
+  .box-login-form-content input[type="text"] {
+    -webkit-box-flex: 4;
+        -ms-flex: 4 2;
+            flex: 4 2; }
+  .box-login-form-content input[type="password"] {
+    -webkit-box-flex: 4;
+        -ms-flex: 4 2;
+            flex: 4 2; }
 
-div.box-login-form-content input[type="button"] {
-  -webkit-box-flex: 2;
-      -ms-flex: 2 1;
-          flex: 2 1; }
-
-div.box-login-form-content input[type="submit"] {
-  -webkit-box-flex: 2;
-      -ms-flex: 2 1;
-          flex: 2 1; }
-
-div.box-login-form-content input[type="text"] {
-  -webkit-box-flex: 4;
-      -ms-flex: 4 2;
-          flex: 4 2; }
-
-div.box-login-form-content input[type="password"] {
-  -webkit-box-flex: 4;
-      -ms-flex: 4 2;
-          flex: 4 2; }
-
-div.box-login-form-content p {
+.box-login-form-content p {
   -webkit-box-flex: 1;
       -ms-flex: 1 1;
           flex: 1 1; }
-
-input:hover {
-  -webkit-box-shadow: 0 0 4px 0 gold;
-          box-shadow: 0 0 4px 0 gold; }
-
-input:focus {
-  -webkit-box-shadow: 0 0 4px 0 skyblue;
-          box-shadow: 0 0 4px 0 skyblue;
-  background-color: lightgray; }
 
 .flash-container, .flash-container-info, .flash-container-warn, .flash-container-danger {
   border-style: solid;
@@ -672,6 +656,15 @@ input:focus {
 .flash-container-danger {
   border-color: #ff2424;
   background-color: #ffd8d8; }
+
+input:hover {
+  -webkit-box-shadow: 0 0 4px 0 gold;
+          box-shadow: 0 0 4px 0 gold; }
+
+input:focus {
+  -webkit-box-shadow: 0 0 4px 0 skyblue;
+          box-shadow: 0 0 4px 0 skyblue;
+  background-color: lightgray; }
 
 ul {
   text-align: left; }
