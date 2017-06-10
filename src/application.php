@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'view_config.php';
-require './_C_renderer.php';
+require_once '_C_renderer.php';
 
 $page_name = ($page == 'top') ? '' : $page;
 $page_file = "_${page}-page.php";
@@ -22,8 +22,6 @@ $renderer = new Renderer("_not-found-page.php");
     <div class="system-logo">
       <a href="#" class="system-logo-link"><?= $system_name ?></a>
     </div>
-    <?
-      $renderer.render([template=>$page_file]);
-    ?>
+    <?=$renderer->render([template=>$page_file]); ?>
   </body>
 </html>

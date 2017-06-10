@@ -1,4 +1,6 @@
 <?php
+require_once './_C_renderer.php';
+
 // PageController
 if (isset($_GET["p"])) {
   $page = htmlspecialchars($_GET["p"]);
@@ -6,15 +8,7 @@ if (isset($_GET["p"])) {
   $page = 'top';
 }
 
-if ($page != 'top') {
-  $page_name = $page;
-} else {
-  $page_name = '';
-}
+$renderer = new Renderer("_not-found-page.php");
+print $renderer->render([template=>"application.php", page=>$page]);
 
-$page_file = "_${page}-page.php";
-if (!file_exists($page_file)) {
-  $page_file = "_not-found-page.php";
-}
-include 'application.php'
  ?>

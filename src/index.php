@@ -1,5 +1,5 @@
 <?php
-require './_C_renderer.php';
+require_once './_C_renderer.php';
 
 // PageController
 if (isset($_GET["p"])) {
@@ -9,6 +9,6 @@ if (isset($_GET["p"])) {
 }
 
 $renderer = new Renderer("_not-found-page.php");
-$renderer.render([template=>"application.php", page=>$page]);
+print $renderer->render([template=>"application.php", page=>$page]);
 
  ?>
