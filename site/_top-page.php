@@ -1,15 +1,22 @@
 <?php
+require_once '_C_renderer.php';
+$renderer = new Renderer('_not-found-page.php');
+
+$output = '';
+
 if (isset($login_type)) {
   if ($login_type == '会員') {
-    include '_search-product-container.php';
-    $login_as = '販売業者'; include '_login-reg-container.php';
+    $output .= $renderer->render([template=>"_search-product-container.php"]);
+    $output .= $renderer->render([template=>"_login-reg-container.php", login_as=>'販売業者']);
   } elseif ($login_type == '販売業者') {
-    include '_search-product-container.php';
-    $login_as = '会員'; include '_login-reg-container.php';
+    $output .= $renderer->render([template=>"_search-product-container.php"]);
+    $output .= $renderer->render([template=>"_login-reg-container.php", login_as=>'会員']);
   }
 } else {
-  include '_search-product-container.php';
-  $login_as = '会員'; include '_login-reg-container.php';
-  $login_as = '販売業者'; include '_login-reg-container.php';
+  $output .= $renderer->render([template=>"_search-product-container.php"]);
+  $output .= $renderer->render([template=>"_login-reg-container.php", login_as=>'会員']);
+  $output .= $renderer->render([template=>"_login-reg-container.php", login_as=>'販売業者']);
 }
  ?>
+
+<?=$output?>
