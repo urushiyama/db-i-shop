@@ -655,3 +655,6 @@ input:focus {
   -webkit-box-shadow: 0 0 4px 0 skyblue;
           box-shadow: 0 0 4px 0 skyblue;
   background-color: lightgray; }
+
+ul {
+  text-align: left; }

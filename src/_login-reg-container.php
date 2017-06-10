@@ -7,9 +7,9 @@ if (!isset($login_as)) $login_as = "会員";
   </div>
   <div class="box-login-form-content">
     <form>
-      <input type="button" name="login" value="ログイン">
+      <input type="button" name="login" value="ログイン" onclick="location.href='?p=login&login-as=<?=urldecode($login_as) ?>'">
       <p>または</p>
-      <input type="button" name="register" value="新規登録">
+      <input type="button" name="register" value="新規登録" onclick="location.href='?p=register&login-as=<?=urldecode($login_as) ?>'">
     </form>
   </div>
 </div>

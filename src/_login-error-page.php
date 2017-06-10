@@ -6,7 +6,7 @@ $user_name = "hogehoge"; // ログイン試行に用いたユーザ名を入れ�
     ログインエラー
   </div>
   <div class="box-login-form-content">
-    <form class="box-content-column">
+    <form method="get" action="?p=login" class="box-content-column">
       <div class="box-content-row">
         <p>ログインに失敗しました。次のことを確認してください。</p>
       </div>
@@ -20,7 +20,7 @@ $user_name = "hogehoge"; // ログイン試行に用いたユーザ名を入れ�
         <p><?= "あなたはユーザー名として${user_name}を入力しました。" ?></p>
       </div>
       <div class="box-content-row">
-        <input type="button" name="login" value="再試行">
+        <input type="submit" name="login" value="再試行">
       </div>
     </form>
   </div>

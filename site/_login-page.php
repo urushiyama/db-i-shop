@@ -3,7 +3,7 @@
     ログインする
   </div>
   <div class="box-login-form-content">
-    <form class="box-content-column">
+    <form method="post" action="?a=login-account" class="box-content-column">
       <div class="box-content-row">
         <p>ユーザ名</p>
         <input type="text" name="user_name" placeholder="ユーザ名">
