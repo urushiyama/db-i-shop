@@ -7,7 +7,7 @@
 - The first character of a file which clients could see should not be `\_`.
 - The first character of a file which clients could not see should be `\_`.
 
-- PHP files which consists of class definition should be named `\_C\_<class.name.lowercase>.php`.
+- PHP files which consists of class definition should be named `\_C\_<ClassName>.php`.
 
 ## View
 

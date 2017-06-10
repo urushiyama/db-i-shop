@@ -1,5 +1,5 @@
 <?php
-require_once './_C_renderer.php';
+require_once './_C_Renderer.php';
 
 // PageController
 if (isset($_GET["p"])) {

@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'view_config.php';
-require_once '_C_renderer.php';
+require_once '_C_Renderer.php';
 
 $page_name = ($page == 'top') ? '' : $page;
 $page_file = "_${page}-page.php";
