@@ -13,6 +13,8 @@ $box-header-bg-color: gray;
 
 $input-bg-color: white;
 $input-text-color: black;
+$input-focus-bg-color: lightcyan;
+$input-focus-glow-color: skyblue;
 
 $headers: h1, h2, h3, h4, h5, h6;
 
@@ -61,7 +63,7 @@ body {
   color: $app-text-color;
 }
 
-div.search-form-content {
+.search-form-content {
   form {
     display: flex;
   }
@@ -168,8 +170,8 @@ input {
   }
 
   &:focus {
-    box-shadow: 0 0 4px 0 skyblue;
-    background-color: lightgray;
+    box-shadow: 0 0 4px 0 $input-focus-glow-color;
+    background-color: $input-focus-bg-color;
   }
 }
 
