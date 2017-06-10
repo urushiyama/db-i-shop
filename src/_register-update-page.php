@@ -3,7 +3,8 @@
     登録情報の更新
   </div>
   <div class="box-login-form-content">
-    <form method="post" action="?a=update-account" class="box-content-column">
+    <form method="post" action="." class="box-content-column">
+      <input type="hidden" name="a" value="update-account">
       <div class="box-content-row">
         <p>ユーザ名</p>
         <input type="text" name="user_name" placeholder="ユーザ名">
@@ -17,9 +18,9 @@
         <input type="password" name="password-confirmation" placeholder="パスワード（再入力）">
       </div>
       <div class="box-content-row">
-        <input type="button" name="update-account" value="更新">
+        <input type="submit" value="更新">
         <p> </p>
-        <input type="button" name="back" value="キャンセル">
+        <input type="button" name="back" value="キャンセル" onclick="history.back();return false">
       </div>
     </form>
   </div>
@@ -29,7 +30,7 @@
     登録情報の削除
   </div>
   <div class="box-login-form-content">
-    <form method="post" action="?p=delete-account" class="box-content-column">
+    <form method="post" action="./?p=delete-account" class="box-content-column">
       <div class="box-content-row">
         <p>登録情報を削除しますか？</p>
       </div>
@@ -44,7 +45,7 @@
       </div>
       <div class="box-content-row">
         <p></p>
-        <input type="submit" name="action[delete-account]" value="登録情報を削除する">
+        <input type="submit" value="登録情報を削除する">
         <p></p>
       </div>
     </form>

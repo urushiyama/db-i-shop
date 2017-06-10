@@ -3,7 +3,8 @@
     登録情報削除の確認
   </div>
   <div class="box-login-form-content">
-    <form method="post" action="?p=top&a=delete-account" class="box-content-column">
+    <form method="post" action="./?p=top" class="box-content-column">
+      <input type="hidden" name="a" value="delete-account">
       <div class="box-content-row">
         <b>本当に登録情報を削除しますか？この操作は取り消せません。</b>
       </div>

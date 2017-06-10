@@ -20,7 +20,7 @@ $renderer = new Renderer("_not-found-page.php");
   </head>
   <body>
     <div class="system-logo">
-      <a href="#" class="system-logo-link"><?= $system_name ?></a>
+      <a href="./?p=top" class="system-logo-link"><?= $system_name ?></a>
     </div>
     <?=$renderer->render([template=>$page_file]); ?>
   </body>

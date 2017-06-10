@@ -6,7 +6,8 @@ if (!isset($login_as)) $login_as = "会員";
     <?=$login_as ?>の新規登録
   </div>
   <div class="box-login-form-content">
-    <form method="post" action="?a=register-account" class="box-content-column">
+    <form method="post" action="." class="box-content-column">
+      <input type="hidden" name="a" value="register-account">
       <div class="box-content-row">
         <p>ユーザ名</p>
         <input type="text" name="user_name" placeholder="ユーザ名">
@@ -20,9 +21,9 @@ if (!isset($login_as)) $login_as = "会員";
         <input type="password" name="password-confirmation" placeholder="パスワード（再入力）">
       </div>
       <div class="box-content-row">
-        <input type="button" name="register-account" value="新規登録">
+        <input type="submit" value="新規登録">
         <p> </p>
-        <input type="button" name="back" value="キャンセル">
+        <input type="button" name="back" value="キャンセル" onclick="history.back();return false">
       </div>
     </form>
   </div>
