@@ -1,14 +1,33 @@
 <?php
 require_once './_C_Renderer.php';
 
-// PageController
-if (isset($_GET["p"])) {
-  $page = htmlspecialchars($_GET["p"]);
-} else {
-  $page = 'top';
+class MainController {
+
+  private $page;
+  private $renderer;
+  private $template = 'application.php';
+  private $not_found = '_not-found-page.php';
+
+  function __construct(array $params = []) {
+    if (isset($params['template'])) $this->template = $params['template'];
+    if (isset($params['not_found'])) $this->not_found = $params['not_found'];
+    $this->renderer = new Renderer($not_found);
+  }
+
+  function run() {
+    $this->readPageParam();
+    print $this->renderer->render([template=>"application.php", page=>$this->page]);
+  }
+
+  private function readPageParam() {
+    if (isset($_GET["p"])) {
+      $this->page = htmlspecialchars($_GET["p"]);
+    } else {
+      $this->page = 'top';
+    }
+  }
 }
 
-$renderer = new Renderer("_not-found-page.php");
-print $renderer->render([template=>"application.php", page=>$page]);
-
+$main = new MainController();
+$main->run();
  ?>
