@@ -22,6 +22,15 @@ $renderer = new Renderer("_not-found-page.php");
     <div class="system-logo">
       <a href="./?p=top" class="system-logo-link"><?= $system_name ?></a>
     </div>
+    <?
+      if (isset($flash_level) && isset($flash_message)) {
+        print $renderer->render([
+          'template'=>'_flash-container.php',
+          'level'=>$flash_level,
+          'message'=>$flash_message
+        ]);
+      }
+      ?>
     <?=$renderer->render(['template'=>$page_file]); ?>
   </body>
 </html>
