@@ -1,9 +1,9 @@
 <?php
-if (!isset($login_as)) $login_as = "会員";
+if (!isset($login_as)) $login_as = LOGIN_TYPE_MEMBER;
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    <?=$login_as ?>の新規登録
+    <?=LOGIN_TYPE[$login_as]['name'] ?>の新規登録
   </div>
   <div class="box-login-form-content">
     <form method="post" action="." class="box-content-column">

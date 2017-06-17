@@ -1,9 +1,9 @@
 <?php
-if (!isset($login_as)) $login_as = "会員";
+if (!isset($login_as)) $login_as = LOGIN_TYPE_MEMBER;
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    <?= $login_as ?>としてログイン・新規登録する
+    <?= LOGIN_TYPE[$login_as]['name'] ?>としてログイン・新規登録する
   </div>
   <div class="box-login-form-content">
     <form>
