@@ -28,3 +28,32 @@
 | register-update | NULL    | update-account   | updateAccount             |
 | logout          | top     | logout-account   | logoutAccount             |
 | delete-account  | top     | delete-account   | deleteAccount             |
+
+## Exception rules
+
+- Do __NOT *throw*__ instance of ApplicationExceptions in functions nor methods.
+  In functions and methods you only have to call `ApplicationException::create(const $exception)`.
+
+- You __CANNOT__ create new instance of ApplicationExceptions with calling `new ApplicationException(...)`.
+  Store new instance with calling `ApplicationException::create(const $exception)`.
+
+- If you want to throw exceptions you stored, call `ApplicationException::raise()`.
+  This method throws all exceptions you stored by calling `ApplicationException::create(const $exception)`.
+  After calling this method, all stored exceptions will be removed.
+
+- If you want to remove stored exceptions, call `ApplicationException::reset()`.
+
+### Exception id rules
+
+- Exception id is a integer number which has 4 digits.
+- The highest digit shows Exception's alert level.
+  - `info` level is numbered 0~0999 (The highest digit is '0').
+  - `warn` level is numbered 1000~1999 (The highest digit is '1').
+  - `danger` level is numbered 2000~2999 (The highest digit is '2').
+
+- The second & third highest digit shows exception source.
+  - '01' means user name.
+  - '02' means password.
+
+- The lowest digit is identifier, which makes each exception id unique.
+  - Generally 0~4 is used for common exceptions and 5~9 is used for specific exceptions to exception source.
