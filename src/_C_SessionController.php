@@ -1,5 +1,5 @@
 <?php
-require_once '_C_Memmbers.php';
+require_once '_C_Members.php';
 
 class SessionController {
 
