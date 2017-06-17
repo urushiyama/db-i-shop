@@ -22,6 +22,6 @@ $renderer = new Renderer("_not-found-page.php");
     <div class="system-logo">
       <a href="./?p=top" class="system-logo-link"><?= $system_name ?></a>
     </div>
-    <?=$renderer->render([template=>$page_file]); ?>
+    <?=$renderer->render(['template'=>$page_file]); ?>
   </body>
 </html>
