@@ -45,7 +45,7 @@ class SessionController {
   static function isLoggedIn() {
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['login_type'])) return false;
     if (!array_key_exists($_SESSION['login_type'], LOGIN_TYPE)) return false;
-    $model = LOGIN_TYPE[$login_type]['model'];
+    $model = LOGIN_TYPE[$_SESSION['login_type']]['model'];
     $user = $model::find_by(['id'=>$_SESSION['user_id']]);
     return (bool) $user;
   }
@@ -59,7 +59,7 @@ class SessionController {
       return null;
     }
     if (self::$current_user) return self::$current_user;
-    $model = LOGIN_TYPE[$login_type]['model'];
+    $model = LOGIN_TYPE[$_SESSION['login_type']]['model'];
     $res = $model::find_by(['id'=>$_SESSION['user_id']]);
     if (!$res) {
       self::logout();
@@ -72,6 +72,7 @@ class SessionController {
     self::$current_user = null;
     self::$login_type = null;
     unset($_SESSION['user_id']);
+    unset($_SESSION['login_type']);
   }
 }
  ?>
