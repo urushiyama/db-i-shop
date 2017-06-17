@@ -3,7 +3,7 @@
     ログアウトの確認
   </div>
   <div class="box-login-form-content">
-    <form method="post" action="." class="box-content-column">
+    <form method="post" action="./?p=top" class="box-content-column">
       <input type="hidden" name="a" value="logout-account">
       <div class="box-content-row">
         <p>ログアウトしますか？</p>
