@@ -100,8 +100,8 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     self::$exception = null;
   }
 
-  static function isRaised() {
-    return (self::$exception === null);
+  static function isStored() {
+    return (self::$exception !== null);
   }
 
   static function getExceptions($ex) {

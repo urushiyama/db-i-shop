@@ -18,9 +18,9 @@ class ActionDispatcher {
       $func = self::$action_table[$con->action];
       self::$func($con);
     } else {
-      ApplicationException::raise(ApplicationException::FATAL_ERROR);
+      ApplicationException::create(ApplicationException::FATAL_ERROR);
     }
-    if (ApplicationException::isRaised()) {
+    if (ApplicationException::isStored()) {
       ApplicationException::raise();
     }
   }
