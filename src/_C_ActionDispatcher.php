@@ -1,4 +1,7 @@
 <?php
+require_once '_C_SessionController.php';
+require_once '_C_ApplicationException.php';
+
 class ActionDispatcher {
 
   static $action_table = [
@@ -10,30 +13,45 @@ class ActionDispatcher {
   ];
 
   static function act(MainController $con) {
+    ApplicationException::reset();
     if (array_key_exists($con->action, self::$action_table)) {
       $func = self::$action_table[$con->action];
-      return self::$func($con);
+      self::$func($con);
+    } else {
+      ApplicationException::raise(ApplicationException::FATAL_ERROR);
     }
-    return false;
+    if (ApplicationException::isRaised()) {
+      ApplicationException::raise();
+    }
   }
 
   static function registerAccount(MainController $con) {
-    # code...
-    return false;
+    # - params
+    #   - user_name : text
+    #   - password : password
+    #   - password-confirmation : password
   }
 
   static function loginAccount(MainController $con) {
+    # - params
+    #   - user_name : text
+    #   - password : password
   }
 
   static function updateAccount(MainController $con) {
+    # - params
+    #   - user_name : text
+    #   - password : password
+    #   - password-confirmation : password
   }
 
   static function logoutAccount(MainController $con) {
-    return false;
+    # - no params
+    
   }
 
   static function deleteAccount(MainController $con) {
-    return false;
+    # - no params
   }
 }
  ?>

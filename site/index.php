@@ -1,7 +1,8 @@
 <?php
-require_once './_C_Renderer.php';
-require_once './_C_SessionController.php';
-require_once './_C_ActionDispatcher.php';
+require_once '_C_Renderer.php';
+require_once '_C_SessionController.php';
+require_once '_C_ActionDispatcher.php';
+require_once '_C_ApplicationException.php';
 
 class MainController {
 
@@ -21,10 +22,28 @@ class MainController {
     SessionController::start();
     $this->readPageParam();
     $this->readActionParam();
+    $flashes = [];
     if ($this->action !== '') {
-      ActionDispatcher::act($this);
+      try {
+        ActionDispatcher::act($this);
+      } catch (Exception $e) {
+        $exceptions = ApplicationException::getExceptions();
+        foreach ($exceptions as $dict) {
+          $level = 'info';
+          if ($dict['id'] >= 2000) {
+            $level = 'danger';
+          } elseif ($dict['id']>=1000) {
+            $level = 'warn';
+          }
+          $flashes[] = ['level'=>$level, 'message'=>$dict['message']];
+        }
+      }
     }
-    print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page]);
+    if (empty($flashes)) {
+      print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page]);
+    } else {
+      print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page, 'flashes'=>$flashes]);
+    }
   }
 
   private function readPageParam() {
