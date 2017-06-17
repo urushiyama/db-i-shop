@@ -4,6 +4,7 @@ class ActionDispatcher {
   static $action_table = [
     'register-account'=>'registerAccount',
     'login-account'=>'loginAccount',
+    'update-account'=>'updateAccount',
     'logout-account'=>'logoutAccount',
     'delete-account'=>'deleteAccount',
   ];
@@ -22,8 +23,9 @@ class ActionDispatcher {
   }
 
   static function loginAccount(MainController $con) {
-    # code...
-    return false;
+  }
+
+  static function updateAccount(MainController $con) {
   }
 
   static function logoutAccount(MainController $con) {

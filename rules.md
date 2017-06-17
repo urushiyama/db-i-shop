@@ -21,9 +21,10 @@
 
 ### valid actions
 
-| page from      | page to | action           | ActionDispatcher function |
-|:---------------|:--------|:-----------------|:--------------------------|
-| register       | NULL    | register-account | registerAccount           |
-| login          | NULL    | login-account    | loginAccount              |
-| logout         | top     | logout-account   | logoutAccount             |
-| delete-account | top     | delete-account   | deleteAccount             |
+| page from       | page to | action           | ActionDispatcher function |
+|:----------------|:--------|:-----------------|:--------------------------|
+| register        | NULL    | register-account | registerAccount           |
+| login           | NULL    | login-account    | loginAccount              |
+| register-update | NULL    | update-account   | updateAccount             |
+| logout          | top     | logout-account   | logoutAccount             |
+| delete-account  | top     | delete-account   | deleteAccount             |
