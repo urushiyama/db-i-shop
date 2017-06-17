@@ -15,8 +15,7 @@ class SessionController {
 
   static function destroy() {
     // セッションの破棄。
-    self::$current_user = null;
-    unset($_SESSION['user_id']);
+    self::logout();
     if (ini_get("session.use_cookies")) {
       $params = session_get_cookie_params();
       setcookie(session_name(), '', time() - 42000,
