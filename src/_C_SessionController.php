@@ -46,7 +46,7 @@ class SessionController {
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['login_type'])) return false;
     if (!array_key_exists($_SESSION['login_type'], LOGIN_TYPE)) return false;
     $model = LOGIN_TYPE[$login_type]['model'];
-    $user = $model::find_by(['name'=>$name]);
+    $user = $model::find_by(['id'=>$_SESSION['user_id']]);
     return (bool) $user;
   }
 
