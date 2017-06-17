@@ -4,7 +4,7 @@
   </div>
   <div class="search-form-content">
     <form>
-      <input type="text">
+      <input type="text" name="query" placeholder="商品名を入力して検索">
       <input type="submit">
     </form>
   </div>
