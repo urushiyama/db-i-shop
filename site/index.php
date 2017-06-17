@@ -1,9 +1,12 @@
 <?php
 require_once './_C_Renderer.php';
+require_once './_C_SessionController.php';
+require_once './_C_ActionDispatcher.php';
 
 class MainController {
 
-  private $page;
+  public $page;
+  public $action;
   private $renderer;
   private $template = 'application.php';
   private $not_found = '_not-found-page.php';
@@ -15,8 +18,13 @@ class MainController {
   }
 
   function run() {
+    SessionController::start();
     $this->readPageParam();
-    print $this->renderer->render([template=>"application.php", page=>$this->page]);
+    $this->readActionParam();
+    if ($this->action !== '') {
+      ActionDispatcher::act($this);
+    }
+    print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page]);
   }
 
   private function readPageParam() {
@@ -24,6 +32,14 @@ class MainController {
       $this->page = htmlspecialchars($_GET["p"]);
     } else {
       $this->page = 'top';
+    }
+  }
+
+  private function readActionParam() {
+    if (isset($_POST["a"])) {
+      $this->action = htmlspecialchars($_POST["a"]);
+    } else {
+      $this->action = '';
     }
   }
 }
