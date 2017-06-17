@@ -8,7 +8,7 @@
         <p>お探しのページは見つかりませんでした。</p>
       </div>
       <div class="box-content-row">
-        <input type="button" name="go-top" value="トップページへ戻る">
+        <input type="button" value="トップページへ戻る" onclick="location.href='?p=top'">
       </div>
     </form>
   </div>
