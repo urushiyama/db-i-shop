@@ -15,9 +15,9 @@
         </ul>
       </div>
       <div class="box-content-row">
-        <input type="submit" name="delete-account" value="登録情報を削除する">
+        <input type="submit" value="登録情報を削除する">
         <p> </p>
-        <input type="button" name="back" value="キャンセル">
+        <input type="button" value="キャンセル" onclick="history.back(); return false">
       </div>
     </form>
   </div>
