@@ -105,13 +105,53 @@ class ActionDispatcher {
   static function updateAccount(MainController $con) {
     # - params
     #   - user_name : text
+    #   - old-password : password
     #   - password : password
     #   - password-confirmation : password
+    if (!isset($_POST['user_name'])
+        || !isset($_POST['old-password'])
+        || !isset($_POST['password'])
+        || !isset($_POST['password-confirmation'])) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'register-update';
+      return false;
+    }
+    $user = SessionController::currentUser();
+    if ($user == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      return false;
+    }
+    if (!$user->authenticate($_POST['old-password'])) {
+      ApplicationException::create(ApplicationException::INVALID_PASSWORD);
+      $con->page = 'register-update';
+      return false;
+    }
+    $model = SessionController::LOGIN_TYPE[$_SESSION['login_type']]['model'];
+    $model::validateValues([
+      'name'=>$_POST['user_name'],
+      'password'=>$_POST['password'],
+      'confirmation'=>$_POST['password-confirmation']
+    ]);
+    $registrated = $model::find_by(['name'=>$_POST['user_name']]);
+    if ($registrated && $user->id !== $registrated->id) {
+      ApplicationException::create(ApplicationException::DUPLICATED_USER_NAME);
+    }
+    if (ApplicationException::isStored()) {
+      $con->page = 'register-update';
+      return false;
+    }
+    $user->name = $_POST['user_name'];
+    $user->setPassword($_POST['password']);
+    $user->save();
+    SessionController::login($user, $_SESSION['login_type']);
+    $con->page = 'top';
+    return true;
   }
 
   static function logoutAccount(MainController $con) {
     # - no params
     SessionController::logout();
+    return true;
   }
 
   static function deleteAccount(MainController $con) {
@@ -119,10 +159,11 @@ class ActionDispatcher {
     $user = SessionController::currentUser();
     if ($user == null) {
       ApplicationException::create(ApplicationException::INVALID_OPERATION);
-      return;
+      return false;
     }
     $user->destroy();
     SessionController::destroy();
+    return true;
   }
 }
  ?>
