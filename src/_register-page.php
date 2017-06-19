@@ -1,13 +1,15 @@
 <?php
-if (!isset($login_as)) $login_as = LOGIN_TYPE_MEMBER;
+$login_type = isset($_GET['login-as']) ? htmlspecialchars($_GET['login-as'])
+                                    : SessionController::LOGIN_TYPE_MEMBER;
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    <?=LOGIN_TYPE[$login_as]['name'] ?>の新規登録
+    <?=SessionController::LOGIN_TYPE[$login_type]['name'] ?>の新規登録
   </div>
   <div class="box-login-form-content">
     <form method="post" action="." class="box-content-column">
       <input type="hidden" name="a" value="register-account">
+      <input type="hidden" name="login_type" value="<?=$login_type ?>">
       <div class="box-content-row">
         <p>ユーザ名</p>
         <input type="text" name="user_name" placeholder="ユーザ名">

@@ -1,9 +1,9 @@
 <?php
-if (!isset($login_as)) $login_as = LOGIN_TYPE_MEMBER;
+if (!isset($login_as)) $login_as = SessionController::LOGIN_TYPE_MEMBER;
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    <?= LOGIN_TYPE[$login_as]['name'] ?>としてログイン・新規登録する
+    <?= SessionController::LOGIN_TYPE[$login_as]['name'] ?>としてログイン・新規登録する
   </div>
   <div class="box-login-form-content">
     <form>
