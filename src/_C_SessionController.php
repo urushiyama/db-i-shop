@@ -27,19 +27,12 @@ class SessionController {
     session_destroy();
   }
 
-  static function login(array $params) {
-    extract($params);
-    if (!isset($name) || !isset($password) || !isset($login_type)) return false;
-    if (!array_key_exists($login_type, LOGIN_TYPE)) return false;
-    $model = LOGIN_TYPE[$login_type]['model'];
-    $user = $model::find_by(['name'=>$name]);
-    if (!$user) return false;
-    if (!$user->authenticate($password)) return false;
+  static function login(Members $user, $login_type) {
     $_SESSION['user_id'] = $user->id;
     $_SESSION['login_type'] = $login_type;
     self::$current_user = $user;
     self::$login_type = $login_type;
-    return $user;
+    return true;
   }
 
   static function isLoggedIn() {
