@@ -3,6 +3,7 @@ require_once '_C_Renderer.php';
 require_once '_C_SessionController.php';
 require_once '_C_ActionDispatcher.php';
 require_once '_C_ApplicationException.php';
+require_once '_C_ModelBase.php';
 
 class MainController {
 
@@ -16,6 +17,14 @@ class MainController {
     if (isset($params['template'])) $this->template = $params['template'];
     if (isset($params['not_found'])) $this->not_found = $params['not_found'];
     $this->renderer = new Renderer($not_found);
+    include 'config.php';
+    ModelBase::setConnectionInfo([
+      'host'=>$dbserver,
+      'dbname'=>$dbname,
+      'user'=>$user,
+      'password'=>$password
+    ]);
+    ModelBase::initDb();
   }
 
   function run() {

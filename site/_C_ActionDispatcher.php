@@ -58,14 +58,6 @@ class ActionDispatcher {
       ApplicationException::create(ApplicationException::EMPTY_PASSWORD);
     }
     $model = SessionController::LOGIN_TYPE[$_POST['login_type']]['model'];
-    include 'config.php';
-    $model::setConnectionInfo([
-      'host'=>$dbserver,
-      'dbname'=>$dbname,
-      'user'=>$user,
-      'password'=>$password
-    ]);
-    $model::initDb();
     $user = $model::find_by(['name'=>$_POST['user_name']]);
     if ($user) {
       ApplicationException::create(ApplicationException::DUPLICATED_USER_NAME);
@@ -95,14 +87,6 @@ class ActionDispatcher {
       return false;
     }
     $model = SessionController::LOGIN_TYPE[$_POST['login_type']]['model'];
-    include 'config.php';
-    $model::setConnectionInfo([
-      'host'=>$dbserver,
-      'dbname'=>$dbname,
-      'user'=>$user,
-      'password'=>$password
-    ]);
-    $model::initDb();
     $user = $model::find_by(['name'=>$_POST['user_name']]);
     if (!$user) {
       ApplicationException::create(ApplicationException::INVALID_LOGIN_COMBINATION);
@@ -135,15 +119,6 @@ class ActionDispatcher {
       ApplicationException::create(ApplicationException::INVALID_OPERATION);
       return;
     }
-    include 'config.php';
-    $model = get_class($user);
-    $model::setConnectionInfo([
-      'host'=>$dbserver,
-      'dbname'=>$dbname,
-      'user'=>$user,
-      'password'=>$password
-    ]);
-    $model::initDb();
     $user->destroy();
     SessionController::destroy();
   }
