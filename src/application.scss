@@ -46,6 +46,7 @@ body {
   color: $app-text-color;
   font-size: 2.0em;
   font-weight: bold;
+  margin: 32px;
 }
 
 .system-logo-link {
@@ -56,11 +57,13 @@ body {
 .search-form {
   text-align: center;
   background-color: $box-bg-color;
+  margin: 16px;
 }
 
 .search-form-title {
   background-color: $box-header-bg-color;
   color: $app-text-color;
+  padding: 8px;
 }
 
 .search-form-content {
@@ -100,11 +103,13 @@ body {
 .box-login-form {
   text-align: center;
   background-color: $box-bg-color;
+  margin: 16px;
 }
 
 .box-login-form-title {
   background-color: $box-header-bg-color;
   color: $app-text-color;
+  padding: 8px;
 }
 
 .box-login-form-content {
@@ -143,6 +148,9 @@ body {
   border-style: solid;
   border-radius: 8px;
   border-width: 2px;
+  margin: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .flash-container-info {

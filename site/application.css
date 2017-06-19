@@ -539,7 +539,8 @@ body {
   background-color: dimgray;
   color: white;
   font-size: 2.0em;
-  font-weight: bold; }
+  font-weight: bold;
+  margin: 32px; }
 
 .system-logo-link {
   text-decoration: none;
@@ -547,11 +548,13 @@ body {
 
 .search-form {
   text-align: center;
-  background-color: lightgray; }
+  background-color: lightgray;
+  margin: 16px; }
 
 .search-form-title {
   background-color: gray;
-  color: white; }
+  color: white;
+  padding: 8px; }
 
 .search-form-content form {
   display: -webkit-box;
@@ -600,11 +603,13 @@ body {
 
 .box-login-form {
   text-align: center;
-  background-color: lightgray; }
+  background-color: lightgray;
+  margin: 16px; }
 
 .box-login-form-title {
   background-color: gray;
-  color: white; }
+  color: white;
+  padding: 8px; }
 
 .box-login-form-content form {
   display: -webkit-box;
@@ -643,7 +648,10 @@ body {
 .flash-container, .flash-container-info, .flash-container-warn, .flash-container-danger {
   border-style: solid;
   border-radius: 8px;
-  border-width: 2px; }
+  border-width: 2px;
+  margin: 16px;
+  padding-left: 16px;
+  padding-right: 16px; }
 
 .flash-container-info {
   border-color: #14d5ff;
