@@ -14,8 +14,6 @@ class ActionDispatcher {
   ];
 
   static function act(MainController $con) {
-    ApplicationException::reset();
-    ApplicationException::setLocale('ja');
     if (array_key_exists($con->action, self::$action_table)) {
       $func = self::$action_table[$con->action];
       self::$func($con);
