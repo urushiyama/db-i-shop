@@ -28,42 +28,36 @@ class MainController {
   }
 
   function run() {
-    SessionController::start();
-    $this->readPageParam();
-    $this->readActionParam();
-    $flashes = [];
-    if ($this->action !== '') {
-      try {
-        ActionDispatcher::act($this);
-      } catch (Exception $e) {
-        if ($e instanceof ApplicationException) {
-          $exceptions = ApplicationException::getExceptions($e);
-          foreach ($exceptions as $dict) {
-            $level = 'info';
-            if ($dict['id'] >= 2000) {
-              $level = 'danger';
-            } elseif ($dict['id']>=1000) {
-              $level = 'warn';
-            }
-            $flashes[] = ['level'=>$level, 'message'=>$dict['message']];
+    try {
+      ApplicationException::reset();
+      ApplicationException::setLocale('ja');
+      SessionController::start();
+      $this->readActionParam();
+      $this->readPageParam();
+      $flashes = [];
+      if ($this->action !== '') {
+          ActionDispatcher::act($this);
+      }
+    } catch (Exception $e) {
+      if ($e instanceof ApplicationException) {
+        $exceptions = ApplicationException::getExceptions($e);
+        foreach ($exceptions as $dict) {
+          $level = 'info';
+          if ($dict['id'] >= 2000) {
+            $level = 'danger';
+          } elseif ($dict['id']>=1000) {
+            $level = 'warn';
           }
-        } else {
-          $flashes[] = ['level'=>'danger', 'message'=>$e->getMessage()];
+          $flashes[] = ['level'=>$level, 'message'=>$dict['message']];
         }
+      } else {
+        $flashes[] = ['level'=>'danger', 'message'=>$e->getMessage()];
       }
     }
     if (empty($flashes)) {
       print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page]);
     } else {
       print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page, 'flashes'=>$flashes]);
-    }
-  }
-
-  private function readPageParam() {
-    if (isset($_GET["p"])) {
-      $this->page = htmlspecialchars($_GET["p"]);
-    } else {
-      $this->page = 'top';
     }
   }
 
@@ -74,6 +68,44 @@ class MainController {
       $this->action = '';
     }
   }
+
+  private function readPageParam() {
+    if (isset($_GET["p"])) {
+      $this->page = htmlspecialchars($_GET["p"]);
+    } else {
+      $this->page = 'top';
+    }
+    if (!SessionController::isLoggedIn()) {
+      $limited_pages = [
+        'delete-account',
+        'logout',
+        'register-update'
+      ];
+      self::limitAccessPages($limited_pages);
+    }
+    if (SessionController::currentLoginType() === SessionController::LOGIN_TYPE_MEMBER) {
+      $limited_pages = [
+      ];
+      self::limitAccessPages($limited_pages);
+    }
+    if (SessionController::currentLoginType() === SessionController::LOGIN_TYPE_DEALER) {
+      $limited_pages = [
+      ];
+      self::limitAccessPages($limited_pages);
+    }
+    if (ApplicationException::isStored()) {
+      ApplicationException::raise();
+    }
+  }
+
+  private function limitAccessPages(array $limited_pages) {
+    if (in_array($this->page, $limited_pages)) {
+      $this->page = 'top';
+      $this->action = '';
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+    }
+  }
+
 }
 
 $main = new MainController();
