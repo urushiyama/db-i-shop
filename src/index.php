@@ -27,15 +27,19 @@ class MainController {
       try {
         ActionDispatcher::act($this);
       } catch (Exception $e) {
-        $exceptions = ApplicationException::getExceptions();
-        foreach ($exceptions as $dict) {
-          $level = 'info';
-          if ($dict['id'] >= 2000) {
-            $level = 'danger';
-          } elseif ($dict['id']>=1000) {
-            $level = 'warn';
+        if ($e instanceof ApplicationException) {
+          $exceptions = ApplicationException::getExceptions($e);
+          foreach ($exceptions as $dict) {
+            $level = 'info';
+            if ($dict['id'] >= 2000) {
+              $level = 'danger';
+            } elseif ($dict['id']>=1000) {
+              $level = 'warn';
+            }
+            $flashes[] = ['level'=>$level, 'message'=>$dict['message']];
           }
-          $flashes[] = ['level'=>$level, 'message'=>$dict['message']];
+        } else {
+          $flashes[] = ['level'=>'danger', 'message'=>$e->getMessage()];
         }
       }
     }
