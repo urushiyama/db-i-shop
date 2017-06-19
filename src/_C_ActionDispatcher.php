@@ -38,10 +38,12 @@ class ActionDispatcher {
         || !isset($_POST['password-confirmation'])
         || !isset($_POST['login_type'])) {
       ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'register';
       return false;
     }
     if (!array_key_exists($_POST['login_type'], SessionController::LOGIN_TYPE)) {
       ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'register';
       return false;
     }
     if ($_POST['password'] !== $_POST['password-confirmation']) {
@@ -62,13 +64,18 @@ class ActionDispatcher {
     if ($user) {
       ApplicationException::create(ApplicationException::DUPLICATED_USER_NAME);
     }
-    if (ApplicationException::isStored()) return false;
+    if (ApplicationException::isStored()) {
+      $con->page = 'register';
+      return false;
+    }
     /* Succeed for registration */
     if (strlen($_POST['password']) < 6) {
       ApplicationException::create(ApplicationException::SHORT_PASSWORD);
     }
     $new = Members::create(['name'=>$_POST['user_name'], 'password'=>$_POST['password']]);
     SessionController::login($new, $_POST['login_type']);
+    $con->page = 'top';
+    return true;
   }
 
   static function loginAccount(MainController $con) {
@@ -80,23 +87,28 @@ class ActionDispatcher {
         || !isset($_POST['password'])
         || !isset($_POST['login_type'])) {
       ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'login';
       return false;
     }
     if (!array_key_exists($_POST['login_type'], SessionController::LOGIN_TYPE)) {
       ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'login';
       return false;
     }
     $model = SessionController::LOGIN_TYPE[$_POST['login_type']]['model'];
     $user = $model::find_by(['name'=>$_POST['user_name']]);
     if (!$user) {
       ApplicationException::create(ApplicationException::INVALID_LOGIN_COMBINATION);
+      $con->page = 'login';
       return false;
     }
     if (!$user->authenticate($_POST['password'])) {
       ApplicationException::create(ApplicationException::INVALID_LOGIN_COMBINATION);
+      $con->page = 'login';
       return false;
     }
     SessionController::login($user, $_POST['login_type']);
+    $con->page = 'top';
     return true;
   }
 
