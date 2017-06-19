@@ -95,11 +95,11 @@ class Members extends ModelBase {
       }
     }
     if (isset($password)) {
-      if ($_POST['password'] == '') {
+      if ($password == '') {
         ApplicationException::create(ApplicationException::EMPTY_PASSWORD);
       }
       if (isset($confirmation)) {
-        if ($_POST['password'] !== $_POST['password-confirmation']) {
+        if ($password !== $confirmation) {
           ApplicationException::create(ApplicationException::FAILED_PASSWORD_CONFIRMATION);
         }
       }
