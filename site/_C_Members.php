@@ -50,13 +50,11 @@ class Members extends ModelBase {
   function save() {
     # save instance value
     if ($this->id == false) {
-      echo "into Members->insert()\n";
       $res = static::insert(['name'=>$this->name, 'password'=>$this->password_digest]);
       if ($res === false) return false;
       $this->id = $res;
       return true;
     } else {
-      echo "into Members->update()\n";
       return static::update("id = :id", ['name'=>$this->name, 'password'=>$this->password_digest], ['id'=>$this->id]);
     }
   }
@@ -77,6 +75,7 @@ class Members extends ModelBase {
     } else {
       return null;
     }
+    return null;
   }
 }
 
