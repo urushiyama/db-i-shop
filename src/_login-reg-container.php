@@ -7,9 +7,9 @@ if (!isset($login_as)) $login_as = SessionController::LOGIN_TYPE_MEMBER;
   </div>
   <div class="box-login-form-content">
     <form>
-      <input type="button" name="login" value="ログイン" onclick="location.href='?p=login&amp;login-as=<?=urldecode($login_as) ?>'">
+      <input type="button" name="login" value="ログイン" onclick="location.href='?p=login&amp;login-as=<?=urlencode($login_as) ?>'">
       <p>または</p>
-      <input type="button" name="register" value="新規登録" onclick="location.href='?p=register&amp;login-as=<?=urldecode($login_as) ?>'">
+      <input type="button" name="register" value="新規登録" onclick="location.href='?p=register&amp;login-as=<?=urlencode($login_as) ?>'">
     </form>
   </div>
 </div>

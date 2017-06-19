@@ -62,7 +62,7 @@ class ActionDispatcher {
     if (strlen($_POST['password']) < 6) {
       ApplicationException::create(ApplicationException::SHORT_PASSWORD);
     }
-    $new = Members::create(['name'=>$_POST['user_name'], 'password'=>$_POST['password']]);
+    $new = $model::create(['name'=>$_POST['user_name'], 'password'=>$_POST['password']]);
     SessionController::login($new, $_POST['login_type']);
     $con->page = 'top';
     return true;
