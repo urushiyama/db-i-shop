@@ -5,7 +5,7 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>0,
     'message'=>[
       'en'=>'Success!',
-      'jp'=>'処理が成功しました。'
+      'ja'=>'処理が成功しました。'
     ]
   ];
 
@@ -13,7 +13,7 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>1021,
     'message'=>[
       'en'=>'Your password is weak. You sholud change password more longer.',
-      'jp'=>'パスワードの長さが短いため、不正ログインの恐れがあります。パスワードをより長いものに変更してください。'
+      'ja'=>'パスワードの長さが短いため、不正ログインの恐れがあります。パスワードをより長いものに変更してください。'
     ]
   ];
 
@@ -21,7 +21,7 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>2011,
     'message'=>[
       'en'=>'User name is invalid.',
-      'jp'=>'不正なユーザー名です。'
+      'ja'=>'不正なユーザー名です。'
     ]
   ];
 
@@ -29,7 +29,7 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>2012,
     'message'=>[
       'en'=>'User name must not be empty.',
-      'jp'=>'ユーザー名が空になっています。'
+      'ja'=>'ユーザー名が空になっています。'
     ]
   ];
 
@@ -37,7 +37,7 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>2015,
     'message'=>[
       'en'=>'User name is already used. Please use different name.',
-      'jp'=>'指定したユーザー名は既に使われています。他の名前をお試しください。'
+      'ja'=>'指定したユーザー名は既に使われています。他の名前をお試しください。'
     ]
   ];
 
@@ -45,7 +45,7 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>2016,
     'message'=>[
       'en'=>'At least one visible character is required for user name.',
-      'jp'=>'ユーザー名には可視文字を少なくとも1文字以上含める必要があります。'
+      'ja'=>'ユーザー名には可視文字を少なくとも1文字以上含める必要があります。'
     ]
   ];
 
@@ -53,7 +53,7 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>2021,
     'message'=>[
       'en'=>'Password is invalid.',
-      'jp'=>'不正なパスワードです。'
+      'ja'=>'不正なパスワードです。'
     ]
   ];
 
@@ -61,7 +61,39 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>2022,
     'message'=>[
       'en'=>'Password must not be empty.',
-      'jp'=>'パスワードが空になっています。'
+      'ja'=>'パスワードが空になっています。'
+    ]
+  ];
+
+  const FAILED_PASSWORD_CONFIRMATION = [
+    'id'=>2031,
+    'message'=>[
+      'en'=>'Password confirmation failed.',
+      'ja'=>'パスワードと再確認の入力が異なります。'
+    ]
+  ];
+
+  const LOGIN_FAILED = [
+    'id'=>2921,
+    'message'=>[
+      'en'=>'Login failed.',
+      'ja'=>'ログインに失敗しました。'
+    ]
+  ];
+
+  const INVALID_LOGIN_COMBINATION = [
+    'id'=>2922,
+    'message'=>[
+      'en'=>'Invalid user name / password combination. Check if the inputs are correct.',
+      'ja'=>'無効なユーザー名とパスワードの組み合わせです。入力に誤りがないか確認してください。'
+    ]
+  ];
+
+  const INVALID_OPERATION = [
+    'id'=>2991,
+    'message'=>[
+      'en'=>'Invaild operation detected.',
+      'ja'=>'不正な操作を検出しました。'
     ]
   ];
 
@@ -69,11 +101,11 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     'id'=>2999,
     'message'=>[
       'en'=>'FATAL ERROR occurred. If you reload the brower and see this error again, please <a href="https://github.com/urushiyama/db-i-shop/issues">contact me</a>. (Because this application is made for an assignment and is in private repository, you cannot follow the link above.)',
-      'jp'=>'致命的なエラーが発生しました。ウェブページをリロードしてもこのエラーが発生する場合は、お手数ですが<a href="https://github.com/urushiyama/db-i-shop/issues">こちら</a>にご報告ください。（授業課題のためリポジトリはPrivateにしており、そのためリンク先にはアクセスできません。）'
+      'ja'=>'致命的なエラーが発生しました。ウェブページをリロードしてもこのエラーが発生する場合は、お手数ですが<a href="https://github.com/urushiyama/db-i-shop/issues">こちら</a>にご報告ください。（授業課題のためリポジトリはPrivateにしており、そのためリンク先にはアクセスできません。）'
     ]
   ];
 
-  const LOCALE = 'ja';
+  private static $locale = 'ja';
 
   private static $exception = null;
 
@@ -86,8 +118,12 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     return new ArrayIterator(array_reverse($array));
   }
 
+  static function setLocale($locale='ja') {
+    self::$locale = $locale;
+  }
+
   static function create($ex) {
-    self::$exception = new self($ex['message'][LOCALE], $ex['id'], self::$exception);
+    self::$exception = new self($ex['message'][self::$locale], $ex['id'], self::$exception);
   }
 
   static function raise() {

@@ -54,6 +54,9 @@
 - The second & third highest digit shows exception source.
   - '01' means user name.
   - '02' means password.
+  - '03' means password-confirmation.
+  - '92' means login function.
+  - '99' means whole application.
 
 - The lowest digit is identifier, which makes each exception id unique.
   - Generally 0~4 is used for common exceptions and 5~9 is used for specific exceptions to exception source.
