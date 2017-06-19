@@ -56,7 +56,7 @@ class Members extends ModelBase {
       $this->id = $res;
       return true;
     } else {
-      return static::update("id = :id", ['name'=>$this->name, 'password'=>$this->password_digest], ['id'=>$this->id]);
+      return static::update("id = :id", ['name'=>$this->name, 'password'=>$this->password_digest, 'id'=>$this->id]);
     }
   }
 
