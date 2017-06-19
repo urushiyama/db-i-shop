@@ -13,8 +13,10 @@ class Members extends ModelBase {
   function __construct(array $params) {
     extract($params);
     if (static::$db === false) static::initDb();
+    if (isset($id)) $this->id = $id;
     $this->name = $name;
-    $this->setPassword($password);
+    if (isset($password)) $this->setPassword($password);
+    if (isset($password_digest)) $this->password_digest = $password_digest;
   }
 
   function authenticate($password) {
@@ -29,7 +31,7 @@ class Members extends ModelBase {
   static function create(array $params) {
     # INSERT new record and return it as new instance
     $instance = new self($params);
-    $instance.save();
+    $instance->save();
     return $instance;
   }
 
@@ -71,7 +73,11 @@ class Members extends ModelBase {
                                   array_keys($params), array_keys($params)
                                 ));
       $res = static::lookup($query, $params);
-      return ($res) ? $res[0] : null;
+      return ($res) ? new self([
+                      'id'=>$res[0]['id'],
+                      'name'=>$res[0]['name'],
+                      'password_digest'=>$res[0]['password']
+                      ]) : null;
     } else {
       return null;
     }
