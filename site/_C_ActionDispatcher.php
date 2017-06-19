@@ -44,20 +44,12 @@ class ActionDispatcher {
       $con->page = 'register';
       return false;
     }
-    if ($_POST['password'] !== $_POST['password-confirmation']) {
-      ApplicationException::create(ApplicationException::FAILED_PASSWORD_CONFIRMATION);
-    }
-    if ($_POST['user_name'] == '') {
-      ApplicationException::create(ApplicationException::EMPTY_USER_NAME);
-    }
-    $user_name = str_replace([' ', '　', "\n", "\t"], '', $_POST['user_name']);
-    if ($user_name == '') {
-      ApplicationException::create(ApplicationException::INVISIBLE_USER_NAME);
-    }
-    if ($_POST['password'] == '') {
-      ApplicationException::create(ApplicationException::EMPTY_PASSWORD);
-    }
     $model = SessionController::LOGIN_TYPE[$_POST['login_type']]['model'];
+    $model::validateValues([
+      'name'=>$_POST['user_name'],
+      'password'=>$_POST['password'],
+      'confirmation'=>$_POST['password-confirmation']
+    ]);
     $user = $model::find_by(['name'=>$_POST['user_name']]);
     if ($user) {
       ApplicationException::create(ApplicationException::DUPLICATED_USER_NAME);
