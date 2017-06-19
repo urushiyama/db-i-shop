@@ -12,7 +12,6 @@ class Members extends ModelBase {
 
   function __construct(array $params) {
     extract($params);
-    if (static::$db === false) static::initDb();
     if (isset($id)) $this->id = $id;
     $this->name = $name;
     if (isset($password)) $this->setPassword($password);
