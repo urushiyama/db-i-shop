@@ -41,7 +41,7 @@ class SessionController {
     session_destroy();
   }
 
-  static function login(Members $user, $login_type) {
+  static function login(AuthenticatedUsers $user, $login_type) {
     $_SESSION['user_id'] = $user->id;
     $_SESSION['login_type'] = $login_type;
     self::$current_user = $user;

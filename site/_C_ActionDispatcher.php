@@ -2,6 +2,7 @@
 require_once '_C_SessionController.php';
 require_once '_C_ApplicationException.php';
 require_once '_C_Members.php';
+require_once '_C_Dealers.php';
 
 class ActionDispatcher {
 
