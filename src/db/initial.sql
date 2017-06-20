@@ -78,3 +78,21 @@ create table owned_coupons(
   foreign key (member_id) references members(id),
   foreign key (coupon_id) references coupons(id)
 );
+
+create table searched_products(
+  id integer primary key auto_increment,
+  searched_date timestamp default current_timestamp,
+  member_id integer not null,
+  product_id integer not null,
+  foreign key (member_id) references members(id),
+  foreign key (product_id) references products(id)
+);
+
+create table purchased_products(
+  id integer primary key auto_increment,
+  purchased_date timestamp default current_timestamp,
+  member_id integer not null,
+  product_id integer not null,
+  foreign key (member_id) references members(id),
+  foreign key (product_id) references products(id)
+);

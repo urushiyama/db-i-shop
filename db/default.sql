@@ -79,32 +79,50 @@ create table owned_coupons(
   foreign key (coupon_id) references coupons(id)
 );
 
+create table searched_products(
+  id integer primary key auto_increment,
+  searched_date timestamp default current_timestamp,
+  member_id integer not null,
+  product_id integer not null,
+  foreign key (member_id) references members(id),
+  foreign key (product_id) references products(id)
+);
+
+create table purchased_products(
+  id integer primary key auto_increment,
+  purchased_date timestamp default current_timestamp,
+  member_id integer not null,
+  product_id integer not null,
+  foreign key (member_id) references members(id),
+  foreign key (product_id) references products(id)
+);
+
 -- insert members test data (assert_success)
-insert into members (name, password) values("山田花子", "$2y$10$Nj68UrJnqii4Hw08wuyOsepRLc.zpLlH/2cWLkg9oxCDNwe9J/T9a");
-insert into members (name, password) values("小川太郎","$2y$10$W0zZXZYx42o/fM4vHWgo4u8erkPqc.v4XFLoOBcpLO7hKQS1Zz65q");
-insert into members (name, password) values("太田二郎","$2y$10$zlCg.LXn0AakgIT7ov9bFOu/AYg/LRfVpbBlqAEvCsdIw06NZWiPa");
-insert into members (name, password) values("大川翔子","$2y$10$Y0IWIZpFFLSkZmmX4XUeke4/S6N.3vx0XnJA0.6RmPS5nAesWzFby");
-insert into members (name, password) values("浅田舞佳","$2y$10$n4yXzYjt7m0sHB0uFzZz7uqFL.toCBlAKygYNfAl8w3MGOwQp9J6q");
-insert into members (name, password) values("戸田シンジ","$2y$10$NGqxk30W/vK3KdxIdDqjUOhrHQVXCTYNmm/Sg4yAutzptnU9blarG");
-insert into members (name, password) values("堀川兵五郎","$2y$10$nubnv42JJHqteCdS8RBSF.dVvtW/GLLBTloXlwK29pe1Y6LcfDRkO");
-insert into members (name, password) values("Aran Hartl","$2y$10$WURq9nbjC.z7FmqVwQ/SROk.qKxHiJLEy6RUJNx3tddb54xlDOHN2");
-insert into members (name, password) values("Bob Carpenter","$2y$10$OvupZAhDXiO6BEwwPD/Xe.hOvevrvYAMcPpBUYFnxoJX8pOyS6gpi");
-insert into members (name, password) values("顾 伟德","$2y$10$DnxLkl9nDeS93hZaINSJ0.QfmZa15lWVlDMMJQAfiqjJjoBT2Ekiy");
+insert into members (name, password) values("山田花子", "$2y$10$xKut674eXxqOvYi3MKtpLuGDRsS8j4XpqOcsbO0MEQYbZZpUSzdWC");
+insert into members (name, password) values("小川太郎","$2y$10$p3CJIMZuCMM/6eb73txylOddaJbQCjh09oqEjWhfIy/h.ydjbyQp2");
+insert into members (name, password) values("太田二郎","$2y$10$.8bvdq7mPUOG1AUgHs5zgOG1Be8UKxIydhea3EMg2U43GEpgcs2ey");
+insert into members (name, password) values("大川翔子","$2y$10$p4NFG6gnPzEHDrsQAPiIreUq7OQKEP4Y4pn9Mn/j5yNxBbGXstSm.");
+insert into members (name, password) values("浅田舞佳","$2y$10$iJ0LucY0UKT9CGT3lW42fuxwic42yHi9EgQAGYo06UC4Tu4Fwo3vq");
+insert into members (name, password) values("戸田シンジ","$2y$10$FNjk/U88oNrVd9oha1fs4.HBaQIqqmZnh/PcO2tjxROTQmIApsYQm");
+insert into members (name, password) values("堀川兵五郎","$2y$10$EGAWNRTwxatcXANSiCcM2OhlNxi8KmXWuB6YAlK8cQ.7tFktwF8xu");
+insert into members (name, password) values("Aran Hartl","$2y$10$6zQS8/VDOjzm5ynp27PFBu1TlX2FB9aH8yZs026f8Nk/GAlfo.AOm");
+insert into members (name, password) values("Bob Carpenter","$2y$10$BbND/2h6LaUsMYUsY6Jtyup5GC9.aFlIUItz/cab1kRF3nsbNR3Lm");
+insert into members (name, password) values("顾 伟德","$2y$10$ukg0IbtOw3KUWiZiJaLjb.APDOdOEGdcAC8uzL/YYtL.gYhf4SrTK");
 
 -- insert an admin member test data (assert_success)
-insert into members (name, password, admin) values("Administrator", "$2y$10$YwN9r/xmgHNFdBAm7i2oS.qrtbeytgleNMncVscxFUmJnnQuNKyOe", true);
+insert into members (name, password, admin) values("Administrator", "$2y$10$tSCnq7DxTJFaNSp4ynJhJuUgJgHI9ozIvWRwyC2CZFGE1lcfFG6Se", true);
 
 -- insert dealers test data (assert_success)
-insert into dealers (name, password) values("山田花子","$2y$10$VBcafJzncRDQZfTlOXzd6OwekFVRgg9XiKXz1QjjdqEih4Tsvkz1W");
-insert into dealers (name, password) values("小川太郎","$2y$10$zo6AWiRFmGAnB46u1lzno.Q21XbapnFeaKcS0XRVBCCIUuygTEg7C");
-insert into dealers (name, password) values("太田二郎","$2y$10$Wxy3BRB9soLzwEqlLAFi2uCbRmX3gvyvub70emQMA/DEzN.IEcZ.e");
-insert into dealers (name, password) values("大川翔子","$2y$10$qzEATp98i8rRH8A0zo.I5uB44orVPIAP5RgUrBswp1FLkDDDmQl4u");
-insert into dealers (name, password) values("浅田舞佳","$2y$10$NzTkERyFkw23Y2.f7q7paubGb4hy/QIu0fVqPorO6Pbq8jvtspizC");
-insert into dealers (name, password) values("戸田シンジ","$2y$10$y1PeWTERpCnHNLMIhf6wfOT93x1rLZLpZgDmqA3o038W2DLoDneVW");
-insert into dealers (name, password) values("堀川兵五郎","$2y$10$ujOjsBq5i.rl6XshHwCRD.hTBhRUfUI02tuFDT7AtcX954/lMwM1S");
-insert into dealers (name, password) values("Aran Hartl","$2y$10$O80w77XpNRBjHajsYplqLeVZebqQkxObfaS4hXuxnwngrYSwlN3Oi");
-insert into dealers (name, password) values("Bob Carpenter","$2y$10$8qmjgNnI1OV7DQjrrW5PV.41vTDi1ncL2eg7Xwy9xSOjOCwIZxXKm");
-insert into dealers (name, password) values("顾 伟德","$2y$10$7kdiQox5fcZD4uu76A.mTeoY5KLyrtyu98nNU6ums222LrS2nDVri");
+insert into dealers (name, password) values("山田花子","$2y$10$paytu8DP6MvP7jCWxKloje/wpi94WZ7vHg7dJcXQqyQfItY7AJxky");
+insert into dealers (name, password) values("小川太郎","$2y$10$ulXYdu0f2BPJDSUprslk/uuLTKj4BKfjNhIbk.YDm6OoWZqUV/YiW");
+insert into dealers (name, password) values("太田二郎","$2y$10$YhPs5LBIgZc24pXaWbjonelIFAEI282OoNb/1oH.AGvsJpGtqTDVy");
+insert into dealers (name, password) values("大川翔子","$2y$10$noTZaCPOgXSOgFjvdUgplezZUG.16c44gKtTfTWib8StuJzlnc/Nq");
+insert into dealers (name, password) values("浅田舞佳","$2y$10$lqnWcZvGQSdcj8KV4kDlwOnSgW.xK4Azowaycd5FGqnmsF4UGzlI2");
+insert into dealers (name, password) values("戸田シンジ","$2y$10$iPK96UoPh56p0Dk26XqTqO5JtlyPu.oE2ZAyM2OLreA/L4Hzjj6vW");
+insert into dealers (name, password) values("堀川兵五郎","$2y$10$mFshyJoTpxezpTAJoeOWc.0W7mi66.F6mhnFlT5wthvKR8HYgp4le");
+insert into dealers (name, password) values("Aran Hartl","$2y$10$X9ayOT7GCUf.8cMy1kbvB.RqNAec2Cxr0l/MzWHDJIDY12qGukz3e");
+insert into dealers (name, password) values("Bob Carpenter","$2y$10$NlQnFxGmVl5go2cmQ2gbEetfZTMH01RxZVPOke48vHNqkqks8qzm2");
+insert into dealers (name, password) values("顾 伟德","$2y$10$KWGkosOfuDj8s4df/LOO4.2ckxUbj5/Rb1AebIRA4bfQY414iPtqO");
 
 -- insert delivery_types test data (assert_success)
 insert into delivery_types (name, charge) values("宅急便",864);
@@ -142,3 +160,9 @@ insert into owned_coupons (invalidate_date, member_id, coupon_id) select '2019-0
 insert into owned_coupons (invalidate_date, member_id, coupon_id) select '2020-01-01 00:00:00', members.id, coupons.id from members, coupons order by rand() limit 1;
 insert into owned_coupons (invalidate_date, member_id, coupon_id) select '2017-05-01 00:00:00', members.id, coupons.id from members, coupons order by rand() limit 1;
 insert into owned_coupons (invalidate_date, used, member_id, coupon_id) select '2001-01-19 00:00:00', true, members.id, coupons.id from members, coupons order by rand() limit 1;
+
+-- insert searched_products test data (assert_success)
+insert into searched_products (searched_date, member_id, product_id) select ADDTIME(CONCAT_WS(' ','2014-07-01' + INTERVAL RAND() * 31 DAY, '00:00:00'), SEC_TO_TIME(FLOOR(0 + (RAND() * 86401)))), members.id, products.id from members, products order by rand() limit 10;
+
+-- insert purchased_products test data (assert_success)
+insert into purchased_products (purchased_date, member_id, product_id) select ADDTIME(CONCAT_WS(' ','2014-07-01' + INTERVAL RAND() * 31 DAY, '00:00:00'), SEC_TO_TIME(FLOOR(0 + (RAND() * 86401)))), members.id, products.id from members, products order by rand() limit 10;
