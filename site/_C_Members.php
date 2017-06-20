@@ -5,6 +5,50 @@ class Members extends AuthenticatedUsers {
 
   protected static $table = 'members';
 
+  private $admin = false;
+
+  function isAdmin() {
+    return ($this->admin == true);
+  }
+
+  function __construct(array $params) {
+    extract($params);
+    if (isset($id)) $this->id = $id;
+    $this->name = $name;
+    if (isset($password)) $this->setPassword($password);
+    if (isset($password_digest)) $this->password_digest = $password_digest;
+    if (isset($admin)) $this->admin = $admin;
+  }
+
+  function reload() {
+    # reload instance from db
+    $row = static::lookup("id = :id", ['id'=>$this->id], ['name', 'password', 'admin']);
+    if (!$rows) return false;
+    $this->name = $rows[0]['name'];
+    $this->password_digest = $rows[0]['password'];
+    $this->password = '';
+    $this->admin = $rows[0]['admin'];
+    return true;
+  }
+
+  static function find_by(array $params) {
+    if ($params) {
+      $query = join(',', array_map(function ($key, $value) { return "${key}=:${value}";},
+                                  array_keys($params), array_keys($params)
+                                ));
+      $res = static::lookup($query, $params);
+      return ($res) ? new static([
+                      'id'=>$res[0]['id'],
+                      'name'=>$res[0]['name'],
+                      'password_digest'=>$res[0]['password'],
+                      'admin'=>$res[0]['admin']
+                      ]) : null;
+    } else {
+      return null;
+    }
+    return null;
+  }
+
   static function validateValues(array $params) {
     extract($params);
     if (isset($name)) {
@@ -28,22 +72,4 @@ class Members extends AuthenticatedUsers {
     }
   }
 }
-//
-// if (realpath($argv[0]) == __FILE__) {
-//   require_once 'config.php';
-//   ModelBase::setConnectionInfo(['host'=>$dbserver, 'dbname'=>$dbname, 'user'=>$user, 'password'=>$password]);
-//   ModelBase::initDb();
-//   print_r(Members::dump());
-//   $member = new Members(['name'=>'Foo Bar', 'password'=>'foobar']);
-//   echo "ID=>".$member->id.", Name=>".$member->name.", password=>".$member->password_digest."\n";
-//   echo $member->save()."\n";
-//   $member->name='hogehoge';
-//   echo $member->reload()."\n";
-//   echo "ID=>".$member->id.", Name=>".$member->name.", password=>".$member->password_digest."\n";
-//   print_r(Members::dump());
-//   $member->destroy();
-//   print_r(Members::dump());
-//   print_r(Members::find_by(['name'=>'Aran Hartl']));
-// }
-
  ?>

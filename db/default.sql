@@ -12,7 +12,8 @@ drop table if exists delivery_types;
 create table members(
   id integer primary key auto_increment,
   name varchar(32) not null unique,
-  password varchar(255) not null
+  password varchar(255) not null,
+  admin boolean not null default false
 );
 
 create table dealers(
@@ -79,28 +80,31 @@ create table owned_coupons(
 );
 
 -- insert members test data (assert_success)
-insert into members (name, password) values("山田花子", "$2y$10$ZIapuX84/BroB5P2hpaz2.j5HzxRYiZugDLvJR2fUTeHlbwQkFe3O");
-insert into members (name, password) values("小川太郎","$2y$10$5sXkCvDZE1LwQyJpyc5phud3Cnqvbp/yf1dGThyvTmIsof7Ivqsae");
-insert into members (name, password) values("太田二郎","$2y$10$Fpr20ZptFDE4KRP54d1Bi.gg2t4sF.SNavvFf.lnFFl..vjbLVaRW");
-insert into members (name, password) values("大川翔子","$2y$10$WhLKKTz6IH79zGBG8z9/dei3m72mMpqp.hjrvZ7l9NSLCd5TyPCgC");
-insert into members (name, password) values("浅田舞佳","$2y$10$rwnstnBspQ.wMTj4K2JOW.hjqqORLZs180l502lm/iijskP/sHc9.");
-insert into members (name, password) values("戸田シンジ","$2y$10$/qdkubcKZaT523W9lWuWO.h6BnN5lGQMTGfC4TI.CC9HcI.NMlJe.");
-insert into members (name, password) values("堀川兵五郎","$2y$10$bmX4P9cMbsGY2WYhz9WwSeTiTKoYSbPLw6qlIUwINWyLlvXrGt4JC");
-insert into members (name, password) values("Aran Hartl","$2y$10$xCYLV/mZ79DA6l2QTpKIseMu932/QRcrbMBQk2S9Dcumy29Rx5cDe");
-insert into members (name, password) values("Bob Carpenter","$2y$10$m/2Qzh9Zf.VO5x/qxHtP.uK7wCHAx3lKwWrWV07O5PSxeKo8S62RK");
-insert into members (name, password) values("顾 伟德","$2y$10$iFcroZw7hFvt1oCJ0H2vp.P.51xAT23pt9rR0yp5Iwi0.J9CiS0C6");
+insert into members (name, password) values("山田花子", "$2y$10$Nj68UrJnqii4Hw08wuyOsepRLc.zpLlH/2cWLkg9oxCDNwe9J/T9a");
+insert into members (name, password) values("小川太郎","$2y$10$W0zZXZYx42o/fM4vHWgo4u8erkPqc.v4XFLoOBcpLO7hKQS1Zz65q");
+insert into members (name, password) values("太田二郎","$2y$10$zlCg.LXn0AakgIT7ov9bFOu/AYg/LRfVpbBlqAEvCsdIw06NZWiPa");
+insert into members (name, password) values("大川翔子","$2y$10$Y0IWIZpFFLSkZmmX4XUeke4/S6N.3vx0XnJA0.6RmPS5nAesWzFby");
+insert into members (name, password) values("浅田舞佳","$2y$10$n4yXzYjt7m0sHB0uFzZz7uqFL.toCBlAKygYNfAl8w3MGOwQp9J6q");
+insert into members (name, password) values("戸田シンジ","$2y$10$NGqxk30W/vK3KdxIdDqjUOhrHQVXCTYNmm/Sg4yAutzptnU9blarG");
+insert into members (name, password) values("堀川兵五郎","$2y$10$nubnv42JJHqteCdS8RBSF.dVvtW/GLLBTloXlwK29pe1Y6LcfDRkO");
+insert into members (name, password) values("Aran Hartl","$2y$10$WURq9nbjC.z7FmqVwQ/SROk.qKxHiJLEy6RUJNx3tddb54xlDOHN2");
+insert into members (name, password) values("Bob Carpenter","$2y$10$OvupZAhDXiO6BEwwPD/Xe.hOvevrvYAMcPpBUYFnxoJX8pOyS6gpi");
+insert into members (name, password) values("顾 伟德","$2y$10$DnxLkl9nDeS93hZaINSJ0.QfmZa15lWVlDMMJQAfiqjJjoBT2Ekiy");
+
+-- insert an admin member test data (assert_success)
+insert into members (name, password, admin) values("Administrator", "$2y$10$YwN9r/xmgHNFdBAm7i2oS.qrtbeytgleNMncVscxFUmJnnQuNKyOe", true);
 
 -- insert dealers test data (assert_success)
-insert into dealers (name, password) values("山田花子","$2y$10$WCVCH6Na4iHq4dR1osaMkO4HDy7lysOnkA2EL9LtZKuH0VtaWN/Da");
-insert into dealers (name, password) values("小川太郎","$2y$10$QC1W1oW5Y9gGq/vi5JiIhO9KRnbEY.02brhXZJxT3kglImBGR7WHm");
-insert into dealers (name, password) values("太田二郎","$2y$10$kW43pxAHhva4WwvBKPdTguTVhxiYoWE0Ks0EPjUqccIV9aWPTSlKq");
-insert into dealers (name, password) values("大川翔子","$2y$10$eiEdBmcmxxDmUyFQoae5Wu/TCaOf1ASIkEsac54/cFPBwOBt04HE.");
-insert into dealers (name, password) values("浅田舞佳","$2y$10$jYR0a.BXdri78CXtk/D8ReBw5ky0AwahH/9uSdQwepk.ZICmVwyfi");
-insert into dealers (name, password) values("戸田シンジ","$2y$10$cAKIdfHRM2aeVra6iFF7UOZ3be2haagE.FxIqAXrexCKYx./wtNeK");
-insert into dealers (name, password) values("堀川兵五郎","$2y$10$gBrFfTSaujjWV97iENUsbegwphiCotgF2M4LAMj/hAogzhut.6Wk.");
-insert into dealers (name, password) values("Aran Hartl","$2y$10$B5y2PbjBY.X5jCvHKrO3eu.E8rD9T6o7MxBd05yViAvTWE/mcbnZi");
-insert into dealers (name, password) values("Bob Carpenter","$2y$10$dmU4D6vNaiyxKQU2aB5uP.mtcjC7nl8uPflJwquf6yb6e2Ggn3uLq");
-insert into dealers (name, password) values("顾 伟德","$2y$10$OMStwrtYXZpHBDCMXUEfveVDqbH7n.LN8CK6W0FQ/aCjlv5w1EckK");
+insert into dealers (name, password) values("山田花子","$2y$10$VBcafJzncRDQZfTlOXzd6OwekFVRgg9XiKXz1QjjdqEih4Tsvkz1W");
+insert into dealers (name, password) values("小川太郎","$2y$10$zo6AWiRFmGAnB46u1lzno.Q21XbapnFeaKcS0XRVBCCIUuygTEg7C");
+insert into dealers (name, password) values("太田二郎","$2y$10$Wxy3BRB9soLzwEqlLAFi2uCbRmX3gvyvub70emQMA/DEzN.IEcZ.e");
+insert into dealers (name, password) values("大川翔子","$2y$10$qzEATp98i8rRH8A0zo.I5uB44orVPIAP5RgUrBswp1FLkDDDmQl4u");
+insert into dealers (name, password) values("浅田舞佳","$2y$10$NzTkERyFkw23Y2.f7q7paubGb4hy/QIu0fVqPorO6Pbq8jvtspizC");
+insert into dealers (name, password) values("戸田シンジ","$2y$10$y1PeWTERpCnHNLMIhf6wfOT93x1rLZLpZgDmqA3o038W2DLoDneVW");
+insert into dealers (name, password) values("堀川兵五郎","$2y$10$ujOjsBq5i.rl6XshHwCRD.hTBhRUfUI02tuFDT7AtcX954/lMwM1S");
+insert into dealers (name, password) values("Aran Hartl","$2y$10$O80w77XpNRBjHajsYplqLeVZebqQkxObfaS4hXuxnwngrYSwlN3Oi");
+insert into dealers (name, password) values("Bob Carpenter","$2y$10$8qmjgNnI1OV7DQjrrW5PV.41vTDi1ncL2eg7Xwy9xSOjOCwIZxXKm");
+insert into dealers (name, password) values("顾 伟德","$2y$10$7kdiQox5fcZD4uu76A.mTeoY5KLyrtyu98nNU6ums222LrS2nDVri");
 
 -- insert delivery_types test data (assert_success)
 insert into delivery_types (name, charge) values("宅急便",864);

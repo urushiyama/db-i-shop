@@ -12,7 +12,8 @@ drop table if exists delivery_types;
 create table members(
   id integer primary key auto_increment,
   name varchar(32) not null unique,
-  password varchar(255) not null
+  password varchar(255) not null,
+  admin boolean not null default false
 );
 
 create table dealers(

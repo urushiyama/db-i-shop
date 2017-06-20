@@ -10,6 +10,9 @@ insert into members (name, password) values("Aran Hartl","<?= password_hash('pas
 insert into members (name, password) values("Bob Carpenter","<?= password_hash('password', PASSWORD_DEFAULT) ?>");
 insert into members (name, password) values("顾 伟德","<?= password_hash('password', PASSWORD_DEFAULT) ?>");
 
+-- insert an admin member test data (assert_success)
+insert into members (name, password, admin) values("Administrator", "<?= password_hash('admin', PASSWORD_DEFAULT) ?>", true);
+
 -- insert dealers test data (assert_success)
 insert into dealers (name, password) values("山田花子","<?= password_hash('password', PASSWORD_DEFAULT) ?>");
 insert into dealers (name, password) values("小川太郎","<?= password_hash('password', PASSWORD_DEFAULT) ?>");
