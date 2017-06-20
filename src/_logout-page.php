@@ -1,6 +1,6 @@
 <div class="box-login-form">
   <div class="box-login-form-title">
-    ログアウトの確認
+    <h2>ログアウトの確認</h2>
   </div>
   <div class="box-login-form-content">
     <form method="post" action="./?p=top" class="box-content-column">

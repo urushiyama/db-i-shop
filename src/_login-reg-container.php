@@ -3,7 +3,7 @@ if (!isset($login_as)) $login_as = SessionController::LOGIN_TYPE_MEMBER;
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    <?= SessionController::LOGIN_TYPE[$login_as]['name'] ?>としてログイン・新規登録する
+    <h2><?= SessionController::LOGIN_TYPE[$login_as]['name'] ?>としてログイン・新規登録する</h2>
   </div>
   <div class="box-login-form-content">
     <form>

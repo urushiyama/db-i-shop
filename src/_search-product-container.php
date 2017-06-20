@@ -1,6 +1,6 @@
 <div class="box-login-form">
   <div class="box-login-form-title">
-    商品を探す
+    <h2>商品を探す</h2>
   </div>
   <div class="search-form-content">
     <form class="box-content-column">

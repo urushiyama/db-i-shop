@@ -9,7 +9,7 @@ $password = isset($_POST['password']) ? htmlspecialchars($_POST['password'])
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    ログインする
+    <h2>ログインする</h2>
   </div>
   <div class="box-login-form-content">
     <form method="post" action="." class="box-content-column">

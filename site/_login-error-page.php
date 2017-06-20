@@ -3,7 +3,7 @@ $user_name = "hogehoge"; // ログイン試行に用いたユーザ名を入れ�
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    ログインエラー
+    <h2>ログインエラー</h2>
   </div>
   <div class="box-login-form-content">
     <form class="box-content-column">

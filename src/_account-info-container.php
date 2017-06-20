@@ -6,7 +6,7 @@ $user = SessionController::currentUser();
 <? if ($user): ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    <?= htmlspecialchars($user->name) ?>さんの会員情報
+    <h2><?= htmlspecialchars($user->name) ?>さんの会員情報</h2>
   </div>
   <div class="box-login-form-content">
     <form>

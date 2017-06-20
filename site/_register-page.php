@@ -10,7 +10,7 @@ $password = isset($_POST['password']) ? htmlspecialchars($_POST['password'])
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    <?=SessionController::LOGIN_TYPE[$login_type]['name'] ?>の新規登録
+    <h2><?=SessionController::LOGIN_TYPE[$login_type]['name'] ?>の新規登録</h2>
   </div>
   <div class="box-login-form-content">
     <form method="post" action="." class="box-content-column">

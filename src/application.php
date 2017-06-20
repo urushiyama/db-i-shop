@@ -20,7 +20,7 @@ $renderer = new Renderer("_not-found-page.php");
   </head>
   <body>
     <div class="system-logo">
-      <a href="./?p=top" class="system-logo-link"><?= $system_name ?></a>
+      <h1><a href="./?p=top" class="system-logo-link"><?= $system_name ?></a></h1>
     </div>
     <?
       if (isset($flashes)) {

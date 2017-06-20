@@ -1,6 +1,6 @@
 <div class="box-login-form">
   <div class="box-login-form-title">
-    404 Not Found
+    <h2>不明なページ</h2>
   </div>
   <div class="box-login-form-content">
     <form class="box-content-column">

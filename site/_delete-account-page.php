@@ -1,6 +1,6 @@
 <div class="box-login-form">
   <div class="box-login-form-title">
-    登録情報削除の確認
+    <h2>登録情報削除の確認</h2>
   </div>
   <div class="box-login-form-content">
     <form method="post" action="./?p=top" class="box-content-column">

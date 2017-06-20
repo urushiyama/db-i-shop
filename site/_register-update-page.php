@@ -10,7 +10,7 @@ $password = isset($_POST['password']) ? htmlspecialchars($_POST['password'])
 <? if ($user): ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    登録情報の更新
+    <h2>登録情報の更新</h2>
   </div>
   <div class="box-login-form-content">
     <form method="post" action="." class="box-content-column">
@@ -41,7 +41,7 @@ $password = isset($_POST['password']) ? htmlspecialchars($_POST['password'])
 </div>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    登録情報の削除
+    <h2>登録情報の削除</h2>
   </div>
   <div class="box-login-form-content">
     <form method="post" action="./?p=delete-account" class="box-content-column">
