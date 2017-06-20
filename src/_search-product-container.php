@@ -6,7 +6,7 @@
     <form class="box-content-column">
       <div class="box-content-row">
         <input type="text" name="query" placeholder="商品名を入力して検索">
-        <input type="submit">
+        <input type="submit" name="submit-search" value="検索">
       </div>
     </form>
     <? if ($advanced_search): ?>
@@ -29,6 +29,11 @@
         <p>出品停止中の商品を表示</p>
         <input type="checkbox" name="show-not-banned" value="1" checked="checked">
         <p>出品継続中の商品を表示</p>
+      </div>
+      <div class="box-content-row">
+        <input type="submit" name="submit-search" value="絞り込み検索">
+        <p>または</p>
+        <input type="submit" name="submit-index" value="全ての出品を表示">
       </div>
     </div>
     <? endif ?>
