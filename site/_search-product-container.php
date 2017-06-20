@@ -22,6 +22,13 @@
       </div>
     </div>
     <? endif ?>
+    <? if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_DEALER): ?>
+    <div class="box-content-column">
+      <div class="box-content-row">
+        <input type="submit" name="submit-index-dealing" value="あなたの出品の一覧を表示">
+      </div>
+    </div>
+    <? endif ?>
     <? if ($admin): ?>
     <div class="box-content-column">
       <div class="box-content-row">
