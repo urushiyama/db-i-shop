@@ -16,6 +16,9 @@ $input-text-color: black;
 $input-focus-bg-color: lightcyan;
 $input-focus-glow-color: skyblue;
 
+$floating-box-bg-color: silver;
+$floating-price-color: red;
+
 $headers: h1, h2, h3, h4, h5, h6;
 
 #{$headers} {
@@ -172,8 +175,39 @@ body {
   background-color: $flash-danger-color * 6;
 }
 
+.floating-box {
+  display: flex;
+  align-content: center;
+  .box-content-row {
+    align-items: flex-start;
+    margin: 16px auto;
+    background: $floating-box-bg-color;
+    .box-content-column {
+      margin: 16px;
+      p {
+        margin: 0px;
+      }
+    }
+    .box-align-left {
+      text-align: left;
+    }
+    .box-align-right {
+      text-align: right;
+    }
+  }
+  .product-name {
+    font-size: 2em;
+  }
+  .price {
+    color: $floating-price-color;
+    font-size: 2em;
+  }
+}
 
 input {
+  &.minimum-width-input {
+    width: 64px !important;
+  }
   &:hover {
     box-shadow: 0 0 4px 0 $app-selected-color;
   }

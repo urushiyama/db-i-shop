@@ -666,6 +666,35 @@ body {
   border-color: #ff2424;
   background-color: #ffd8d8; }
 
+.floating-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center; }
+  .floating-box .box-content-row {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    margin: 16px auto;
+    background: silver; }
+    .floating-box .box-content-row .box-content-column {
+      margin: 16px; }
+      .floating-box .box-content-row .box-content-column p {
+        margin: 0px; }
+    .floating-box .box-content-row .box-align-left {
+      text-align: left; }
+    .floating-box .box-content-row .box-align-right {
+      text-align: right; }
+  .floating-box .product-name {
+    font-size: 2em; }
+  .floating-box .price {
+    color: red;
+    font-size: 2em; }
+
+input.minimum-width-input {
+  width: 64px !important; }
+
 input:hover {
   -webkit-box-shadow: 0 0 4px 0 gold;
           box-shadow: 0 0 4px 0 gold; }
