@@ -19,6 +19,9 @@ $input-focus-glow-color: skyblue;
 $floating-box-bg-color: silver;
 $floating-price-color: red;
 
+$product-condition-new-color: rgb(93, 175, 11);
+$product-condition-used-color: rgb(255, 186, 51);
+
 $headers: h1, h2, h3, h4, h5, h6;
 
 #{$headers} {
@@ -28,6 +31,7 @@ $headers: h1, h2, h3, h4, h5, h6;
 
 p {
   font-family: $root-font-family;
+  margin: 0px;
 }
 
 a {
@@ -95,13 +99,17 @@ body {
 .box-content-column {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
 
 .box-content-row {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
 
 .box-login-form {
@@ -179,28 +187,63 @@ body {
   display: flex;
   align-content: center;
   .box-content-row {
-    align-items: flex-start;
     margin: 16px auto;
     background: $floating-box-bg-color;
-    .box-content-column {
-      margin: 16px;
-      p {
-        margin: 0px;
-      }
-    }
-    .box-align-left {
-      text-align: left;
-    }
-    .box-align-right {
-      text-align: right;
-    }
   }
-  .product-name {
-    font-size: 2em;
+  .box-content-column {
+    margin: 16px;
   }
-  .price {
-    color: $floating-price-color;
-    font-size: 2em;
+}
+
+.box-align-left {
+  text-align: left;
+  align-items: left;
+}
+.box-align-right {
+  text-align: right;
+  align-items: right;
+}
+.box-align-baseline {
+  align-items: baseline;
+}
+
+.product-name {
+  font-size: 2em;
+  &.minimum {
+    font-size: 1em;
+    font-weight: bold;
+  }
+}
+
+.price {
+  color: $floating-price-color;
+  font-size: 2em;
+  &.minimum {
+    font-size: 1.5em;
+  }
+}
+
+.product-condition {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.product-condition-new {
+  @extend .product-condition;
+  color: $product-condition-new-color;
+}
+
+.product-condition-used {
+  @extend .product-condition;
+  color: $product-condition-used-color;
+}
+
+.product-thumbnail {
+  width: 100%;
+  max-width: 256px;
+  height: auto;
+  &.minimum {
+    max-width: 64px;
   }
 }
 
