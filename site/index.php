@@ -67,6 +67,13 @@ class MainController {
     } else {
       $this->action = '';
     }
+    // get actions
+    $get_action_pages = [
+      'search-product'
+    ];
+    if (isset($_GET['p']) && in_array($_GET['p'], $get_action_pages)) {
+      $this->action = htmlspecialchars($_GET['p']);
+    }
   }
 
   private function readPageParam() {

@@ -12,6 +12,7 @@ class ActionDispatcher {
     'update-account'=>'updateAccount',
     'logout-account'=>'logoutAccount',
     'delete-account'=>'deleteAccount',
+    'search-product'=>'searchProduct'
   ];
 
   static function act(MainController $con) {
@@ -165,6 +166,10 @@ class ActionDispatcher {
     $user->destroy();
     SessionController::destroy();
     return true;
+  }
+
+  static function searchProduct(MainController $con) {
+    return false;
   }
 }
  ?>
