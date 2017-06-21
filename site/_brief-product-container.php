@@ -2,6 +2,8 @@
 require_once '_C_Renderer.php';
 $renderer = new Renderer('_not-found-page.php');
 
+if (!isset($button_template)) $button_template = '_brief-product-purchase-button-container.php';
+
 if (!isset($image)) $image = 'http://lorempixel.com/64/64/technics/'.rand(1, 10);
 if (!isset($product_id)) $product_id = 0;
 if (!isset($product_name)) $product_name = 'Product Name';
@@ -24,6 +26,6 @@ if (!isset($product_stock)) $product_stock = 10;
       <p class="price minimum"><?=htmlspecialchars($product_price) ?>円</p>
       <p><?=htmlspecialchars($delivery_type) ?> 送料<?=htmlspecialchars($delivery_cost) ?>円</p>
     </div>
-    <?=$renderer->render(['template'=>'_brief-product-purchase-button-container.php', 'product_id'=>$product_id, 'product_stock'=>$product_stock]) ?>
+    <?=$renderer->render(['template'=>$button_template, 'product_id'=>$product_id, 'product_stock'=>$product_stock]) ?>
   </div>
 </div>
