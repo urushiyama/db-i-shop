@@ -1,5 +1,6 @@
 <?php
 require_once '_C_Renderer.php';
+require_once '_C_SessionController.php';
 $renderer = new Renderer('_not-found-page.php');
 
 if (!isset($image)) $image = 'http://lorempixel.com/256/256/technics/'.rand(1, 10);
@@ -42,7 +43,8 @@ if (!isset($product_description)) $product_description = '商品の詳細';
           <p class="price"><?=htmlspecialchars($product_price) ?>円</p>
           <p><?=htmlspecialchars($delivery_type) ?> <span class="price minimum">送料<?=htmlspecialchars($delivery_cost) ?>円</span></p>
           <p>商品の状態: <span class="product-condition-<?=htmlspecialchars($product_condition, ENT_QUOTES)?>"><?=htmlspecialchars($product_condition_name) ?></span></p>
-          <form class="box-content-row box-align-baseline">
+          <form action="." method="post" class="box-content-row box-align-baseline">
+            <input type="hidden" name="a" value="add-to-cart">
             <input type="hidden" name="product_id" value="<?=htmlspecialchars($product_id, ENT_QUOTES) ?>">
             <input class="minimum-width-input" type="number" name="units" value="1" min="1" max="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>">
             <p>残り<?=htmlspecialchars($product_stock) ?>個</p>

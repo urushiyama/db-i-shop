@@ -12,7 +12,9 @@ class ActionDispatcher {
     'update-account'=>'updateAccount',
     'logout-account'=>'logoutAccount',
     'delete-account'=>'deleteAccount',
-    'search-product'=>'searchProduct'
+    'search-product'=>'searchProduct',
+    'update-product'=>'updateProduct',
+    'add-to-cart'=>'addToCart'
   ];
 
   static function act(MainController $con) {
@@ -169,6 +171,14 @@ class ActionDispatcher {
   }
 
   static function searchProduct(MainController $con) {
+    return false;
+  }
+
+  static function updateProduct(MainController $con) {
+    return false;
+  }
+
+  static function addToCart(MainController $con) {
     return false;
   }
 }
