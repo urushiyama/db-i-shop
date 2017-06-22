@@ -25,6 +25,9 @@ switch ($product_condition) {
     break;
 }
 if (!isset($product_description)) $product_description = '商品の詳細';
+if (SessionController::currentLoginType() == LOGIN_TYPE_MEMBER && SessionController::currentUser()->isAdmin()){
+  $admin = 1;
+}
  ?>
 <?=$renderer->render(['template'=>'_search-product-container.php']) ?>
 <div class="box-login-form">
@@ -48,7 +51,15 @@ if (!isset($product_description)) $product_description = '商品の詳細';
             <input type="hidden" name="product_id" value="<?=htmlspecialchars($product_id, ENT_QUOTES) ?>">
             <input class="minimum-width-input" type="number" name="units" value="1" min="1" max="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>">
             <p>残り<?=htmlspecialchars($product_stock) ?>個</p>
+            <? if ($admin): ?>
+              <? if ($product_banned): ?>
+            <input type="submit" name="submit[ban]" value="出品の一時停止">
+              <? else: ?>
+            <input type="submit" name="submit[unban]" value="出品の許可">
+              <? endif ?>
+            <? else: ?>
             <input type="submit" value="買い物かごに入れる">
+            <? endif ?>
           </form>
         </div>
       </div>
