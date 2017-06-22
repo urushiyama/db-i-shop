@@ -11,8 +11,13 @@ $max = 100; // 検索結果の個数
     <h2>検索結果</h2>
   </div>
   <div class="box-login-form-content">
-    <?=$renderer->render(['template'=>'_brief-product-container.php']) ?>
+    <? if (isset($button_template)): ?>
+    <?=$renderer->render(['template'=>'_brief-product-container.php', 'button_template'=>$button_template])?>
+    <?=$renderer->render(['template'=>'_brief-product-container.php', 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860, 'button_template'=>$button_template]) ?>
+    <? else: ?>
+    <?=$renderer->render(['template'=>'_brief-product-container.php'])?>
     <?=$renderer->render(['template'=>'_brief-product-container.php', 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860]) ?>
+    <? endif ?>
     <div class="box-content-column">
       <div class="box-content-row">
         <? if ($start_from > 10): ?>

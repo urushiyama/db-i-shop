@@ -14,7 +14,8 @@ class ActionDispatcher {
     'delete-account'=>'deleteAccount',
     'search-product'=>'searchProduct',
     'update-product'=>'updateProduct',
-    'add-to-cart'=>'addToCart'
+    'add-to-cart'=>'addToCart',
+    'edit-product'=>'editProduct'
   ];
 
   static function act(MainController $con) {
@@ -179,6 +180,21 @@ class ActionDispatcher {
   }
 
   static function addToCart(MainController $con) {
+    return false;
+  }
+
+  static function editProduct(MainController $con) {
+    /* check if product dealer == current user */
+    if (isset($_POST['submit']['update'])) {
+      // link to update product page
+      header("Location: ?p=product-register&product_id=".urlencode(openssl_encrypt($_POST['product_id'])));
+      exit;
+    }
+    if (isset($_POST['submit']['delete'])) {
+      // delete product and back to manage product page
+      $con->page = "?manage-product";
+      return false;
+    }
     return false;
   }
 }

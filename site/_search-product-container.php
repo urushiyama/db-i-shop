@@ -1,10 +1,11 @@
 <?php
 $user = SessionController::currentUser();
 if ($user instanceof Members && $user->isAdmin()) $admin=true;
+if (!isset($box_title)) $box_title = '商品を探す';
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
-    <h2>商品を探す</h2>
+    <h2><?=htmlspecialchars($box_title)?></h2>
   </div>
   <div class="search-form-content">
     <form method="get" action="./?p=search-product" class="box-content-column">
