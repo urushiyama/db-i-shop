@@ -4,11 +4,13 @@ require_once '_C_SessionController.php';
 require_once '_C_ActionDispatcher.php';
 require_once '_C_ApplicationException.php';
 require_once '_C_ModelBase.php';
+require_once 'view_config.php';
 
 class MainController {
 
   public $page;
   public $action;
+  public $other_params;
   private $renderer;
   private $template = 'application.php';
   private $not_found = '_not-found-page.php';
@@ -16,6 +18,7 @@ class MainController {
   function __construct(array $params = []) {
     if (isset($params['template'])) $this->template = $params['template'];
     if (isset($params['not_found'])) $this->not_found = $params['not_found'];
+    $this->other_params = [];
     $this->renderer = new Renderer($not_found);
     include 'config.php';
     ModelBase::setConnectionInfo([
@@ -55,9 +58,9 @@ class MainController {
       }
     }
     if (empty($flashes)) {
-      print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page]);
+      print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page, 'other_params'=>$this->other_params]);
     } else {
-      print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page, 'flashes'=>$flashes]);
+      print $this->renderer->render(['template'=>$this->template, 'page'=>$this->page, 'flashes'=>$flashes, 'other_params'=>$this->other_params]);
     }
   }
 

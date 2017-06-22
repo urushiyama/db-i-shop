@@ -35,6 +35,6 @@ $renderer = new Renderer("_not-found-page.php");
         }
       }
       ?>
-    <?=$renderer->render(['template'=>$page_file]); ?>
+    <?=$renderer->render(array_merge(['template'=>$page_file], $other_params)); ?>
   </body>
 </html>

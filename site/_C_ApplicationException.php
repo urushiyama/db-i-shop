@@ -73,6 +73,14 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     ]
   ];
 
+  const INVALID_EMAIL = [
+    'id'=>2041,
+    'message'=>[
+      'en'=>'Email is invalid.',
+      'ja'=>'不正なメールアドレスです。'
+    ]
+  ];
+
   const LOGIN_FAILED = [
     'id'=>2921,
     'message'=>[

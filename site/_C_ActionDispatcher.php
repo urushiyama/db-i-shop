@@ -1,9 +1,11 @@
 <?php
 require_once '_C_SessionController.php';
+require_once '_C_Renderer.php';
 require_once '_C_ApplicationException.php';
 require_once '_C_Members.php';
 require_once '_C_Dealers.php';
 require_once '_C_Crypt.php';
+require_once '_C_Mailers.php';
 
 class ActionDispatcher {
 
@@ -16,7 +18,8 @@ class ActionDispatcher {
     'search-product'=>'searchProduct',
     'update-product'=>'updateProduct',
     'add-to-cart'=>'addToCart',
-    'edit-product'=>'editProduct'
+    'edit-product'=>'editProduct',
+    'send-register-email'=>'sendRegisterEmail'
   ];
 
   static function act(MainController $con) {
@@ -169,6 +172,64 @@ class ActionDispatcher {
     }
     $user->destroy();
     SessionController::destroy();
+    return true;
+  }
+
+  static function sendRegisterEmail(MainController $con) {
+    # - params
+    #   - account-type
+    #   - user-name
+    #   - email
+    # - only can do by admin
+    $user = SessionController::currentUser();
+    if ($user == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      return false;
+    }
+    if (!($user instanceof Members) || !($user->isAdmin())) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      return false;
+    }
+    if (!isset($_POST['user-name'])
+        || !isset($_POST['email'])
+        || !isset($_POST['account-type'])) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-account';
+      return false;
+    }
+    if (!array_key_exists($_POST['account-type'], SessionController::LOGIN_TYPE)) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-account';
+      return false;
+    }
+    if (!Mailers::verify($_POST['email'])) {
+      ApplicationException::create(ApplicationException::INVALID_EMAIL);
+    }
+    $password = Crypt::randomHexString(8);
+    $model = SessionController::LOGIN_TYPE[$_POST['account-type']]['model'];
+    $model::validateValues([
+      'name'=>$_POST['user-name'],
+      'password'=>$password,
+      'confirmation'=>$password
+    ]);
+    $user = $model::find_by(['name'=>$_POST['user-name']]);
+    if ($user) {
+      ApplicationException::create(ApplicationException::DUPLICATED_USER_NAME);
+    }
+    if (ApplicationException::isStored()) {
+      $con->page = 'manage-account';
+      return false;
+    }
+    /* Succeed for registration */
+    // $model::create(['name'=>$_POST['user-name'], 'password'=>$password]);
+    $renderer = new Renderer('');
+    $mail = new Mailers();
+    $mail->from = 'mail-from@example.com';
+    $mail->to = $_POST['email'];
+    global $system_name;
+    $mail->subject = "Welcome to $system_name";
+    $mail->body = $renderer->render(['template'=>'_register-email-text.php', 'account_name'=>$_POST['user-name'], 'password'=>$password, 'account_type'=>$_POST['account-type']]);
+    $mail->send($con);
     return true;
   }
 

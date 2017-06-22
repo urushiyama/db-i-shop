@@ -59,6 +59,10 @@ class Crypt {
     $encrypted_data = openssl_encrypt($data, 'AES-256-CBC', $key, true, $iv);
     return base64_encode($salt . $encrypted_data);
   }
+
+  static function randomHexString($n = 8) {
+    return bin2hex(openssl_random_pseudo_bytes($n/2));
+  }
 }
 
 if (realpath($argv[0]) == __FILE__) {

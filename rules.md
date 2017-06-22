@@ -31,6 +31,7 @@
 | product-register | NULL            | update-product   | updateProduct             |
 | product-detail   | shopping-basket | add-to-cart      | addToCart                 |
 | edit-product     | product-register\|manage-product | edit-product (submit[update\|delete]) | editProduct\|deleteProduct |
+| manage-account   | preview-email   | send-register-email | sendRegisterEmail      |
 
 ## Exception rules
 
