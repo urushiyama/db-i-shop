@@ -5,6 +5,13 @@ $renderer = new Renderer('_not-found-page.php');
 $start_from = (isset($_GET['start'])) ? $_GET['start'] : 1;
 $query = (isset($_GET['query'])) ? urlencode(htmlspecialchars($_GET['query'])) : '';
 $max = 100; // 検索結果の個数
+
+$template = '_brief-product-container.php';
+if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_MEMBER && SessionController::currentUser()->isAdmin()){
+  $admin = 1;
+  $template = '_admin-brief-product-container.php';
+}
+
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
@@ -12,11 +19,11 @@ $max = 100; // 検索結果の個数
   </div>
   <div class="box-login-form-content">
     <? if (isset($button_template)): ?>
-    <?=$renderer->render(['template'=>'_brief-product-container.php', 'button_template'=>$button_template])?>
-    <?=$renderer->render(['template'=>'_brief-product-container.php', 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860, 'button_template'=>$button_template]) ?>
+    <?=$renderer->render(['template'=>$template, 'button_template'=>$button_template])?>
+    <?=$renderer->render(['template'=>$template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860, 'button_template'=>$button_template]) ?>
     <? else: ?>
-    <?=$renderer->render(['template'=>'_brief-product-container.php'])?>
-    <?=$renderer->render(['template'=>'_brief-product-container.php', 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860]) ?>
+    <?=$renderer->render(['template'=>$template])?>
+    <?=$renderer->render(['template'=>$template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860]) ?>
     <? endif ?>
     <div class="box-content-column">
       <div class="box-content-row">
@@ -27,6 +34,6 @@ $max = 100; // 検索結果の個数
         <input type="button" value="次の10件" onclick="?p=search-product&amp;query=<?=$query ?>&amp;start=<?=$start_from + 10 ?>">
         <? endif ?>
       </div>
-    </form>
+    </div>
   </div>
 </div>
