@@ -19,7 +19,7 @@ if (!isset($product_stock)) $product_stock = 10;
       <img class="product-thumbnail minimum" src="<?=htmlspecialchars($image, ENT_QUOTES) ?>" alt="商品のサムネイル">
     </div>
     <div class="box-content-column box-align-left" style="flex: 1 1 800px;">
-      <a class="product-name" href=""><?=htmlspecialchars($product_name) ?></a>
+      <a class="product-name" href="?p=product-detail&amp;product_id=<?=htmlspecialchars(urlencode($product_id)) ?>"><?=htmlspecialchars($product_name) ?></a>
       <em><?=htmlspecialchars($dealer_name) ?> が出品</em>
     </div>
     <div class="box-content-column box-align-right" style="flex: 1 1 400px;">
