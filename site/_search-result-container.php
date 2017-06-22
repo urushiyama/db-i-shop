@@ -6,12 +6,11 @@ $start_from = (isset($_GET['start'])) ? $_GET['start'] : 1;
 $query = (isset($_GET['query'])) ? urlencode(htmlspecialchars($_GET['query'])) : '';
 $max = 100; // 検索結果の個数
 
-$template = '_brief-product-container.php';
-if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_MEMBER && SessionController::currentUser()->isAdmin()){
+if (!isset($template) && SessionController::currentLoginType() == SessionController::LOGIN_TYPE_MEMBER && SessionController::currentUser()->isAdmin()){
   $admin = 1;
   $template = '_admin-brief-product-container.php';
 }
-
+if (!isset($template)) $template = '_brief-product-container.php';
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
