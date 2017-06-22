@@ -648,6 +648,14 @@ body {
         -ms-flex: 4 2;
             flex: 4 2; }
 
+.box-login-form-content select, .box-login-form-content textarea {
+  border: none;
+  margin: 0.5em;
+  padding: 0.5em;
+  font-size: 1.0em;
+  color: black;
+  background-color: white; }
+
 .box-login-form-content p {
   -webkit-box-flex: 1;
       -ms-flex: 1 1;
