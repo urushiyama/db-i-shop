@@ -3,6 +3,7 @@ require_once '_C_SessionController.php';
 require_once '_C_ApplicationException.php';
 require_once '_C_Members.php';
 require_once '_C_Dealers.php';
+require_once '_C_Crypt.php';
 
 class ActionDispatcher {
 
@@ -187,7 +188,7 @@ class ActionDispatcher {
     /* check if product dealer == current user */
     if (isset($_POST['submit']['update'])) {
       // link to update product page
-      header("Location: ?p=product-register&product_id=".urlencode(openssl_encrypt($_POST['product_id'])));
+      header("Location: ?p=product-register&product_id=".urlencode(Crypt::encrypt($_POST['product_id'], Crypt::getGlobalPassword())));
       exit;
     }
     if (isset($_POST['submit']['delete'])) {

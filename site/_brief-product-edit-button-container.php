@@ -16,7 +16,7 @@ if (!isset($product_dealer)) $product_dealer = 0;
     <input type="submit" name="submit[update]" value="更新">
     <input type="submit" name="submit[delete]" value="削除">
     <? else: ?>
-    <input type="button" value="詳細をみる" onclick="location.href='?p=product-detail&amp;product-id=<?=htmlspecialchars($product_id, ENT_QUOTES) ?>'">
+    <input type="button" value="詳細をみる" onclick="location.href='?p=product-detail&amp;product-id=<?=htmlspecialchars(urlencode($product_id), ENT_QUOTES) ?>'">
     <? endif ?>
   </div>
 </form>
