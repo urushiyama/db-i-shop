@@ -6,7 +6,13 @@ $renderer = new Renderer('_not-found-page.php');
 $output = '';
 
 if ($login_type = SessionController::currentLoginType()) {
-  if ($login_type == SessionController::LOGIN_TYPE_MEMBER) {
+  if ($login_type == SessionController::LOGIN_TYPE_MEMBER && SessionController::currentUser()->isAdmin()) {
+    $output .= $renderer->render(['template'=>'_link-to-manage-account-container.php']);
+    $output .= $renderer->render(['template'=>'_search-product-container.php', 'box_title'=>'商品の検索']);
+    $output .= $renderer->render(['template'=>'_search-result-container.php', 'button_template'=>'_admin-brief-product-edit-button-container.php']);
+    $output .= $renderer->render(['template'=>"_account-info-container.php"]);
+
+  } elseif ($login_type == SessionController::LOGIN_TYPE_MEMBER) {
     $output .= $renderer->render(['template'=>"_search-product-container.php"]);
     $output .= $renderer->render(['template'=>"_account-info-container.php"]);
     $output .= $renderer->render(['template'=>"_login-reg-container.php", 'login_as'=>SessionController::LOGIN_TYPE_DEALER]);
