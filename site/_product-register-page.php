@@ -1,9 +1,11 @@
 <?php
 require_once '_C_Renderer.php';
+// require_once '_C_Crypt.php';
 $renderer = new Renderer('_not-found-page.php');
 
 if (!isset($image)) $image = 'http://lorempixel.com/256/256/technics/'.rand(1, 10);
 if (!isset($product_id)) $product_id = 0;
+$product_id = (isset($_GET['product_id'])) ? $_GET['product_id'] : 0;
 if (!isset($product_name)) $product_name = 'Product Name';
 if (!isset($dealer_name)) $dealer_name = 'Dealer Name';
 if (!isset($delivery_type)) $delivery_type = '宅急便';
@@ -58,7 +60,7 @@ if (!isset($product_description)) $product_description = '商品の詳細';
               <? endif ?>
             </select>
           </p>
-          <p>在庫<input class="minimum-width-input" type="number" name="units" value="1" min="1" max="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>"></p>
+          <p>在庫<input class="minimum-width-input" type="number" name="units" value="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>" min="0"></p>
         </div>
       </div>
       <div class="box-content-column box-align-left" style="margin-top: 8px;margin-left: 64px;">
