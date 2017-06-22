@@ -6,23 +6,28 @@ $start_from = (isset($_GET['start'])) ? $_GET['start'] : 1;
 $query = (isset($_GET['query'])) ? urlencode(htmlspecialchars($_GET['query'])) : '';
 $max = 100; // 検索結果の個数
 
-if (!isset($template) && SessionController::currentLoginType() == SessionController::LOGIN_TYPE_MEMBER && SessionController::currentUser()->isAdmin()){
+if (!isset($brief_template) && SessionController::currentLoginType() == SessionController::LOGIN_TYPE_MEMBER && SessionController::currentUser()->isAdmin()){
   $admin = 1;
-  $template = '_admin-brief-product-container.php';
+  $brief_template = '_admin-brief-product-container.php';
 }
-if (!isset($template)) $template = '_brief-product-container.php';
+if (!isset($brief_template)) $brief_template = '_brief-product-container.php';
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
     <h2>検索結果</h2>
   </div>
   <div class="box-login-form-content">
-    <? if (isset($button_template)): ?>
-    <?=$renderer->render(['template'=>$template, 'button_template'=>$button_template])?>
-    <?=$renderer->render(['template'=>$template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860, 'button_template'=>$button_template]) ?>
+    <? if ($brief_template=='_brief-account-edit-button-container.php'): ?>
+      <?=$renderer->render(['template'=>$brief_template, 'account_id'=>1]) ?>
+      <?=$renderer->render(['template'=>$brief_template, 'account_id'=>2]) ?>
     <? else: ?>
-    <?=$renderer->render(['template'=>$template])?>
-    <?=$renderer->render(['template'=>$template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860]) ?>
+      <? if (isset($button_template)): ?>
+      <?=$renderer->render(['template'=>$brief_template, 'button_template'=>$button_template])?>
+      <?=$renderer->render(['template'=>$brief_template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860, 'button_template'=>$button_template]) ?>
+      <? else: ?>
+      <?=$renderer->render(['template'=>$brief_template])?>
+      <?=$renderer->render(['template'=>$brief_template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860]) ?>
+      <? endif ?>
     <? endif ?>
     <div class="box-content-column">
       <div class="box-content-row">

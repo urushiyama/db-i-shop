@@ -647,6 +647,10 @@ body {
     -webkit-box-flex: 4;
         -ms-flex: 4 2;
             flex: 4 2; }
+  .box-login-form-content input[type="email"] {
+    -webkit-box-flex: 4;
+        -ms-flex: 4 2;
+            flex: 4 2; }
 
 .box-login-form-content select, .box-login-form-content textarea {
   border: none;
@@ -657,6 +661,11 @@ body {
   background-color: white; }
 
 .box-login-form-content p {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1;
+          flex: 1 1; }
+
+.box-login-form-content label {
   -webkit-box-flex: 1;
       -ms-flex: 1 1;
           flex: 1 1; }

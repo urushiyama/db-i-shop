@@ -149,6 +149,9 @@ body {
     &[type="password"] {
       flex: 4 2;
     }
+    &[type="email"] {
+      flex: 4 2;
+    }
   }
 
   select, textarea {
@@ -161,6 +164,10 @@ body {
   }
 
   p {
+    flex: 1 1;
+  }
+
+  label {
     flex: 1 1;
   }
 }
