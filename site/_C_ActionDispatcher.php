@@ -188,7 +188,7 @@ class ActionDispatcher {
     /* check if product dealer == current user */
     if (isset($_POST['submit']['update'])) {
       // link to update product page
-      header("Location: ?p=product-register&product_id=".urlencode(Crypt::encrypt($_POST['product_id'], Crypt::getGlobalPassword())));
+      header("Location: ?p=product-register&product_id=".urlencode($_POST['product_id']));
       exit;
     }
     if (isset($_POST['submit']['delete'])) {
