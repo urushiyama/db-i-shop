@@ -5,17 +5,16 @@ class Crypt {
   ** Referenced: https://blog.ohgaki.net/encrypt-decrypt-using-openssl
   */
 
-  private static $global_password;
+  const APPLICATION_PASSWORD = 'databaseI';
 
-  static function init() {
-     $global_password = openssl_random_pseudo_bytes(16);
-  }
-
-  static function getGlobalPassword() {
-    return $global_password;
-  }
-
-  static function decrypt($cipher, $password) {
+ /**
+  * decrypt AES 256
+  *
+  * @param data $edata
+  * @param string $password
+  * @return decrypted data
+  */
+  static function decrypt($edata, $password) {
     $data = base64_decode($edata);
     $salt = substr($data, 0, 16);
     $ct = substr($data, 16);
@@ -26,8 +25,8 @@ class Crypt {
     $hash[0] = hash('sha256', $data00, true);
     $result = $hash[0];
     for ($i = 1; $i < $rounds; $i++) {
-        $hash[$i] = hash('sha256', $hash[$i - 1].$data00, true);
-        $result .= $hash[$i];
+      $hash[$i] = hash('sha256', $hash[$i - 1].$data00, true);
+      $result .= $hash[$i];
     }
     $key = substr($result, 0, 32);
     $iv  = substr($result, 32,16);
@@ -35,7 +34,14 @@ class Crypt {
     return openssl_decrypt($ct, 'AES-256-CBC', $key, true, $iv);
   }
 
-  static function encrypt($plain, $password) {
+  /**
+   * crypt AES 256
+   *
+   * @param data $data
+   * @param string $password
+   * @return base64 encrypted data
+   */
+  static function encrypt($data, $password) {
     // Set a random salt
     $salt = openssl_random_pseudo_bytes(16);
 
@@ -55,5 +61,11 @@ class Crypt {
   }
 }
 
-Crypt::init();
+if (realpath($argv[0]) == __FILE__) {
+  $plain = "Hoge Hoge Foo Bar";
+  $cipher = Crypt::encrypt($plain, "password");
+  $replain = Crypt::decrypt($cipher, "password");
+  var_dump($plain);
+  var_dump($replain);
+}
 ?>
