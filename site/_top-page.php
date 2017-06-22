@@ -11,7 +11,8 @@ if ($login_type = SessionController::currentLoginType()) {
     $output .= $renderer->render(['template'=>"_account-info-container.php"]);
     $output .= $renderer->render(['template'=>"_login-reg-container.php", 'login_as'=>SessionController::LOGIN_TYPE_DEALER]);
   } elseif ($login_type == SessionController::LOGIN_TYPE_DEALER) {
-    $output .= $renderer->render(['template'=>"_search-product-container.php"]);
+    $output .= $renderer->render(['template'=>"_link-to-manage-product-container.php"]);
+    $output .= $renderer->render(['template'=>"_search-product-container.php", 'box_title'=>'全ての業者の商品を検索する']);
     $output .= $renderer->render(['template'=>"_account-info-container.php"]);
     $output .= $renderer->render(['template'=>"_login-reg-container.php", 'login_as'=>SessionController::LOGIN_TYPE_MEMBER]);
   }
