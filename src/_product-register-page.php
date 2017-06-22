@@ -49,8 +49,8 @@ if (!isset($product_description)) $product_description = '商品の詳細';
             </select>
           </p>
           <p>
-            商品の状態:
-            <select class="product-condition" name="product-condition">
+            <label for="product-condition">商品の状態:</label>
+            <select id="product-condition" class="product-condition" name="product-condition">
               <? if ($product_condition === 'new'): ?>
               <option value="new" selected>新品</option>
               <option value="used">中古</option>
@@ -60,12 +60,15 @@ if (!isset($product_description)) $product_description = '商品の詳細';
               <? endif ?>
             </select>
           </p>
-          <p>在庫<input class="minimum-width-input" type="number" name="units" value="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>" min="0"></p>
+          <p>
+            <label for="units">在庫</label>
+            <input id="units" class="minimum-width-input" type="number" name="units" value="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>" min="0">
+          </p>
         </div>
       </div>
       <div class="box-content-column box-align-left" style="margin-top: 8px;margin-left: 64px;">
-        <p>商品の概要</p>
-        <textarea name="product-description" rows="8" cols="80"><?=htmlspecialchars($product_description)?></textarea>
+        <label for="product-description">商品の概要</label>
+        <textarea id="product-description" name="product-description" rows="8" cols="80"><?=htmlspecialchars($product_description)?></textarea>
       </div>
       <div class="box-content-row">
         <input type="submit" value="登録・更新する">
