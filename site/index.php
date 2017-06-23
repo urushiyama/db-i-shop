@@ -72,10 +72,11 @@ class MainController {
     }
     // get actions
     $get_action_pages = [
-      'search-product'
+      'search-product',
+      'search-account'
     ];
-    if (isset($_GET['p']) && in_array($_GET['p'], $get_action_pages)) {
-      $this->action = htmlspecialchars($_GET['p']);
+    if (isset($_GET['a']) && in_array($_GET['a'], $get_action_pages)) {
+      $this->action = htmlspecialchars($_GET['a']);
     }
   }
 

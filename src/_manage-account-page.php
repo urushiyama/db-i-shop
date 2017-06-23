@@ -2,7 +2,7 @@
 require_once '_C_Renderer.php';
 
 $renderer = new Renderer('_not-found-page.php');
-$account_type = (isset($_GET['account_type'])) ? $_GET['account_type'] : SessionController::LOGIN_TYPE_MEMBER;
+$account_type = (isset($_GET['account-type'])) ? $_GET['account-type'] : SessionController::LOGIN_TYPE_MEMBER;
  ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
@@ -27,4 +27,4 @@ $account_type = (isset($_GET['account_type'])) ? $_GET['account_type'] : Session
   </div>
 </div>
 <?=$renderer->render(['template'=>'_search-account-container.php', 'account_type'=>$account_type]); ?>
-<?=$renderer->render(['template'=>'_search-result-container.php', 'brief_template'=>'_brief-account-edit-button-container.php']); ?>
+<?=$renderer->render(['template'=>'_search-result-container.php', 'brief_template'=>'_brief-account-edit-button-container.php', 'search_page'=>'manage-account', 'search_action'=>'search-account', 'results'=>$results, 'account_type'=>$account_type, 'max'=>$max]); ?>

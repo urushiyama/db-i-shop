@@ -15,10 +15,10 @@ $user = $model::find_by(['id'=>$account_id]);
 <div class="floating-box">
   <form action="." method="post" class="box-content-row">
     <input type="hidden" name="a" value="delete-account">
-    <input type="hidden" name="account_type" value="<?=htmlspecialchars($account_type) ?>">
-    <input type="hidden" name="account_id" value="<?=htmlspecialchars($account_id, ENT_QUOTES) ?>">
+    <input type="hidden" name="account-type" value="<?=htmlspecialchars($account_type) ?>">
+    <input type="hidden" name="account-id" value="<?=htmlspecialchars($account_id, ENT_QUOTES) ?>">
       <p style="flex: 10 8;"><?=htmlspecialchars($account_name) ?></p>
-      <input type="submit" name="submit[delete]" value="登録を削除する" style="flex: 1 1 256px;">
+      <input type="submit" value="登録を削除する" style="flex: 1 1 256px;">
   </form>
 </div>
 <? endif ?>

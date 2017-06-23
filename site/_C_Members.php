@@ -20,14 +20,39 @@ class Members extends AuthenticatedUsers {
     if (isset($admin)) $this->admin = $admin;
   }
 
+  static function query($sql, array $params = []) {
+    $results = ModelBase::query($sql, $params);
+    return array_map(function ($res) {
+      return new static([
+        'id'=>$res['id'],
+        'name'=>$res['name'],
+        'password_digest'=>$res['password'],
+        'admin'=>$res['admin']
+      ]);
+    }, $results);
+  }
+
+  static function lookup($sql, array $params = [], array $keys = [], $table='') {
+    if ($table == '') $table = self::$table;
+    $results = ModelBase::lookup($sql, $params, $keys, $table);
+    return array_map(function ($res) {
+      return new static([
+        'id'=>$res['id'],
+        'name'=>$res['name'],
+        'password_digest'=>$res['password'],
+        'admin'=>$res['admin']
+      ]);
+    }, $results);
+  }
+
   function reload() {
     # reload instance from db
-    $row = static::lookup("id = :id", ['id'=>$this->id], ['name', 'password', 'admin']);
+    $row = self::lookup("id = :id", ['id'=>$this->id], ['name', 'password', 'admin']);
     if (!$rows) return false;
-    $this->name = $rows[0]['name'];
-    $this->password_digest = $rows[0]['password'];
+    $this->name = $rows[0]->name;
+    $this->password_digest = $rows[0]->password_digest;
     $this->password = '';
-    $this->admin = $rows[0]['admin'];
+    $this->admin = $rows[0]->isAdmin();
     return true;
   }
 
@@ -38,10 +63,10 @@ class Members extends AuthenticatedUsers {
                                 ));
       $res = static::lookup($query, $params);
       return ($res) ? new static([
-                      'id'=>$res[0]['id'],
-                      'name'=>$res[0]['name'],
-                      'password_digest'=>$res[0]['password'],
-                      'admin'=>$res[0]['admin']
+                      'id'=>$res[0]->id,
+                      'name'=>$res[0]->name,
+                      'password_digest'=>$res[0]->password_digest,
+                      'admin'=>$res[0]->isAdmin()
                       ]) : null;
     } else {
       return null;

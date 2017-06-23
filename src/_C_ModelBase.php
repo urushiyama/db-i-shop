@@ -5,6 +5,10 @@ class ModelBase {
   protected static $db = false;  // PDO instance, shared by all children classes
   protected static $table; // table name, should be protected to avoid sql injection.
 
+  static function getTable() {
+    return static::$table;
+  }
+
   function __construct() {
     # create new instance without modifing database.
   }
@@ -23,15 +27,14 @@ class ModelBase {
 
   /* some protected database helper method (query & CLUD) */
 
-  protected static function query($sql, array $params = []) {
+  static function query($sql, array $params = []) {
     $stmt = self::$db->prepare($sql);
     self::bindParams($stmt, $params);
-    $res = $stmt->execute();
-    if ($res === false) $res = "false";
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  protected static function insert(array $data) {
+  static function insert(array $data) {
     $keys = array_keys($data);
     $fields = join(',', $keys);
     $values = join(',', array_map(function ($k) {return ":${k}";}, $keys));
@@ -45,16 +48,17 @@ class ModelBase {
     return $res;
   }
 
-  protected static function lookup($where, array $params = [], array $keys = []) {
+  static function lookup($where, array $params = [], array $keys = [], $table='') {
     $fields = join(',', $keys) or $fields = '*';
-    $sql = self::appendWhere("SELECT ${fields} FROM ".static::$table, $where);
+    if ($table=='') $table = static::$table;
+    $sql = self::appendWhere("SELECT ${fields} FROM ".$table, $where);
     $stmt = self::$db->prepare($sql);
     self::bindParams($stmt, $params);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  protected static function update($where, array $data) {
+  static function update($where, array $data) {
     $set = join(',', array_map(function ($key, $value) { return "${key}=:${value}";},
                                 array_keys($data), array_keys($data)
                               ));
@@ -64,7 +68,7 @@ class ModelBase {
     return $stmt->execute();
   }
 
-  protected static function delete($where, array $params = []) {
+  static function delete($where, array $params = []) {
     $sql = self::appendWhere("DELETE FROM ".static::$table, $where);
     $stmt = self::$db->prepare($sql);
     self::bindParams($stmt, $params);

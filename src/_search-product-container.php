@@ -9,7 +9,7 @@ if (!isset($box_title)) $box_title = '商品を探す';
   </div>
   <div class="search-form-content">
     <form method="get" action="./?p=search-product" class="box-content-column">
-      <input type="hidden" name="p" value="search-product">
+      <input type="hidden" name="a" value="search-product">
       <div class="box-content-row">
         <input type="text" name="query" placeholder="商品名を入力して検索">
         <input type="submit" name="submit-search" value="検索">

@@ -15,6 +15,7 @@ class ActionDispatcher {
     'update-account'=>'updateAccount',
     'logout-account'=>'logoutAccount',
     'delete-account'=>'deleteAccount',
+    'search-account'=>'searchAccount',
     'search-product'=>'searchProduct',
     'update-product'=>'updateProduct',
     'add-to-cart'=>'addToCart',
@@ -54,6 +55,10 @@ class ActionDispatcher {
       return false;
     }
     $model = SessionController::LOGIN_TYPE[$_POST['login_type']]['model'];
+    if ($model == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      return false;
+    }
     $model::validateValues([
       'name'=>$_POST['user_name'],
       'password'=>$_POST['password'],
@@ -95,6 +100,10 @@ class ActionDispatcher {
       return false;
     }
     $model = SessionController::LOGIN_TYPE[$_POST['login_type']]['model'];
+    if ($model == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      return false;
+    }
     $user = $model::find_by(['name'=>$_POST['user_name']]);
     if (!$user) {
       ApplicationException::create(ApplicationException::INVALID_LOGIN_COMBINATION);
@@ -136,6 +145,10 @@ class ActionDispatcher {
       return false;
     }
     $model = SessionController::LOGIN_TYPE[$_SESSION['login_type']]['model'];
+    if ($model == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      return false;
+    }
     $model::validateValues([
       'name'=>$_POST['user_name'],
       'password'=>$_POST['password'],
@@ -165,13 +178,87 @@ class ActionDispatcher {
 
   static function deleteAccount(MainController $con) {
     # - no params
-    $user = SessionController::currentUser();
-    if ($user == null) {
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    # - params
+    #   - account-id
+    #   - account-type
+    # - only can do by admin
+    if (isset($_POST['account-id']) || isset($_POST['account-type'])) {
+      if (!isset($_POST['account-id']) || !isset($_POST['account-type'])) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        return false;
+      }
+      if (!array_key_exists($_POST['account-type'], SessionController::LOGIN_TYPE)) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        $con->page = 'manage-account';
+        return false;
+      }
+      $user = SessionController::currentUser();
+      if ($user == null || !($user->isAdmin())) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        return false;
+      }
+      // delete an account by admin
+      $model = SessionController::LOGIN_TYPE[$_POST['account-type']]['model'];
+      if ($model == null) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        return false;
+      }
+      $account = $model::find_by(['id'=>$_POST['account-id']]);
+      if ($account == null) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        return false;
+      }
+      $account->destroy();
+      $con->page = 'manage-account';
+      return true;
+    } else {
+      $user = SessionController::currentUser();
+      if ($user == null || $user->isAdmin()) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        return false;
+      }
+      $user->destroy();
+      SessionController::destroy();
+      return true;
+    }
+  }
+
+  static function searchAccount(MainController $con) {
+    # - params
+    #   - account-type
+    #   - query
+    #       :if query == '' do index search
+    #   - (start)
+    #   - submit[search] || submit[index]
+    if (!isset($_GET['account-type'])
+        || !isset($_GET['query'])) {
       ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-account';
       return false;
     }
-    $user->destroy();
-    SessionController::destroy();
+    if (!array_key_exists($_GET['account-type'], SessionController::LOGIN_TYPE)) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-account';
+      return false;
+    }
+    $model = SessionController::LOGIN_TYPE[$_GET['account-type']]['model'];
+    $start = (isset($_GET['start'])) ? $_GET['start']: 1;
+    $max = ModelBase::query("SELECT count(*) as count FROM ".$model::getTable())[0]['count'];
+    $end = ($max > $start + 9) ? $start + 9 : $max;
+    if ($_GET['query'] == '' || isset($_GET['submit']['index'])) {
+      // return all accounts
+      $sql= "SELECT id, name, password FROM (SELECT @row:=@row+1 as row, id, name, password FROM members, (select @row:=0) ini ORDER BY id) result WHERE row between :start and :end";
+      $results = $model::query($sql, ['start'=>$start, 'end'=>$end]);
+    } else {
+      // return name matched accounts
+      $query = str_replace('%', '\%', $_GET['query']);
+      $sql= "SELECT id, name, password FROM (SELECT @row:=@row+1 as row, id, name, password FROM members, (select @row:=0) ini WHERE name like :name ORDER BY id) result WHERE row between :start and :end";
+      $results = $model::query($sql, ['start'=>$start, 'end'=>$end, 'name'=>"%$query%"]);
+    }
+    $con->other_params['results'] = $results;
+    $con->other_params['max'] = $max;
+    $con->page = 'manage-account';
     return true;
   }
 
@@ -221,7 +308,7 @@ class ActionDispatcher {
       return false;
     }
     /* Succeed for registration */
-    // $model::create(['name'=>$_POST['user-name'], 'password'=>$password]);
+    $model::create(['name'=>$_POST['user-name'], 'password'=>$password]);
     $renderer = new Renderer('');
     $mail = new Mailers();
     $mail->from = 'mail-from@example.com';

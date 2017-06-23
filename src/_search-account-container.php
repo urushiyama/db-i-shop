@@ -10,7 +10,7 @@ if (!isset($account_type)) $account_type = SessionController::LOGIN_TYPE_MEMBER;
   <div class="search-form-content">
     <form method="get" action="." class="box-content-column">
       <input type="hidden" name="a" value="search-account">
-      <input type="hidden" name="account_type" value="<?=htmlspecialchars($account_type) ?>">
+      <input type="hidden" name="account-type" value="<?=htmlspecialchars($account_type, ENT_QUOTES) ?>">
       <div class="box-content-column">
         <div class="box-content-row">
           <label for="query">ユーザ名</label>
