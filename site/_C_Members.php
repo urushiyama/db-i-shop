@@ -61,7 +61,7 @@ class Members extends AuthenticatedUsers {
       $query = join(',', array_map(function ($key, $value) { return "${key}=:${value}";},
                                   array_keys($params), array_keys($params)
                                 ));
-      $res = static::lookup($query, $params);
+      $res = self::lookup($query, $params);
       return ($res) ? new static([
                       'id'=>$res[0]->id,
                       'name'=>$res[0]->name,

@@ -63,7 +63,7 @@ class AuthenticatedUsers extends ModelBase {
 
   function reload() {
     # reload instance from db
-    $rows = self::lookup("id = :id", ['id'=>$this->id], ['name', 'password']);
+    $rows = self::lookup("id = :id", ['id'=>$this->id], ['name', 'password'], static::$table);
     if (!$rows) return false;
     $this->name = $rows[0]->name;
     $this->password_digest = $rows[0]->password_digest;
@@ -94,7 +94,7 @@ class AuthenticatedUsers extends ModelBase {
       $query = join(',', array_map(function ($key, $value) { return "${key}=:${value}";},
                                   array_keys($params), array_keys($params)
                                 ));
-      $res = static::lookup($query, $params);
+      $res = static::lookup($query, $params, [], static::$table);
       return ($res) ? new static([
                       'id'=>$res[0]->id,
                       'name'=>$res[0]->name,
