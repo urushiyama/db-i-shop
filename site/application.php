@@ -22,7 +22,7 @@ $renderer = new Renderer("_not-found-page.php");
     <div class="system-logo">
       <h1><a href="./?p=top" class="system-logo-link"><?= $system_name ?></a></h1>
     </div>
-    <?
+    <?php
       if (isset($flashes)) {
         foreach ($flashes as $flash) {
           if (isset($flash['level']) && isset($flash['message'])) {
