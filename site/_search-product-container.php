@@ -12,7 +12,7 @@ if (!isset($box_title)) $box_title = '商品を探す';
       <input type="hidden" name="a" value="search-product">
       <div class="box-content-row">
         <input type="text" name="query" placeholder="商品名を入力して検索">
-        <input type="submit" name="submit-search" value="検索">
+        <input type="submit" name="submit[search]" value="検索">
       </div>
       <?php if ($advanced_search): ?>
       <div class="box-content-column">
@@ -20,9 +20,9 @@ if (!isset($box_title)) $box_title = '商品を探す';
       </div>
       <div class="box-content-column">
         <div class="box-content-row">
-          <input type="number" name="minimum-value" placeholder="下限">
+          <input type="number" name="min-price" placeholder="下限">
           <p>円以上</p>
-          <input type="number" name="maximum-value" placeholder="上限">
+          <input type="number" name="max-price" placeholder="上限">
           <p>円未満</p>
         </div>
       </div>
@@ -30,7 +30,7 @@ if (!isset($box_title)) $box_title = '商品を探す';
       <?php if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_DEALER): ?>
       <div class="box-content-column">
         <div class="box-content-row">
-          <input type="submit" name="submit-index-dealing" value="あなたの出品の一覧を表示">
+          <input type="submit" name="submit[dealing]" value="あなたの出品の一覧を表示">
         </div>
       </div>
       <?php endif ?>
@@ -43,9 +43,9 @@ if (!isset($box_title)) $box_title = '商品を探す';
           <p>出品継続中の商品を表示</p>
         </div>
         <div class="box-content-row">
-          <input type="submit" name="submit-search" value="絞り込み検索">
+          <input type="submit" name="submit[search]" value="絞り込み検索">
           <p>または</p>
-          <input type="submit" name="submit-index" value="全ての出品を表示">
+          <input type="submit" name="submit[index]" value="全ての出品を表示">
         </div>
       </div>
       <?php endif ?>

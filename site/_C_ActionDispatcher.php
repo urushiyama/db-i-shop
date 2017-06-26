@@ -321,6 +321,15 @@ class ActionDispatcher {
   }
 
   static function searchProduct(MainController $con) {
+    # - params
+    #   - query
+    #   - (min-price)
+    #   - (max-price)
+    #   - (show-banned)
+    #   - (show-not-banned)
+    #   - submit[search|index|dealing]
+    # - GET method action
+    
     return false;
   }
 
