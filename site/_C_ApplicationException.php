@@ -81,6 +81,102 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     ]
   ];
 
+  const INVALID_PRODUCT_NAME = [
+    'id'=>2051,
+    'message'=>[
+      'en'=>'Product name is invalid.',
+      'ja'=>'不正な商品名です。'
+    ]
+  ];
+
+  const EMPTY_PRODUCT_NAME = [
+    'id'=>2052,
+    'message'=>[
+      'en'=>'Product name must not be empty.',
+      'ja'=>'商品名が空になっています。'
+    ]
+  ];
+
+  const INVISIBLE_PRODUCT_NAME = [
+    'id'=>2056,
+    'message'=>[
+      'en'=>'At least one visible character is required for product name.',
+      'ja'=>'商品名には可視文字を少なくとも1文字以上含める必要があります。'
+    ]
+  ];
+
+  const INVALID_PRODUCT_CONDITION_TYPE = [
+    'id'=>2053,
+    'message'=>[
+      'en'=>'Product condition_type is invalid. ONLY \'new\' or \'used\' is allowed.',
+      'ja'=>'不正な商品の状態です。\'new\'と\'used\'のみ設定可能です。'
+    ]
+  ];
+
+  const INVALID_PRODUCT_STOCK = [
+    'id'=>2054,
+    'message'=>[
+      'en'=>'Product stock is invalid.',
+      'ja'=>'不正な在庫数です。'
+    ]
+  ];
+
+  const INVALID_PRODUCT_PRICE = [
+    'id'=>2055,
+    'message'=>[
+      'en'=>'Product price is invalid.',
+      'ja'=>'不正な商品価格です。'
+    ]
+  ];
+
+  const INVALID_PRODUCT_CREATED_DATE = [
+    'id'=>2057,
+    'message'=>[
+      'en'=>'Product created_date is invalid.',
+      'ja'=>'不正な作成日時です。'
+    ]
+  ];
+
+  const INVALID_DELIVERY_TYPE_NAME = [
+    'id'=>2061,
+    'message'=>[
+      'en'=>'Delivery type\'s name is invalid.',
+      'ja'=>'不正な配送手法名です。'
+    ]
+  ];
+
+  const INVISIBLE_DELIVERY_TYPE_NAME = [
+    'id'=>2066,
+    'message'=>[
+      'en'=>'At least one visible character is required for delivery type\'s name.',
+      'ja'=>'配送手法名には可視文字を少なくとも1文字以上含める必要があります。'
+    ]
+  ];
+
+  const INVALID_DELIVERY_TYPE_CHARGE = [
+    'id'=>2062,
+    'message'=>[
+      'en'=>'Delivery type\'s charge is invalid.',
+      'ja'=>'不正な配送料金です。'
+    ]
+  ];
+
+  const PRODUCT_DEALER_NOT_FOUND = [
+    'id'=>2951,
+    'message'=>[
+      'en'=>'Product dealer is not found.',
+      'ja'=>'商品を登録した販売業者が見つかりません。'
+    ]
+  ];
+
+  const PRODUCT_DELIVERY_TYPE_NOT_FOUND = [
+    'id'=>2952,
+    'message'=>[
+      'en'=>'Product delivery_type is not found.',
+      'ja'=>'商品の配送方法が見つかりません。'
+    ]
+  ];
+
   const LOGIN_FAILED = [
     'id'=>2921,
     'message'=>[
