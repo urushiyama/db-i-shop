@@ -15,7 +15,7 @@ class ModelBase {
 
   static function initDb() {
     extract(self::$connection_info); // host, dbname, user, password
-    $dsn = "mysql:host=${host};dbname=${dbname}";
+    $dsn = "mysql:host=${host};dbname=${dbname};charset=utf8;";
     self::$db = new PDO($dsn, $user, $password);
     self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }
