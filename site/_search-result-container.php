@@ -37,9 +37,13 @@ if (!isset($results)) $results = [];
       <div class="box-content-row">
         <?php if ($start_from > 10): ?>
         <input type="button" value="前の10件" onclick="location.href='?p=<?=htmlspecialchars($search_page, ENT_QUOTES)?>&amp;a=<?=htmlspecialchars($search_action, ENT_QUOTES)?>&amp;account-type=<?=$account_type?>&amp;query=<?=$query ?>&amp;start=<?=$start_from - 10 ?>'">
+        <?php else: ?>
+          <input type="button" value="前の10件" disabled>
         <?php endif ?>
         <?php if ($start_from+10 <= $max): ?>
         <input type="button" value="次の10件" onclick="location.href='?p=<?=htmlspecialchars($search_page, ENT_QUOTES)?>&amp;a=<?=htmlspecialchars($search_action, ENT_QUOTES)?>&amp;account-type=<?=$account_type?>&amp;query=<?=$query ?>&amp;start=<?=$start_from + 10 ?>'">
+        <?php else: ?>
+          <input type="button" value="次の10件" disabled>
         <?php endif ?>
       </div>
     </div>

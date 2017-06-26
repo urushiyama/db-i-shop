@@ -635,6 +635,11 @@ body {
     -webkit-box-flex: 2;
         -ms-flex: 2 1;
             flex: 2 1; }
+    .box-login-form-content input[type="button"][disabled] {
+      background-color: #bfbfbf; }
+      .box-login-form-content input[type="button"][disabled]:hover {
+        -webkit-box-shadow: none !important;
+                box-shadow: none !important; }
   .box-login-form-content input[type="submit"] {
     -webkit-box-flex: 2;
         -ms-flex: 2 1;

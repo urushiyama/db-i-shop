@@ -139,6 +139,12 @@ body {
 
     &[type="button"] {
       flex: 2 1;
+      &[disabled] {
+        background-color: $input-bg-color * 0.75;
+        &:hover {
+          box-shadow: none !important;
+        }
+      }
     }
     &[type="submit"] {
       flex: 2 1;
