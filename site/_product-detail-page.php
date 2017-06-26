@@ -51,15 +51,15 @@ if (SessionController::currentLoginType() == LOGIN_TYPE_MEMBER && SessionControl
             <input type="hidden" name="product_id" value="<?=htmlspecialchars($product_id, ENT_QUOTES) ?>">
             <input class="minimum-width-input" type="number" name="units" value="1" min="1" max="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>">
             <p>残り<?=htmlspecialchars($product_stock) ?>個</p>
-            <? if ($admin): ?>
-              <? if ($product_banned): ?>
+            <?php if ($admin): ?>
+              <?php if ($product_banned): ?>
             <input type="submit" name="submit[ban]" value="出品の一時停止">
-              <? else: ?>
+              <?php else: ?>
             <input type="submit" name="submit[unban]" value="出品の許可">
-              <? endif ?>
-            <? else: ?>
+              <?php endif ?>
+            <?php else: ?>
             <input type="submit" value="買い物かごに入れる">
-            <? endif ?>
+            <?php endif ?>
           </form>
         </div>
       </div>

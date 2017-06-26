@@ -20,27 +20,27 @@ if (!isset($results)) $results = [];
     <h2>検索結果</h2>
   </div>
   <div class="box-login-form-content">
-    <? if ($brief_template=='_brief-account-edit-button-container.php'): ?>
+    <?php if ($brief_template=='_brief-account-edit-button-container.php'): ?>
       <?php foreach ($results as $account): ?>
         <?=$renderer->render(['template'=>$brief_template, 'account_id'=>$account->id]) ?>
       <?php endforeach; ?>
-    <? else: ?>
-      <? if (isset($button_template)): ?>
+    <?php else: ?>
+      <?php if (isset($button_template)): ?>
       <?=$renderer->render(['template'=>$brief_template, 'button_template'=>$button_template])?>
       <?=$renderer->render(['template'=>$brief_template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860, 'button_template'=>$button_template]) ?>
-      <? else: ?>
+      <?php else: ?>
       <?=$renderer->render(['template'=>$brief_template])?>
       <?=$renderer->render(['template'=>$brief_template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860]) ?>
-      <? endif ?>
-    <? endif ?>
+      <?php endif ?>
+    <?php endif ?>
     <div class="box-content-column">
       <div class="box-content-row">
-        <? if ($start_from > 10): ?>
+        <?php if ($start_from > 10): ?>
         <input type="button" value="前の10件" onclick="location.href='?p=<?=htmlspecialchars($search_page, ENT_QUOTES)?>&amp;a=<?=htmlspecialchars($search_action, ENT_QUOTES)?>&amp;account-type=<?=$account_type?>&amp;query=<?=$query ?>&amp;start=<?=$start_from - 10 ?>'">
-        <? endif ?>
-        <? if ($start_from+10 <= $max): ?>
+        <?php endif ?>
+        <?php if ($start_from+10 <= $max): ?>
         <input type="button" value="次の10件" onclick="location.href='?p=<?=htmlspecialchars($search_page, ENT_QUOTES)?>&amp;a=<?=htmlspecialchars($search_action, ENT_QUOTES)?>&amp;account-type=<?=$account_type?>&amp;query=<?=$query ?>&amp;start=<?=$start_from + 10 ?>'">
-        <? endif ?>
+        <?php endif ?>
       </div>
     </div>
   </div>

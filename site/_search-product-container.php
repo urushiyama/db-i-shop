@@ -14,7 +14,7 @@ if (!isset($box_title)) $box_title = '商品を探す';
         <input type="text" name="query" placeholder="商品名を入力して検索">
         <input type="submit" name="submit-search" value="検索">
       </div>
-      <? if ($advanced_search): ?>
+      <?php if ($advanced_search): ?>
       <div class="box-content-column">
         <p>条件で絞り込む</p>
       </div>
@@ -26,15 +26,15 @@ if (!isset($box_title)) $box_title = '商品を探す';
           <p>円未満</p>
         </div>
       </div>
-      <? endif ?>
-      <? if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_DEALER): ?>
+      <?php endif ?>
+      <?php if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_DEALER): ?>
       <div class="box-content-column">
         <div class="box-content-row">
           <input type="submit" name="submit-index-dealing" value="あなたの出品の一覧を表示">
         </div>
       </div>
-      <? endif ?>
-      <? if ($admin): ?>
+      <?php endif ?>
+      <?php if ($admin): ?>
       <div class="box-content-column">
         <div class="box-content-row">
           <input type="checkbox" name="show-banned" value="1" checked="checked">
@@ -48,7 +48,7 @@ if (!isset($box_title)) $box_title = '商品を探す';
           <input type="submit" name="submit-index" value="全ての出品を表示">
         </div>
       </div>
-      <? endif ?>
+      <?php endif ?>
     </form>
   </div>
 </div>

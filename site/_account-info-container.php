@@ -3,7 +3,7 @@ require_once '_C_SessionController.php';
 
 $user = SessionController::currentUser();
  ?>
-<? if ($user): ?>
+<?php if ($user): ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
     <h2><?= htmlspecialchars($user->name) ?>さんの会員情報</h2>
@@ -16,4 +16,4 @@ $user = SessionController::currentUser();
     </form>
   </div>
 </div>
-<? endif ?>
+<?php endif ?>

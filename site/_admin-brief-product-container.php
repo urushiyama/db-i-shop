@@ -35,11 +35,11 @@ if (!isset($product_stock)) $product_stock = 10;
       <form action="." method="post" class="box-content-row" style="margin: 0;">
         <input type="hidden" name="a" value="toggle-product-suspention">
         <input type="hidden" name="product_id" value="<?=htmlspecialchars($product_id, ENT_QUOTES) ?>">
-        <? if ($product_banned): ?>
+        <?php if ($product_banned): ?>
         <input type="submit" name="submit[unban]" value="出品の許可">
-        <? else: ?>
+        <?php else: ?>
         <input type="button" name="submit[ban]" value="出品の一時停止">
-        <? endif ?>
+        <?php endif ?>
       </form>
     </div>
   </div>

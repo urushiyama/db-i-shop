@@ -7,7 +7,7 @@ $old_password = isset($_POST['old-password']) ? htmlspecialchars($_POST['old-pas
 $password = isset($_POST['password']) ? htmlspecialchars($_POST['password'])
                                     : '';
  ?>
-<? if ($user): ?>
+<?php if ($user): ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
     <h2>登録情報の更新</h2>
@@ -65,4 +65,4 @@ $password = isset($_POST['password']) ? htmlspecialchars($_POST['password'])
     </form>
   </div>
 </div>
-<? endif ?>
+<?php endif ?>

@@ -51,13 +51,13 @@ if (!isset($product_description)) $product_description = '商品の詳細';
           <p>
             <label for="product-condition">商品の状態:</label>
             <select id="product-condition" class="product-condition" name="product-condition">
-              <? if ($product_condition === 'new'): ?>
+              <?php if ($product_condition === 'new'): ?>
               <option value="new" selected>新品</option>
               <option value="used">中古</option>
-              <? elseif ($product_condition === 'used'): ?>
+              <?php elseif ($product_condition === 'used'): ?>
               <option value="new">新品</option>
               <option value="used" selected>中古</option>
-              <? endif ?>
+              <?php endif ?>
             </select>
           </p>
           <p>

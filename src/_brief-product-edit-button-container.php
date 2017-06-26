@@ -12,11 +12,11 @@ if (!isset($product_dealer)) $product_dealer = 0;
     <p>残り<?=htmlspecialchars($product_stock) ?>個</p>
   </div>
   <div class="box-content-row" style="margin: 0;">
-    <? if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_DEALER && SessionController::currentUser()->id == $product_dealer): ?>
+    <?php if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_DEALER && SessionController::currentUser()->id == $product_dealer): ?>
     <input type="submit" name="submit[update]" value="更新">
     <input type="submit" name="submit[delete]" value="削除">
-    <? else: ?>
+    <?php else: ?>
     <input type="button" value="詳細をみる" onclick="location.href='?p=product-detail&amp;product-id=<?=htmlspecialchars(urlencode($product_id), ENT_QUOTES) ?>'">
-    <? endif ?>
+    <?php endif ?>
   </div>
 </form>

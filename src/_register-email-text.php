@@ -1,4 +1,4 @@
-<? global $system_name ?>
+<?php global $system_name ?>
 Hi, <?=$account_name?>!
 
 Thank you for your registration for <?=$system_name?>.

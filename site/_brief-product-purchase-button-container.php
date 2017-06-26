@@ -10,10 +10,10 @@ if (!isset($product_stock)) $product_stock = 0;
     <p>残り<?=htmlspecialchars($product_stock) ?>個</p>
   </div>
   <div class="box-content-row" style="margin: 0;">
-    <? if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_MEMBER): ?>
+    <?php if (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_MEMBER): ?>
     <input type="submit" value="買い物かごに入れる">
-    <? else: ?>
+    <?php else: ?>
     <input type="button" value="詳細をみる" onclick="location.href='?p=product-detail&amp;product-id=<?=htmlspecialchars($product_id, ENT_QUOTES) ?>'">
-    <? endif ?>
+    <?php endif ?>
   </div>
 </form>
