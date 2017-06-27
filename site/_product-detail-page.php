@@ -1,17 +1,30 @@
 <?php
 require_once '_C_Renderer.php';
 require_once '_C_SessionController.php';
+require_once '_C_Products.php';
+require_once '_C_Dealers.php';
+require_once '_C_DeliveryTypes.php';
 $renderer = new Renderer('_not-found-page.php');
 
 if (!isset($image)) $image = 'http://lorempixel.com/256/256/technics/'.rand(1, 10);
 if (!isset($product_id)) $product_id = 0;
-if (!isset($product_name)) $product_name = 'Product Name';
-if (!isset($dealer_name)) $dealer_name = 'Dealer Name';
-if (!isset($delivery_type)) $delivery_type = '宅急便';
-if (!isset($delivery_cost)) $delivery_cost = 864;
-if (!isset($product_price)) $product_price = 1280;
-if (!isset($product_stock)) $product_stock = 10;
-if (!isset($product_condition)) $product_condition = 'new';
+
+$product = Products::find_by(['id'=>$product_id]);
+
+if ($product) {
+  $product_name = $product->name;
+  $dealer = Dealers::find_by(['id'=>$product->dealer_id]);
+  if ($dealer) $dealer_name = $dealer->name;
+  $delivery_type = DeliveryTypes::find_by(['id'=>$product->delivery_type_id]);
+  if ($delivery_type) {
+    $delivery_name = $delivery_type->name;
+    $delivery_cost = $delivery_type->charge;
+  }
+  $product_stock = $product->stock;
+  $product_condition = $product->condition_type;
+  $product_description = $product->description;
+}
+
 switch ($product_condition) {
   case 'new':
     $product_condition_name = '新品';
@@ -24,12 +37,13 @@ switch ($product_condition) {
     $product_condition = '';
     break;
 }
-if (!isset($product_description)) $product_description = '商品の詳細';
+
 if (SessionController::currentLoginType() == LOGIN_TYPE_MEMBER && SessionController::currentUser()->isAdmin()){
   $admin = 1;
 }
  ?>
 <?=$renderer->render(['template'=>'_search-product-container.php']) ?>
+<?php if ($product): ?>
 <div class="box-login-form">
   <div class="box-login-form-title">
     <h2>商品詳細</h2>
@@ -42,9 +56,21 @@ if (SessionController::currentLoginType() == LOGIN_TYPE_MEMBER && SessionControl
         </div>
         <div class="box-content-column box-align-left">
           <a class="product-name" href=""><?=htmlspecialchars($product_name) ?></a>
-          <em><?=htmlspecialchars($dealer_name) ?> が出品</em>
+          <em>
+            <?php if ($dealer_name != ""): ?>
+            <?=htmlspecialchars($dealer_name) ?> が出品
+            <?php else: ?>
+            出品者不明
+            <? endif ?>
+          </em>
           <p class="price"><?=htmlspecialchars($product_price) ?>円</p>
-          <p><?=htmlspecialchars($delivery_type) ?> <span class="price minimum">送料<?=htmlspecialchars($delivery_cost) ?>円</span></p>
+          <p>
+            <?php if ($delivery_type): ?>
+            <?=htmlspecialchars($delivery_name) ?> <span class="price minimum">送料<?=htmlspecialchars($delivery_cost) ?>円</span>
+            <?php else: ?>
+              配送方法不明
+            <?php endif ?>
+          </p>
           <p>商品の状態: <span class="product-condition-<?=htmlspecialchars($product_condition, ENT_QUOTES)?>"><?=htmlspecialchars($product_condition_name) ?></span></p>
           <form action="." method="post" class="box-content-row box-align-baseline">
             <input type="hidden" name="a" value="add-to-cart">
@@ -92,3 +118,13 @@ if (SessionController::currentLoginType() == LOGIN_TYPE_MEMBER && SessionControl
       <a onclick="listAll()">全て表示</a>
   </div>
 </div>
+<?php else: ?>
+<div class="box-login-form">
+  <div class="box-login-form-title">
+    <h2>商品詳細</h2>
+  </div>
+  <div class="box-login-form-content">
+    <p>お探しの商品は見つかりませんでした。</p>
+  </div>
+</div>
+<?php endif ?>

@@ -26,11 +26,13 @@ if (!isset($results)) $results = [];
       <?php endforeach; ?>
     <?php else: ?>
       <?php if (isset($button_template)): ?>
-      <?=$renderer->render(['template'=>$brief_template, 'button_template'=>$button_template])?>
-      <?=$renderer->render(['template'=>$brief_template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860, 'button_template'=>$button_template]) ?>
+        <?php foreach ($results as $product): ?>
+            <?=$renderer->render(['template'=>$brief_template, 'button_template'=>$button_template, 'product_id'=>$product->id])?>
+        <?php endforeach ?>
       <?php else: ?>
-      <?=$renderer->render(['template'=>$brief_template])?>
-      <?=$renderer->render(['template'=>$brief_template, 'product_name'=>'Lorem Keeper', 'dealer_name'=>'Foo Bar Co.Ltd.', 'product_price'=>14860]) ?>
+        <?php foreach ($results as $product): ?>
+            <?=$renderer->render(['template'=>$brief_template, 'product_id'=>$product->id])?>
+        <?php endforeach ?>
       <?php endif ?>
     <?php endif ?>
     <div class="box-content-column">
