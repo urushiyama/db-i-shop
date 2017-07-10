@@ -136,12 +136,12 @@ class Products extends ModelBase {
       return ($res) ? new static([
                       'id'              =>$res[0]->id,
                       'name'            =>$res[0]->name,
-                      'condition_type'  =>$rows[0]->condition_type,
-                      'stock'           =>$rows[0]->stock,
-                      'price'           =>$rows[0]->price,
-                      'description'     =>$rows[0]->description,
-                      'created_date'    =>$rows[0]->created_date,
-                      'suspention'      =>$rows[0]->suspention,
+                      'condition_type'  =>$res[0]->condition_type,
+                      'stock'           =>$res[0]->stock,
+                      'price'           =>$res[0]->price,
+                      'description'     =>$res[0]->description,
+                      'created_date'    =>$res[0]->created_date,
+                      'suspention'      =>$res[0]->suspention,
                       'dealer_id'       =>$res[0]->dealer_id,
                       'delivery_type_id'=>$res[0]->delivery_type_id
                       ]) : null;

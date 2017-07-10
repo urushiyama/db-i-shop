@@ -4,6 +4,7 @@ require_once '_C_Renderer.php';
 require_once '_C_ApplicationException.php';
 require_once '_C_Members.php';
 require_once '_C_Dealers.php';
+require_once '_C_Products.php';
 require_once '_C_Crypt.php';
 require_once '_C_Mailers.php';
 
@@ -329,11 +330,140 @@ class ActionDispatcher {
     #   - (show-not-banned)
     #   - submit[search|index|dealing]
     # - GET method action
+    if (!isset($_GET['query'])) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'search-product';
+      return false;
+    }
+    $start = (isset($_GET['start'])) ? $_GET['start']: 1;
+    $max = ModelBase::query("SELECT count(*) as count FROM ".Products::getTable())[0]['count'];
+    $end = ($max > $start + 9) ? $start + 9 : $max;
+    if (isset($_GET['submit']['search']) 
+        || (isset($_GET['query']) && !empty($_GET['query']))) {
+      // return name matched products matched advanced search query
+      if (isset($_GET['min-price']) && isset($_GET['max-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and price between :minp and :maxp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'name'=>"%{$_GET['query']}%",
+          'minp'=>$_GET['min-price'],
+          'maxp'=>$_GET['maxp']
+        ]);
+      } else if (isset($_GET['min-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and price >= :minp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'name'=>"%{$_GET['query']}%",
+          'minp'=>$_GET['min-price']
+        ]);
+      } else if (isset($_GET['max-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and price <= :maxp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'name'=>"%{$_GET['query']}%",
+          'maxp'=>$_GET['max-price']
+        ]);
+      } else {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'name'=>"%{$_GET['query']}%"
+        ]);
+      }
+    } else if (isset($_GET['submit']['dealing'])) {
+      // return dealed products matched advanced search query
+      if (SessionController::currentLoginType() != SessionController::LOGIN_TYPE_DEALER) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        $con->page = 'search-product';
+        return false;
+      }
+      if (isset($_GET['min-price']) && isset($_GET['max-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and dealer_id = :dealer_id and price between :minp and :maxp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'name'=>"%{$_GET['query']}%",
+          'minp'=>$_GET['min-price'],
+          'maxp'=>$_GET['maxp'],
+          'dealer_id'=>SessionController::currentUser()->id
+        ]);
+      } else if (isset($_GET['min-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and dealer_id = :dealer_id and price >= :minp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'name'=>"%{$_GET['query']}%",
+          'minp'=>$_GET['min-price'],
+          'dealer_id'=>SessionController::currentUser()->id
+        ]);
+      } else if (isset($_GET['max-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and dealer_id = :dealer_id and price <= :maxp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'name'=>"%{$_GET['query']}%",
+          'maxp'=>$_GET['max-price'],
+          'dealer_id'=>SessionController::currentUser()->id
+        ]);
+      } else {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and dealer_id = :dealer_id ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'name'=>"%{$_GET['query']}%",
+          'dealer_id'=>SessionController::currentUser()->id
+        ]);
+      }
+    } else /*if (isset($_GET['submit']['index']) || $_GET['query'] == '')*/ {
+      // return all products matched advanced search query
+      if (isset($_GET['min-price']) && isset($_GET['max-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE price between :minp and :maxp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'minp'=>$_GET['min-price'],
+          'maxp'=>$_GET['maxp']
+        ]);
+      } else if (isset($_GET['min-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE price >= :minp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'minp'=>$_GET['min-price']
+        ]);
+      } else if (isset($_GET['max-price'])) {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE price <= :maxp ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, [
+          'start'=>$start,
+          'end'=>$end,
+          'maxp'=>$_GET['max-price']
+        ]);
+      } else {
+        $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini ORDER BY id) result WHERE row between :start and :end";
+        $results = Products::query($sql, ['start'=>$start, 'end'=>$end]);
+      }
+    }
+    $con->other_params['results'] = $results;
+    $con->other_params['max'] = $max;
+    $con->page = 'search-product';
+    return true;
     
     return false;
   }
 
   static function updateProduct(MainController $con) {
+    # - params
+    #   - product-name
+    #   - product_price
+    #   - product-delivery(delivery_type_id)
+    #   - product_condition
+    #   - units (product_stock)
+    #   - product_description
+    # - POST method action
     return false;
   }
 
@@ -342,7 +472,37 @@ class ActionDispatcher {
   }
 
   static function editProduct(MainController $con) {
+    # - params
+    #   - product_id
+    #   - (units)
     /* check if product dealer == current user */
+    if (!isset($_POST['product_id'])) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-product';
+      return false;
+    }
+    if (SessionController::currentLoginType() != SessionController::LOGIN_TYPE_DEALER) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-product';
+      return false;
+    }
+    $product = Products::find_by(['id'=>$_POST['product_id']]);
+    if ($product == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-product';
+      return false;
+    }
+    if ($product->dealer_id != SessionController::currentUser()->id) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-product';
+      return false;
+    }
+    $dealer = Dealers::find_by(['id'=>$product->dealer_id]);
+    if ($dealer == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'manage-product';
+      return false;
+    }
     if (isset($_POST['submit']['update'])) {
       // link to update product page
       header("Location: ?p=product-register&product_id=".urlencode($_POST['product_id']));
@@ -350,9 +510,15 @@ class ActionDispatcher {
     }
     if (isset($_POST['submit']['delete'])) {
       // delete product and back to manage product page
-      $con->page = "?manage-product";
-      return false;
+      $product->destroy();
+      $sql= "SELECT id, name, password FROM (SELECT @row:=@row+1 as row, id, name, password FROM members, (select @row:=0) ini ORDER BY id) result WHERE row between :start and :end";
+      $results = Products::query($sql, ['start'=>1, 'end'=>10]);
+      $con->other_params['results'] = $results;
+      $con->page = "manage-product";
+      return true;
     }
+    ApplicationException::create(ApplicationException::INVALID_OPERATION);
+    $con->page = 'manage-product';
     return false;
   }
 }

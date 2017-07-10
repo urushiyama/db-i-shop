@@ -90,7 +90,7 @@ class DeliveryTypes extends ModelBase {
       return ($res) ? new static([
                       'id'      =>$res[0]->id,
                       'name'    =>$res[0]->name,
-                      'charge'  =>$rows[0]->charge
+                      'charge'  =>$res[0]->charge
                       ]) : null;
     } else {
       return null;
