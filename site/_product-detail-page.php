@@ -7,6 +7,7 @@ require_once '_C_DeliveryTypes.php';
 $renderer = new Renderer('_not-found-page.php');
 
 if (!isset($image)) $image = 'http://lorempixel.com/256/256/technics/'.rand(1, 10);
+if (isset($_GET['product_id'])) $product_id = $_GET['product_id'];
 if (!isset($product_id)) $product_id = 0;
 
 $product = Products::find_by(['id'=>$product_id]);
@@ -21,6 +22,7 @@ if ($product) {
     $delivery_cost = $delivery_type->charge;
   }
   $product_stock = $product->stock;
+  $product_price = $product->price;
   $product_condition = $product->condition_type;
   $product_description = $product->description;
 }
