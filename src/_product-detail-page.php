@@ -15,6 +15,7 @@ $product = Products::find_by(['id'=>$product_id]);
 if ($product) {
   $product_name = $product->name;
   $dealer = Dealers::find_by(['id'=>$product->dealer_id]);
+  $product_dealer = $product->dealer_id;
   if ($dealer) $dealer_name = $dealer->name;
   $delivery_type = DeliveryTypes::find_by(['id'=>$product->delivery_type_id]);
   if ($delivery_type) {
@@ -75,18 +76,28 @@ if (SessionController::currentLoginType() == LOGIN_TYPE_MEMBER && SessionControl
           </p>
           <p>商品の状態: <span class="product-condition-<?=htmlspecialchars($product_condition, ENT_QUOTES)?>"><?=htmlspecialchars($product_condition_name) ?></span></p>
           <form action="." method="post" class="box-content-row box-align-baseline">
-            <input type="hidden" name="a" value="add-to-cart">
             <input type="hidden" name="product_id" value="<?=htmlspecialchars($product_id, ENT_QUOTES) ?>">
             <input class="minimum-width-input" type="number" name="units" value="1" min="1" max="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>">
             <p>残り<?=htmlspecialchars($product_stock) ?>個</p>
             <?php if ($admin): ?>
               <?php if ($product_banned): ?>
-            <input type="submit" name="submit[ban]" value="出品の一時停止">
+                <input type="hidden" name="a" value="toggle-banned-product">
+                <input type="submit" name="submit[ban]" value="出品の一時停止">
               <?php else: ?>
-            <input type="submit" name="submit[unban]" value="出品の許可">
+                <input type="submit" name="submit[unban]" value="出品の許可">
+              <?php endif ?>
+            <?php elseif (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_DEALER): ?>
+              <?php if (SessionController::currentUser()->id == $product_dealer): ?>
+                <p>
+                  <input type="hidden" name="a" value="edit-product">
+                  <input type="submit" name="submit[update]" value="更新">
+                  <input type="button" name="submit[delete]" value="削除">
+                </p>
+              <?php else: ?>
               <?php endif ?>
             <?php else: ?>
-            <input type="submit" value="買い物かごに入れる">
+              <input type="hidden" name="a" value="add-to-cart">
+              <input type="submit" value="買い物かごに入れる">
             <?php endif ?>
           </form>
         </div>

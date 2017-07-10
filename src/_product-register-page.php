@@ -8,7 +8,13 @@ $renderer = new Renderer('_not-found-page.php');
 
 if (!isset($image)) $image = 'http://lorempixel.com/256/256/technics/'.rand(1, 10);
 
-$product_id = (isset($_GET['product_id'])) ? $_GET['product_id'] : 0;
+if (isset($_GET['product_id'])) {
+  $product_id = $_GET['product_id'];
+} elseif (isset($_POST['product-id'])) {
+  $product_id = $_POST['product-id'];
+} else {
+  $product_id = 0;
+}
 $product = Products::find_by(['id'=>$product_id]);
 
 if ($product) {
@@ -21,6 +27,7 @@ if ($product) {
     $delivery_cost = $delivery_type->charge;
   }
   $product_stock = $product->stock;
+  $product_price = $product->price;
   $product_condition = $product->condition_type;
   $product_description = $product->description;
 }
@@ -55,9 +62,10 @@ foreach ($delivery_types as $del_type) {
     <h2>商品の登録・更新</h2>
   </div>
   <div class="box-login-form-content">
-    <form class="box-content-column">
-      <div action="." method="post" class="box-content-row">
+    <form action="." method="post" class="box-content-column">
+      <div class="box-content-row">
         <input type="hidden" name="a" value="update-product">
+        <input type="hidden" name="product-id" value="<?=htmlspecialchars($product_id, ENT_QUOTES)?>">
         <div class="box-content-column">
           <img class="product-thumbnail" src="<?=htmlspecialchars($image, ENT_QUOTES) ?>" alt="商品のサムネイル">
         </div>
@@ -78,6 +86,9 @@ foreach ($delivery_types as $del_type) {
               <?php elseif ($product_condition === 'used'): ?>
               <option value="new">新品</option>
               <option value="used" selected>中古</option>
+              <?php else: ?>
+              <option value="new" selected>新品</option>
+              <option value="used">中古</option>
               <?php endif ?>
             </select>
           </p>
@@ -94,7 +105,7 @@ foreach ($delivery_types as $del_type) {
       <div class="box-content-row">
         <input type="submit" value="登録・更新する">
         <p></p>
-        <input type="button" value="キャンセル" onclick="location.href='?p=manage-dealed-product'">
+        <input type="button" value="キャンセル" onclick="location.href='?p=manage-product'">
       </div>
     </form>
   </div>

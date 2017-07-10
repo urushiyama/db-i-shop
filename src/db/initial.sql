@@ -49,8 +49,7 @@ create table products(
   delivery_type_id integer,
   coupon_id integer,
   foreign key (dealer_id) references dealers(id),
-  foreign key (delivery_type_id) references delivery_types(id),
-  foreign key (coupon_id) references coupons(id)
+  foreign key (delivery_type_id) references delivery_types(id)
 ) default charset=utf8;
 
 create table images(

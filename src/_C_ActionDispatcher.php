@@ -5,6 +5,7 @@ require_once '_C_ApplicationException.php';
 require_once '_C_Members.php';
 require_once '_C_Dealers.php';
 require_once '_C_Products.php';
+require_once '_C_DeliveryTypes.php';
 require_once '_C_Crypt.php';
 require_once '_C_Mailers.php';
 
@@ -537,13 +538,90 @@ class ActionDispatcher {
 
   static function updateProduct(MainController $con) {
     # - params
+    #   - product-id
     #   - product-name
-    #   - product_price
+    #   - product-price
     #   - product-delivery(delivery_type_id)
-    #   - product_condition
+    #   - product-condition
     #   - units (product_stock)
-    #   - product_description
+    #   - product-description
     # - POST method action
+    if (!isset($_POST['product-id'])
+        || !isset($_POST['product-name'])
+        || !isset($_POST['product-price'])
+        || !isset($_POST['product-delivery'])
+        || !isset($_POST['product-condition'])
+        || !isset($_POST['units'])
+        || !isset($_POST['product-description'])) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'product-register';
+      return false;
+    }
+    if (SessionController::currentLoginType() != SessionController::LOGIN_TYPE_DEALER) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'top';
+      return false;
+    }
+    $dealer = SessionController::currentUser();
+    if ($_POST['product-id'] == 0) {
+      // register
+      Products::validateValues([
+        'name'=>$_POST['product-name'],
+        'price'=>$_POST['product-price'],
+        'delivery_type_id'=>$_POST['product-delivery'],
+        'condition_type'=>$_POST['product-condition'],
+        'stock'=>$_POST['units'],
+        'dealer_id'=>$dealer->id
+      ]);
+      if (ApplicationException::isStored()) {
+        $con->page = 'product-register';
+        return false;
+      }
+      Products::create([
+        'name'=>$_POST['product-name'],
+        'condition_type'=>$_POST['product-condition'],
+        'stock'=>$_POST['units'],
+        'price'=>$_POST['product-price'],
+        'description'=>$_POST['product-description'],
+        'dealer_id'=>$dealer->id,
+        'delivery_type_id'=>$_POST['product-delivery']
+      ]);
+      $con->page = 'manage-product';
+      return true;
+    } else {
+      // update
+      $product = Products::find_by(['id'=>$_POST['product-id']]);
+      if ($product == null) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        $con->page = 'manage-product';
+        return false;
+      }
+      if ($dealer->id != $product->dealer_id) {
+        ApplicationException::create(ApplicationException::INVALID_OPERATION);
+        $con->page = 'manage-product';
+        return false;
+      }
+      Products::validateValues([
+        'name'=>$_POST['product-name'],
+        'price'=>$_POST['product-price'],
+        'delivery_type_id'=>$_POST['product-delivery'],
+        'condition_type'=>$_POST['product-condition'],
+        'stock'=>$_POST['units'],
+        'dealer_id'=>$dealer->id
+      ]);
+      if (ApplicationException::isStored()) {
+        $con->page = 'product-register';
+        return false;
+      }
+      $product->name = $_POST['product-name'];
+      $product->price = $_POST['product-price'];
+      $product->delivery_type_id = $_POST['product-delivery'];
+      $product->condition_type = $_POST['product-condition'];
+      $product->stock = $_POST['units'];
+      $product->save();
+      $con->page = 'manage-product';
+      return true;
+    }
     return false;
   }
 

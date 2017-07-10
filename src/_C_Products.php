@@ -168,12 +168,12 @@ class Products extends ModelBase {
       }
     }
     if (isset($stock)) {
-      if ($stock < 0) {
+      if ($stock < 0 || !ctype_digit($stock)) {
         ApplicationException::create(ApplicationException::INVALID_PRODUCT_STOCK);
       }
     }
     if (isset($price)) {
-      if ($price < 0) {
+      if ($price < 0  || !ctype_digit($price)) {
         ApplicationException::create(ApplicationException::INVALID_PRODUCT_PRICE);
       }
     }
