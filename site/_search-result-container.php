@@ -29,6 +29,10 @@ if (!isset($results)) $results = [];
         <?php foreach ($results as $product): ?>
             <?=$renderer->render(['template'=>$brief_template, 'button_template'=>$button_template, 'product_id'=>$product->id])?>
         <?php endforeach ?>
+      <?php elseif (SessionController::currentLoginType() == SessionController::LOGIN_TYPE_DEALER): ?>
+        <?php foreach ($results as $product): ?>
+            <?=$renderer->render(['template'=>$brief_template, 'button_template'=>'_brief-product-edit-button-container.php', 'product_id'=>$product->id])?>
+        <?php endforeach ?>
       <?php else: ?>
         <?php foreach ($results as $product): ?>
             <?=$renderer->render(['template'=>$brief_template, 'product_id'=>$product->id])?>
