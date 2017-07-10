@@ -43,6 +43,8 @@ insert into products (name, condition_type, stock, price, description, created_d
 insert into products (name, condition_type, stock, price, description, created_date, dealer_id, delivery_type_id, coupon_id) select '最新OS搭載 11インチノートパソコン 内部レストア済', 'used', 4, 39800, '最新OS搭載でこの価格！ネットも文書作成もこれ一台で始められます！', '2016-11-05 02:00:00', dealers.id, delivery_types.id, coupons.id from dealers, delivery_types, coupons order by rand() limit 1;
 insert into products (name, condition_type, stock, price, description, created_date, dealer_id, delivery_type_id, coupon_id) select '液晶保護フィルム 新しいOranePadに最適 アンチグレア', 'new', 20, 2200, '液晶保護フィルムで傷を避ける、日常の使用に通用、反射は目の疲れを除去する。', '2014-05-22 09:30:00', dealers.id, delivery_types.id, null from dealers, delivery_types order by rand() limit 1;
 
+insert into products (name, condition_type, stock, price, description, created_date, dealer_id, delivery_type_id, coupon_id) select 'Product hoge hoge', 'new', 200, 210, 'foo bar null hoge fuga baz boo', '2013-09-01 23:31:56', dealers.id, delivery_types.id, null from dealers, delivery_types order by rand() limit 26;
+
 -- insert images test data (assert_success)
 insert into images (file, product_id) select '/images/ionr24swgnj.png', products.id from products order by rand() limit 1;
 insert into images (file, product_id) select '/images/2ht45s5zdfb.png', products.id from products order by rand() limit 1;
@@ -50,9 +52,7 @@ insert into images (file, product_id) select '/images/f153haernz4.png', products
 insert into images (file, product_id) select '/images/rq346jarger.png', products.id from products order by rand() limit 1;
 
 -- insert coupon_targets test data (assert_success)
-insert into coupon_targets (coupon_id, product_id) select coupons.id, products.id from coupons, products order by rand() limit 1;
-insert into coupon_targets (coupon_id, product_id) select coupons.id, products.id from coupons, products order by rand() limit 1;
-insert into coupon_targets (coupon_id, product_id) select coupons.id, products.id from coupons, products order by rand() limit 1;
+insert into coupon_targets (coupon_id, product_id) select coupons.id, products.id from coupons, products order by rand() limit 20;
 
 -- insert owned_coupons test data (assert_success)
 insert into owned_coupons (invalidate_date, member_id, coupon_id) select '2020-05-28 00:00:00', members.id, coupons.id from members, coupons order by rand() limit 1;
