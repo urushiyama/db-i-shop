@@ -336,21 +336,34 @@ class ActionDispatcher {
       return false;
     }
     $start = (isset($_GET['start'])) ? $_GET['start']: 1;
-    $max = ModelBase::query("SELECT count(*) as count FROM ".Products::getTable())[0]['count'];
-    $end = ($max > $start + 9) ? $start + 9 : $max;
     if (isset($_GET['submit']['search']) 
         || (isset($_GET['query']) && !empty($_GET['query']))) {
       // return name matched products matched advanced search query
       if (isset($_GET['min-price']) && isset($_GET['max-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE name like :name and price between :minp and :maxp", [
+                                  'name'=>"%{$_GET['query']}%",
+                                  'minp'=>$_GET['min-price'],
+                                  'maxp'=>$_GET['max-price']
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and price between :minp and :maxp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
           'end'=>$end,
           'name'=>"%{$_GET['query']}%",
           'minp'=>$_GET['min-price'],
-          'maxp'=>$_GET['maxp']
+          'maxp'=>$_GET['max-price']
         ]);
       } else if (isset($_GET['min-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE name like :name and price >= :minp", [
+                                  'name'=>"%{$_GET['query']}%",
+                                  'minp'=>$_GET['min-price']
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and price >= :minp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
@@ -359,6 +372,13 @@ class ActionDispatcher {
           'minp'=>$_GET['min-price']
         ]);
       } else if (isset($_GET['max-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE name like :name and price <= :maxp", [
+                                  'name'=>"%{$_GET['query']}%",
+                                  'maxp'=>$_GET['max-price']
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and price <= :maxp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
@@ -367,6 +387,12 @@ class ActionDispatcher {
           'maxp'=>$_GET['max-price']
         ]);
       } else {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE name like :name", [
+                                  'name'=>"%{$_GET['query']}%"
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
@@ -382,16 +408,33 @@ class ActionDispatcher {
         return false;
       }
       if (isset($_GET['min-price']) && isset($_GET['max-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE name like :name and dealer_id = :dealer_id and price between :minp and :maxp", [
+                                  'name'=>"%{$_GET['query']}%",
+                                  'minp'=>$_GET['min-price'],
+                                  'maxp'=>$_GET['max-price'],
+                                  'dealer_id'=>SessionController::currentUser()->id
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and dealer_id = :dealer_id and price between :minp and :maxp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
           'end'=>$end,
           'name'=>"%{$_GET['query']}%",
           'minp'=>$_GET['min-price'],
-          'maxp'=>$_GET['maxp'],
+          'maxp'=>$_GET['max-price'],
           'dealer_id'=>SessionController::currentUser()->id
         ]);
       } else if (isset($_GET['min-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE name like :name and dealer_id = :dealer_id and price >= :minp", [
+                                  'name'=>"%{$_GET['query']}%",
+                                  'minp'=>$_GET['min-price'],
+                                  'dealer_id'=>SessionController::currentUser()->id
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and dealer_id = :dealer_id and price >= :minp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
@@ -401,6 +444,14 @@ class ActionDispatcher {
           'dealer_id'=>SessionController::currentUser()->id
         ]);
       } else if (isset($_GET['max-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE name like :name and dealer_id = :dealer_id and price <= :maxp", [
+                                  'name'=>"%{$_GET['query']}%",
+                                  'maxp'=>$_GET['max-price'],
+                                  'dealer_id'=>SessionController::currentUser()->id
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and dealer_id = :dealer_id and price <= :maxp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
@@ -410,6 +461,13 @@ class ActionDispatcher {
           'dealer_id'=>SessionController::currentUser()->id
         ]);
       } else {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE name like :name and dealer_id = :dealer_id", [
+                                  'name'=>"%{$_GET['query']}%",
+                                  'dealer_id'=>SessionController::currentUser()->id
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE name like :name and dealer_id = :dealer_id ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
@@ -421,14 +479,29 @@ class ActionDispatcher {
     } else /*if (isset($_GET['submit']['index']) || $_GET['query'] == '')*/ {
       // return all products matched advanced search query
       if (isset($_GET['min-price']) && isset($_GET['max-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE price between :minp and :maxp", [
+                                  'minp'=>$_GET['min-price'],
+                                  'maxp'=>$_GET['max-price'],
+                                  'dealer_id'=>SessionController::currentUser()->id
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE price between :minp and :maxp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
           'end'=>$end,
           'minp'=>$_GET['min-price'],
-          'maxp'=>$_GET['maxp']
+          'maxp'=>$_GET['max-price']
         ]);
       } else if (isset($_GET['min-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE price >= :minp", [
+                                  'minp'=>$_GET['min-price'],
+                                  'dealer_id'=>SessionController::currentUser()->id
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE price >= :minp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
@@ -436,6 +509,13 @@ class ActionDispatcher {
           'minp'=>$_GET['min-price']
         ]);
       } else if (isset($_GET['max-price'])) {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE price <= :maxp", [
+                                  'maxp'=>$_GET['max-price'],
+                                  'dealer_id'=>SessionController::currentUser()->id
+                                ])[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini WHERE price <= :maxp ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, [
           'start'=>$start,
@@ -443,6 +523,10 @@ class ActionDispatcher {
           'maxp'=>$_GET['max-price']
         ]);
       } else {
+        $max = ModelBase::query("SELECT count(*) as count FROM "
+                                .Products::getTable()
+                                ." WHERE price >= :minp")[0]['count'];
+        $end = ($max > $start + 9) ? $start + 9 : $max;
         $sql= "SELECT id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id FROM (SELECT @row:=@row+1 as row, id, name, condition_type, stock, price, description, created_date, suspention, dealer_id, delivery_type_id  FROM products, (select @row:=0) ini ORDER BY id) result WHERE row between :start and :end";
         $results = Products::query($sql, ['start'=>$start, 'end'=>$end]);
       }
