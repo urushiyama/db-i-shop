@@ -69,7 +69,5 @@ if (realpath($argv[0]) == __FILE__) {
   $plain = "Hoge Hoge Foo Bar";
   $cipher = Crypt::encrypt($plain, "password");
   $replain = Crypt::decrypt($cipher, "password");
-  var_dump($plain);
-  var_dump($replain);
 }
 ?>
