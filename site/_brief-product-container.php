@@ -9,6 +9,7 @@ if (!isset($button_template)) $button_template = '_brief-product-purchase-button
 
 if (!isset($image)) $image = 'http://lorempixel.com/64/64/technics/'.rand(1, 10);
 
+if (!isset($purchase_units)) $purchase_units = 0;
 if (!isset($product_id)) $product_id = 0;
 $product = Products::find_by(['id'=>$product_id]);
 if ($product) {
@@ -64,6 +65,6 @@ switch ($product_condition) {
         <?php endif ?>
       </p>
     </div>
-    <?=$renderer->render(['template'=>$button_template, 'product_id'=>$product_id, 'product_stock'=>$product_stock]) ?>
+    <?=$renderer->render(['template'=>$button_template, 'product_id'=>$product_id, 'product_stock'=>$product_stock, 'purchase_units'=>$purchase_units]) ?>
   </div>
 </div>

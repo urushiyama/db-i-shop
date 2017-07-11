@@ -30,13 +30,14 @@ switch ($product_condition) {
     break;
 }
  ?>
-<div class="box-content-column" style="flex: 1 1 0;">
-  <div class="box-content-row" style="margin: 0;">
+<form method="post" action="." class="box-content-column" style="flex: 1 1 0;">
+  <div class="box-content-column" style="margin: 0;">
     <input type="hidden" name="product_id" value="<?=htmlspecialchars($product_id, ENT_QUOTES) ?>">
-    個数<input class="minimum-width-input" type="number" name="units" value="1" min="1" max="<?=htmlspecialchars($product_stock, ENT_QUOTES)?>">
+    <p>購入個数: <?=htmlspecialchars($purchase_units) ?>個</p>
     <p>残り<?=htmlspecialchars($product_stock) ?>個</p>
   </div>
   <div class="box-content-row" style="margin: 0;">
-    <input type="button" value="買い物かごから削除" onclick="removeFromCart(<?=htmlspecialchars($product_id, ENT_QUOTES) ?>);">
+    <input type="hidden" name="a" value="remove-from-cart">
+    <input type="submit" name="submit[remove]" value="買い物かごから削除">
   </div>
-</div>
+</form>

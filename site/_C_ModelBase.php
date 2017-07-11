@@ -25,12 +25,13 @@ class ModelBase {
     self::$connection_info = $info;
   }
 
-  /* some protected database helper method (query & CLUD) */
+  /* some database helper method (query & CLUD) */
 
   static function query($sql, array $params = []) {
     $stmt = self::$db->prepare($sql);
     self::bindParams($stmt, $params);
-    $stmt->execute();
+    $res = $stmt->execute();
+    if ($res == false) return false;
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 

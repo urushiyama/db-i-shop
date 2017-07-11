@@ -5,6 +5,7 @@ require_once '_C_ApplicationException.php';
 require_once '_C_Members.php';
 require_once '_C_Dealers.php';
 require_once '_C_Products.php';
+require_once '_C_PurchasedProducts.php';
 require_once '_C_DeliveryTypes.php';
 require_once '_C_Crypt.php';
 require_once '_C_Mailers.php';
@@ -21,6 +22,8 @@ class ActionDispatcher {
     'search-product'=>'searchProduct',
     'update-product'=>'updateProduct',
     'add-to-cart'=>'addToCart',
+    'remove-from-cart'=>'removeFromCart',
+    'purchase-product'=>'purchaseProduct',
     'edit-product'=>'editProduct',
     'send-register-email'=>'sendRegisterEmail'
   ];
@@ -626,7 +629,97 @@ class ActionDispatcher {
   }
 
   static function addToCart(MainController $con) {
-    return false;
+    # - params
+    #   - product_id
+    #   - units
+    # - POST method action
+    if (!isset($_POST['product_id']) || !isset($_POST['units'])) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    if ($_POST['units'] <= 0) {
+      ApplicationException::create(ApplicationException::INVALID_PURCHASE_UNITS);
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    if (SessionController::currentLoginType() != SessionController::LOGIN_TYPE_MEMBER) {
+      ApplicationException::create(ApplicationException::PURCHASE_BY_NON_MEMBER);
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    $product = Products::find_by(['id'=>$_POST['product_id']]);
+    if ($product == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    SessionController::addToCart($_POST['product_id'], $_POST['units']);
+    $con->page = 'shopping-basket';
+    return true;
+  }
+  
+  static function removeFromCart(MainController $con) {
+    # - params
+    #   - product_id
+    # - POST method action
+    if (!isset($_POST['product_id'])) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    if (SessionController::currentLoginType() != SessionController::LOGIN_TYPE_MEMBER) {
+      ApplicationException::create(ApplicationException::PURCHASE_BY_NON_MEMBER);
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    $product = Products::find_by(['id'=>$_POST['product_id']]);
+    if ($product == null) {
+      ApplicationException::create(ApplicationException::INVALID_OPERATION);
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    if (!SessionController::isInCart($_POST['product_id'])) {
+      ApplicationException::create(ApplicationException::REMOVE_MISSING_PURCHASE_ITEM);
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    SessionController::removeFromCart($_POST['product_id']);
+    $con->page = 'shopping-basket';
+    return true;
+  }
+  
+  static function purchaseProduct(MainController $con) {
+    if (SessionController::currentLoginType() != SessionController::LOGIN_TYPE_MEMBER) {
+      ApplicationException::create(ApplicationException::PURCHASE_BY_NON_MEMBER);
+      $con->page = 'top';
+      return false;
+    }
+    $member = SessionController::currentUser();
+    $cart_items = SessionController::loadCart();
+    foreach ($cart_items as $item) {
+      // stockチェック
+      if ($item['product']->stock < $item['units']) {
+        SessionController::addToCart($item['product']->id, $item['product']->stock);
+        ApplicationException::create(ApplicationException::LACK_OF_PRODUCT);
+      }
+    }
+    if (ApplicationException::isStored()) {
+      $con->page = 'shopping-basket';
+      return false;
+    }
+    foreach ($cart_items as $item) {
+      // 購入処理
+      $item['product']->stock -= $item['units'];
+      $item['product']->save();
+      PurchasedProducts::insert([
+        'member_id'=>$member->id,
+        'product_id'=>$item['product']->id
+      ]);
+    }
+    SessionController::resetCart();
+    $con->page = 'purchased';
+    return true;
   }
 
   static function editProduct(MainController $con) {

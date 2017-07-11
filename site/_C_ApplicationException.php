@@ -193,6 +193,38 @@ class ApplicationException extends RuntimeException implements IteratorAggregate
     ]
   ];
 
+  const PURCHASE_BY_NON_MEMBER = [
+    'id'=>2932,
+    'message'=>[
+      'en'=>'You can\'t purchase products when you are not loginned as a member.',
+      'ja'=>'会員としてログインしていないため、商品を購入できません。'
+    ]
+  ];
+
+  const INVALID_PURCHASE_UNITS = [
+    'id'=>2933,
+    'message'=>[
+      'en'=>'Purchase units is invalid.',
+      'ja'=>'不正な購入個数です。'
+    ]
+  ];
+
+  const REMOVE_MISSING_PURCHASE_ITEM = [
+    'id'=>2934,
+    'message'=>[
+      'en'=>'Removing purchase item do not exists in cart.',
+      'ja'=>'買い物かごから削除しようとした商品が買い物かごの中に見つかりません。'
+    ]
+  ];
+
+  const LACK_OF_PRODUCT = [
+    'id'=>2935,
+    'message'=>[
+      'en'=>'You cannot purchase products as much as you want in the basket for the lack of product stock.',
+      'ja'=>'買い物かごに入れた商品の在庫が不足しているため、指定した個数分を購入することができません。'
+    ]
+  ];
+
   const INVALID_OPERATION = [
     'id'=>2991,
     'message'=>[

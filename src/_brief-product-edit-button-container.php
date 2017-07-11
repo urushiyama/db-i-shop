@@ -44,7 +44,7 @@ switch ($product_condition) {
     <input type="submit" name="submit[update]" value="更新">
     <input type="submit" name="submit[delete]" value="削除">
     <?php else: ?>
-    <input type="button" value="詳細をみる" onclick="location.href='?p=product-detail&amp;product-id=<?=htmlspecialchars(urlencode($product_id), ENT_QUOTES) ?>'">
+    <input type="button" value="詳細をみる" onclick="location.href='?p=product-detail&amp;product_id=<?=htmlspecialchars(urlencode($product_id), ENT_QUOTES) ?>'">
     <?php endif ?>
   </div>
 </form>

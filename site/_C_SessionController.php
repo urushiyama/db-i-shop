@@ -46,6 +46,7 @@ class SessionController {
     $_SESSION['login_type'] = $login_type;
     self::$current_user = $user;
     self::$login_type = $login_type;
+    self::resetCart();
     return true;
   }
 
@@ -84,6 +85,73 @@ class SessionController {
     self::$login_type = null;
     unset($_SESSION['user_id']);
     unset($_SESSION['login_type']);
+  }
+
+  static function resetCart() {
+    $_SESSION['cart'] = [];
+    $_SESSION['cart-units'] = [];
+  }
+
+  static function addToCart($product_id, $units) {
+    if (self::isInCart($product_id)) {
+      // 注文個数の変更
+      $product = Products::find_by(['id'=>$product_id]);
+      $cart_units = $_SESSION['cart-units'];
+      $old_units = $cart_units[array_search($product_id, $_SESSION['cart'])];
+      if ($product->stock + $old_units < $units) {
+        $units = $product->stock + $old_units;
+      }
+      $cart_units[array_search($product_id, $_SESSION['cart'])] = $units;
+      $_SESSION['cart-units'] = $cart_units;
+    } else {
+      $product = Products::find_by(['id'=>$product_id]);
+      if ($product->stock < $units) {
+        // 注文個数の修正
+        $units = $product->stock;
+      }
+      $cart = $_SESSION['cart'];
+      array_push($cart, $product_id);
+      $_SESSION['cart'] = $cart;
+      $cart_units = $_SESSION['cart-units'];
+      array_push($cart_units, $units);
+      $_SESSION['cart-units'] = $cart_units;
+    }
+    date_default_timezone_set('UTC');
+    $_SESSION['cart-expired-at'] = date('Y-m-d H:i:s', strtotime('+30 minute'));
+  }
+
+  static function removeFromCart($product_id) {
+    if (self::isInCart($product_id)) {
+      $key = array_search($product_id, $_SESSION['cart']);
+      $units =$_SESSION['cart-units'][$key];
+      unset($_SESSION['cart'][$key]);
+      unset($_SESSION['cart-units'][$key]);
+      $_SESSION['cart'] = array_values($_SESSION['cart']);
+      $_SESSION['cart-units'] = array_values($_SESSION['cart-units']);
+    }
+  }
+
+  static function loadCart() {
+    if (strtotime($_SESSION['cart-expired-at']) <= time()) {
+      self::resetCart();
+    }
+    date_default_timezone_set('UTC');
+    $_SESSION['cart-expired-at'] = date('Y-m-d H:i:s', strtotime('+30 minute'));
+    return array_map(function ($product_id, $units) {
+      return [
+        'product'=>Products::find_by(['id'=>$product_id]),
+        'units'=>$units
+      ];
+    }, $_SESSION['cart'], $_SESSION['cart-units']);
+  }
+  
+  static function isInCart($product_id) {
+    if (strtotime($_SESSION['cart-expired-at']) <= time()) {
+      self::resetCart();
+    }
+    date_default_timezone_set('UTC');
+    $_SESSION['cart-expired-at'] = date('Y-m-d H:i:s', strtotime('+30 minute'));
+    return in_array($product_id, $_SESSION['cart']);
   }
 }
  ?>
