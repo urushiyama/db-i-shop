@@ -42,7 +42,7 @@ switch ($product_condition) {
     <input type="hidden" name="a" value="add-to-cart">
     <input type="submit" value="買い物かごに入れる">
     <?php else: ?>
-    <input type="button" value="詳細をみる" onclick="location.href='?p=product-detail&amp;product-id=<?=htmlspecialchars($product_id, ENT_QUOTES) ?>'">
+    <input type="button" value="詳細をみる" onclick="location.href='?p=product-detail&amp;product_id=<?=htmlspecialchars($product_id, ENT_QUOTES) ?>'">
     <?php endif ?>
   </div>
 </form>
