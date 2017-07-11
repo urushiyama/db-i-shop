@@ -714,7 +714,8 @@ class ActionDispatcher {
       $item['product']->save();
       PurchasedProducts::insert([
         'member_id'=>$member->id,
-        'product_id'=>$item['product']->id
+        'product_id'=>$item['product']->id,
+        'purchased_units'=>$item['units']
       ]);
     }
     SessionController::resetCart();

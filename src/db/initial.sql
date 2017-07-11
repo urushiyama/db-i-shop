@@ -90,6 +90,7 @@ create table searched_products(
 create table purchased_products(
   id integer primary key auto_increment,
   purchased_date timestamp default current_timestamp,
+  purchased_units integer not null,
   member_id integer not null,
   product_id integer not null,
   foreign key (member_id) references members(id),
