@@ -51,7 +51,7 @@ switch ($product_condition) {
         <?=htmlspecialchars($dealer_name) ?> が出品
         <?php else: ?>
         出品者不明
-        <? endif ?>
+        <?php endif ?>
       </em>
     </div>
     <div class="box-content-column box-align-right" style="flex: 1 1 400px;">
