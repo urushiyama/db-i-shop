@@ -64,7 +64,7 @@ if (SessionController::currentLoginType() == LOGIN_TYPE_MEMBER && SessionControl
             <?=htmlspecialchars($dealer_name) ?> が出品
             <?php else: ?>
             出品者不明
-            <? endif ?>
+            <?php endif ?>
           </em>
           <p class="price"><?=htmlspecialchars($product_price) ?>円</p>
           <p>
