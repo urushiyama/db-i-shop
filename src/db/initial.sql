@@ -1,5 +1,7 @@
 use DBs1511427;
 
+drop table if exists searched_products;
+drop table if exists purchased_products;
 drop table if exists images;
 drop table if exists coupon_targets;
 drop table if exists owned_coupons;
